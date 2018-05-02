@@ -1,7 +1,7 @@
 from tkinter import *
 import os
 import shutil
-import time
+# import time
 
 
 def donothing():
