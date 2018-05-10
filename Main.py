@@ -84,17 +84,22 @@ class Team:
     def __init__(self):
         self.logo = None
         self.name = StringVar()
+        self.roster = {}   # Roster will be setup as a Dict with name as key and number as content
 
     def set(self, team_name, destfile):
         self.logo = team_name+".png"
-        self.name.set(team_name)
-        print(team_name)
-        self.logo = "Teamlogos/{}.png".format(team_name)
+        self.logo = "Input/Teamlogos/{}.png".format(team_name)
         try:
             shutil.copyfile(self.logo, "Output/"+destfile)
         except FileExistsError:
             os.remove("Output/"+destfile)
             shutil.copyfile(self.logo, "Output/"+destfile)
+        with open("Input/Teamrosters/"+team_name+".txt", "r") as roster_file:
+            content = roster_file.readline()
+            self.name.set(content[0][:-1])
+        for line in content[1:]:
+            number, name = line.split(":")
+            self.roster[name] = int(number)
 
 
 class Score:
@@ -178,7 +183,7 @@ class MyFirstGUI:
     def setup_teams(self):
         listofteams = []
         try:
-            for team in os.listdir("Teamlogos"):
+            for team in os.listdir("Input/Teamlogos"):
                 if team[-4:] == ".png":
                     listofteams.append(team[:-4])
         except FileNotFoundError:

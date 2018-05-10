@@ -1,0 +1,8 @@
+Berlin Bluecaps
+1:Max Mustermann
+3:Friz Sowieso
+5:Irgendwer Neuer
+14:Nächster Name
+412:Ein Name mit Mehreren Wörtern
+93:Toller Name
+105:Der Andere
