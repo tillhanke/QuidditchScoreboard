@@ -85,6 +85,7 @@ class Team:
         self.logo = None
         self.name = StringVar()
         self.roster = {}   # Roster will be setup as a Dict with name as key and number as content
+        self.is_set = False
 
     def set(self, team_name, destfile):
         self.logo = team_name+".png"
@@ -95,11 +96,13 @@ class Team:
             os.remove("Output/"+destfile)
             shutil.copyfile(self.logo, "Output/"+destfile)
         with open("Input/Teamrosters/"+team_name+".txt", "r") as roster_file:
-            content = roster_file.readline()
+            content = roster_file.readlines()
             self.name.set(content[0][:-1])
         for line in content[1:]:
+            #print(line)
             number, name = line.split(":")
             self.roster[name] = int(number)
+        self.is_set = True
 
 
 class Score:
@@ -148,7 +151,7 @@ class Score:
             f.write(str(self.current))
 
 
-class MyFirstGUI:
+class ScoreBoardGUI:
 
     def __init__(self, master):
         # try Output folder:
@@ -175,7 +178,9 @@ class MyFirstGUI:
         self.setup_teams()
 
         self.timer_up = Timer(master=self.master, col=col, row=row+3, countdown=False)
-        self.timer_down = Timer(master=self.master, col=col+4, row=row+3, countdown=True)
+        self.timer_down = Timer(master=self.master, col=col+4, row=row+3, countdown=True)  # takes 4 rows!
+
+        self.setup_penalties(col=col, row=row+6)
 
         self.close_button = Button(master, text="Close", command=master.quit)
         self.close_button.grid(columnspan=8, column=col, sticky=E+W)
@@ -206,8 +211,32 @@ class MyFirstGUI:
         menubar.add_cascade(label="Set Team B", menu=team_menu_two)
         self.master.config(menu=menubar)
 
+    def setup_penalties(self, col, row):
+        # Setup a penalty menu, with Cards, team, number of player and reason
+        if self.team_one.is_set and self.team_two.is_set:
+            chosen_team = IntVar()
+            self.close_button.destroy()
+            Label(self.master,
+                  text="Choose a Team:",
+                  justify=LEFT,
+                  padx=20).grid(column=col, row=row, columnspan=8)
+            Radiobutton(self.master,
+                        text=self.team_one.name.get(),
+                        padx=20,
+                        variable=chosen_team,
+                        value=1).grid(column=col, row=row+1, columnspan=4)
+            Radiobutton(self.master,
+                        text=self.team_two.name.get(),
+                        padx=20,
+                        variable=chosen_team,
+                        value=2).grid(column=col+4, row=row + 1, columnspan=4)
+            self.close_button = Button(self.master, text="Close", command=self.master.quit)
+            self.close_button.grid(columnspan=8, column=col, sticky=E + W)
+        else:
+            self.master.after(1000, lambda: self.setup_penalties(col=col, row=row+7))
+
 
 root = Tk()
-my_gui = MyFirstGUI(root)
+my_gui = ScoreBoardGUI(root)
 root.mainloop()
 root.destroy()  # optional; see description below
