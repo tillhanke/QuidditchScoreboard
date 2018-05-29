@@ -154,6 +154,8 @@ class Score:
 class ScoreBoardGUI:
 
     def __init__(self, master):
+        self.penalty_set = False
+        self.penalty_objects = []
         # try Output folder:
         try:
             os.listdir("Output")
@@ -180,7 +182,9 @@ class ScoreBoardGUI:
         self.timer_up = Timer(master=self.master, col=col, row=row+3, countdown=False)
         self.timer_down = Timer(master=self.master, col=col+4, row=row+3, countdown=True)  # takes 4 rows!
 
-        self.setup_penalties(col=col, row=row+6)
+        self.penalty_column = col
+        self.penalty_row = row + 6
+        self.setup_penalties()
 
         self.close_button = Button(master, text="Close", command=master.quit)
         self.close_button.grid(columnspan=8, column=col, sticky=E+W)
@@ -199,89 +203,182 @@ class ScoreBoardGUI:
         team_menu_one = Menu(menubar, tearoff=0)
         for team in listofteams:
             team_menu_one.add_command(label=team,
-                                      command=lambda team=team: self.team_one.set(str(team),
-                                                                                  "TeamA.png"))
+                                      command=lambda team=team: [self.team_one.set(str(team),
+                                                                                  "TeamA.png"), self.setup_penalties()])
         menubar.add_cascade(label="Set Team A", menu=team_menu_one)
-        
+
         team_menu_two = Menu(menubar, tearoff=0)
         for team in listofteams:
             team_menu_two.add_command(label=str(team),
-                                      command=lambda team=team: self.team_two.set(str(team),
-                                                                                  "TeamB.png"))
+                                      command=lambda team=team: [self.team_two.set(str(team),
+                                                                                  "TeamB.png"), self.setup_penalties()])
         menubar.add_cascade(label="Set Team B", menu=team_menu_two)
         self.master.config(menu=menubar)
 
-    def setup_penalties(self, col, row):
+    def setup_penalties(self):
         # Setup a penalty menu, with Cards, team, number of player and reasons
+        col = self.penalty_column
+        row = self.penalty_row
+
         if self.team_one.is_set and self.team_two.is_set:
-            chosen_team = IntVar()
+            if self.penalty_set:
+                print("going to")
+                print(self.penalty_objects)
+                self.destroy_penalty()
+                self.penalty_objects = []
+                print("destroyed it")
+            self.chosen_team_penalty = IntVar()
             self.close_button.destroy()
             # -------------------
             # Setup Penalty area
             # -------------------
             #
             # simple Label and chose button for team
-            Label(self.master,
-                  text="Choose a Team:",
-                  justify=LEFT,
-                  padx=20).grid(column=col, row=row, columnspan=8)
-            Radiobutton(self.master,
+            label_buttons = Label(self.master,
+                                  text="Choose a Team:",
+                                  justify=LEFT,
+                                  padx=20)
+            label_buttons.grid(column=col, row=row, columnspan=8)
+            self.penalty_objects.append(label_buttons)
+
+
+            rad_b1 = Radiobutton(self.master,
                         text=self.team_one.name.get(),
                         padx=20,
-                        variable=chosen_team,
-                        value=1).grid(column=col, row=row+1, columnspan=4)
-            Radiobutton(self.master,
+                        variable=self.chosen_team_penalty,
+                        value=1)
+            rad_b1.grid(column=col, row=row+1, columnspan=4)
+            self.penalty_objects.append(rad_b1)
+
+            rad_b2=Radiobutton(self.master,
                         text=self.team_two.name.get(),
                         padx=20,
-                        variable=chosen_team,
-                        value=2).grid(column=col+4, row=row + 1, columnspan=4)
+                        variable=self.chosen_team_penalty,
+                        value=2)
+            rad_b2.grid(column=col+4, row=row + 1, columnspan=4)
+            self.penalty_objects.append(rad_b2)
             # set number of Player:
-            Label(self.master,
+
+            playernumber_label = Label(self.master,
                   text="Number of Player:",
-                  justify=LEFT).grid(column=col,
+                  justify=LEFT)
+            playernumber_label.grid(column=col,
                                      row=row+2,
                                      columnspan=2,
                                      sticky=W)
-            player_num = Entry(self.master)
-            player_num.grid(column=col+3, row=row+2, columnspan=5, sticky=E+W)
+            self.penalty_objects.append(playernumber_label)
+
+            self.player_num_penalty = Entry(self.master)
+            self.penalty_objects.append(self.player_num_penalty)
+            self.player_num_penalty.grid(column=col+3, row=row+2, columnspan=5, sticky=E+W)
             # player_num.get()
             # --------------------------------
             # set chose cards radio buttons:
             #       Blue=1 Yellow=2 Red=3
             # --------------------------------
-            Label(self.master, text="Card:", justify=LEFT).grid(column=col, row=row+3, columnspan=2, sticky=W)
-            chosen_card = IntVar()
-            Radiobutton(self.master,
+            label_cards = Label(self.master,
+                  text="Card:",
+                  justify=LEFT)
+            label_cards.grid(column=col,
+                  row=row+3,
+                  columnspan=2,
+                  sticky=W)
+            self.penalty_objects.append(label_cards)
+            self.chosen_card = IntVar()
+            rad1 = Radiobutton(self.master,
                         text="Blue",
                         padx=20,
-                        variable=chosen_card,
-                        value=1).grid(column=col+2, row=row+3, columnspan=2)
-            Radiobutton(self.master,
-                        text="Yellow",
-                        padx=20,
-                        variable=chosen_card,
-                        value=2).grid(column=col+4, row=row+3, columnspan=2)
-            Radiobutton(self.master,
-                        text="Red",
-                        padx=20,
-                        variable=chosen_card,
-                        value=3).grid(column=col+6, row=row+3, columnspan=2)
+                        variable=self.chosen_card,
+                        value=1)
+            rad1.grid(column=col+2, row=row+3, columnspan=2)
+            self.penalty_objects.append(rad1)
+
+            rad1 = Radiobutton(self.master,
+                               text="Yellow",
+                               padx=20,
+                               variable=self.chosen_card,
+                               value=2)
+            rad1.grid(column=col + 4, row=row + 3, columnspan=2)
+            self.penalty_objects.append(rad1)
+
+            rad1 = Radiobutton(self.master,
+                               text="Red",
+                               padx=20,
+                               variable=self.chosen_card,
+                               value=3)
+            rad1.grid(column=col + 6, row=row + 3, columnspan=2)
+            self.penalty_objects.append(rad1)
+
             # -------------------------
             # Reason for Penalty:
             # -------------------------
-            Label(self.master, text="Reason:", justify=LEFT).grid(column=col, row=row+4, columnspan=2, sticky=W)
-            panelty_reason = Entry(self.master)
-            panelty_reason.grid(column=col+3, row=row+4, columnspan=5, sticky=E+W)
+            label_reason = Label(self.master,
+                                              text="Reason:",
+                                              justify=LEFT)
+            label_reason.grid(column=col,
+                              row=row+4,
+                              columnspan=2,
+                              sticky=W)
+            self.penalty_objects.append(label_reason)
+            self.penalty_reason = Entry(self.master)
+            self.penalty_objects.append(self.penalty_reason)
+            self.penalty_reason.grid(column=col+3, row=row+4, columnspan=5, sticky=E+W)
+            # -----------------------
+            # Execution Button
+            # -----------------------
+            exec_button = Button(self.master,
+                   text="Execute penalty",
+                   command=self.penalty_execution)
+            exec_button.grid(column=col+1,
+                                                        row=row+5,
+                                                        columnspan=6,
+                                                        sticky=E+W)
+            self.penalty_objects.append(exec_button)
+            self.penalty_set = True
             # -------------------
             # Reset close button
             # -------------------
             self.close_button = Button(self.master, text="Close", command=self.master.quit)
             self.close_button.grid(columnspan=8, column=col, sticky=E+W)
-        else:
-            self.master.after(1000, lambda: self.setup_penalties(col=col, row=row+7))
+        # else:
+        #     self.master.after(1000, lambda: self.setup_penalties)
+
+    def penalty_execution(self):
+        # -------------------------
+        # Move Card png to Output
+        # -------------------------
+        if self.chosen_card.get() == 1:
+            try:
+                shutil.copyfile("Input/Cards/Blue.png", "Output/card.png")
+            except FileExistsError:
+                os.remove("Output/card.png")
+                shutil.copyfile("Input/Cards/Blue.png", "Output/card.png")
+        if self.chosen_card.get() == 2:
+            try:
+                shutil.copyfile("Input/Cards/Yellow.png", "Output/card.png")
+            except FileExistsError:
+                os.remove("Output/card.png")
+                shutil.copyfile("Input/Cards/Yellow.png", "Output/card.png")
+        if self.chosen_card.get() == 3:
+            try:
+                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
+            except FileExistsError:
+                os.remove("Output/card.png")
+                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
+        # ------------------------------
+        # Move Playername and Number:
+        # ------------------------------
+        
+        return None
+
+    def destroy_penalty(self):
+        for i in self.penalty_objects:
+            i.destroy()
 
 
 root = Tk()
+root.resizable(False, False)
+
 my_gui = ScoreBoardGUI(root)
 root.mainloop()
 root.destroy()  # optional; see description below
