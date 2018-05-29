@@ -212,10 +212,15 @@ class ScoreBoardGUI:
         self.master.config(menu=menubar)
 
     def setup_penalties(self, col, row):
-        # Setup a penalty menu, with Cards, team, number of player and reason
+        # Setup a penalty menu, with Cards, team, number of player and reasons
         if self.team_one.is_set and self.team_two.is_set:
             chosen_team = IntVar()
             self.close_button.destroy()
+            # -------------------
+            # Setup Penalty area
+            # -------------------
+            #
+            # simple Label and chose button for team
             Label(self.master,
                   text="Choose a Team:",
                   justify=LEFT,
@@ -230,8 +235,48 @@ class ScoreBoardGUI:
                         padx=20,
                         variable=chosen_team,
                         value=2).grid(column=col+4, row=row + 1, columnspan=4)
+            # set number of Player:
+            Label(self.master,
+                  text="Number of Player:",
+                  justify=LEFT).grid(column=col,
+                                     row=row+2,
+                                     columnspan=2,
+                                     sticky=W)
+            player_num = Entry(self.master)
+            player_num.grid(column=col+3, row=row+2, columnspan=5, sticky=E+W)
+            # player_num.get()
+            # --------------------------------
+            # set chose cards radio buttons:
+            #       Blue=1 Yellow=2 Red=3
+            # --------------------------------
+            Label(self.master, text="Card:", justify=LEFT).grid(column=col, row=row+3, columnspan=2, sticky=W)
+            chosen_card = IntVar()
+            Radiobutton(self.master,
+                        text="Blue",
+                        padx=20,
+                        variable=chosen_card,
+                        value=1).grid(column=col+2, row=row+3, columnspan=2)
+            Radiobutton(self.master,
+                        text="Yellow",
+                        padx=20,
+                        variable=chosen_card,
+                        value=2).grid(column=col+4, row=row+3, columnspan=2)
+            Radiobutton(self.master,
+                        text="Red",
+                        padx=20,
+                        variable=chosen_card,
+                        value=3).grid(column=col+6, row=row+3, columnspan=2)
+            # -------------------------
+            # Reason for Penalty:
+            # -------------------------
+            Label(self.master, text="Reason:", justify=LEFT).grid(column=col, row=row+4, columnspan=2, sticky=W)
+            panelty_reason = Entry(self.master)
+            panelty_reason.grid(column=col+3, row=row+4, columnspan=5, sticky=E+W)
+            # -------------------
+            # Reset close button
+            # -------------------
             self.close_button = Button(self.master, text="Close", command=self.master.quit)
-            self.close_button.grid(columnspan=8, column=col, sticky=E + W)
+            self.close_button.grid(columnspan=8, column=col, sticky=E+W)
         else:
             self.master.after(1000, lambda: self.setup_penalties(col=col, row=row+7))
 
