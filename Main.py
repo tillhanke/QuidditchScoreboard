@@ -84,7 +84,7 @@ class Team:
     def __init__(self):
         self.logo = None
         self.name = StringVar()
-        self.roster = {}   # Roster will be setup as a Dict with name as key and number as content
+        self.roster = {}   # Roster will be setup as a Dict with Number as key and name as element
         self.is_set = False
 
     def set(self, team_name, destfile):
@@ -101,7 +101,7 @@ class Team:
         for line in content[1:]:
             #print(line)
             number, name = line.split(":")
-            self.roster[name] = int(number)
+            self.roster[number] = name
         self.is_set = True
 
 
@@ -183,7 +183,7 @@ class ScoreBoardGUI:
         self.timer_down = Timer(master=self.master, col=col+4, row=row+3, countdown=True)  # takes 4 rows!
 
         self.penalty_column = col
-        self.penalty_row = row + 6
+        self.penalty_row = row + 7
         self.setup_penalties()
 
         self.close_button = Button(master, text="Close", command=master.quit)
@@ -240,7 +240,6 @@ class ScoreBoardGUI:
                                   padx=20)
             label_buttons.grid(column=col, row=row, columnspan=8)
             self.penalty_objects.append(label_buttons)
-
 
             rad_b1 = Radiobutton(self.master,
                         text=self.team_one.name.get(),
@@ -368,7 +367,16 @@ class ScoreBoardGUI:
         # ------------------------------
         # Move Playername and Number:
         # ------------------------------
-        
+        with open("Output/penalty_reason.txt", "w") as pen_file:
+            pen_file.write(self.penalty_reason.get())
+        if self.chosen_team_penalty.get() == 1:
+            team = self.team_one
+        else:
+            team = self.team_two
+        with open("Output/penalty_player.txt", "w") as pen_file:
+            pen_file.write(self.player_num_penalty.get() + " " + team.roster[self.player_num_penalty.get()])
+        with open("Output/penalty_team.txt", "w") as pen_file:
+            pen_file.write(team.name.get())
         return None
 
     def destroy_penalty(self):
