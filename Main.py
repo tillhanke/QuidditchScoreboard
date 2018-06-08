@@ -259,7 +259,7 @@ class ScoreBoardGUI:
             # set number of Player:
 
             playernumber_label = Label(self.master,
-                  text="Number of Player:",
+                  text="Jersey number of Player:",
                   justify=LEFT)
             playernumber_label.grid(column=col,
                                      row=row+2,
