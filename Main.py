@@ -1,6 +1,10 @@
 from tkinter import *
 import os
 import shutil
+# from PIL import ImageTk
+from PIL import Image
+import codecs
+
 # import time
 
 
@@ -81,11 +85,12 @@ class Timer:
 
 
 class Team:
-    def __init__(self):
+    def __init__(self, team_type):
         self.logo = None
         self.name = StringVar()
         self.roster = {}   # Roster will be setup as a Dict with Number as key and name as element
         self.is_set = False
+        self.team_type = team_type
 
     def set(self, team_name, destfile):
         self.logo = team_name+".png"
@@ -95,18 +100,44 @@ class Team:
         except FileExistsError:
             os.remove("Output/"+destfile)
             shutil.copyfile(self.logo, "Output/"+destfile)
-        with open("Input/Teamrosters/"+team_name+".txt", "r") as roster_file:
+        # ---- set National Flag ----
+        try:
+            shutil.copyfile("Input/TeamFlagsUpright/"+team_name+".png", "Output/"+self.team_type+"FlagUpright.png")
+        except FileExistsError:
+            os.remove("Output/"+self.team_type+"FlagUpright.png")
+            shutil.copyfile("Input/TeamFlagsUpright/"+team_name+".png", "Output/"+self.team_type+"FlagUpright.png")
+        try:
+            shutil.copyfile("Input/TeamFlags/"+team_name+".png", "Output/"+self.team_type+"Flag.png")
+        except FileExistsError:
+            os.remove("Output/"+self.team_type+"Flag.png")
+            shutil.copyfile("Input/TeamFlags/"+team_name+".png", "Output/"+self.team_type+"Flag.png")
+        # ---- Set roster ----
+        # with open("Input/Teamrosters/"+team_name+".txt", "r", encoding="utf8") as roster_file:
+        with codecs.open("Input/Teamrosters/"+team_name+".txt", "r", 'iso-8859-1') as roster_file:
             content = roster_file.readlines()
-            self.name.set(content[0][:-1])
+            print(content)
+            self.name.set(content[0][1:-1])
         for line in content[1:]:
-            #print(line)
+            print(line)
             number, name = line.split(":")
             self.roster[number] = name
+        with open("Output/{}.txt".format(self.team_type), "w") as file:
+            file.write(self.name.get())
         self.is_set = True
+
+    def set_color(self, colorfile):
+        #
+        # Setting jersey color for team from colors in Input/Jerseycolors
+        # to Output/Team(A/B)jersey.png
+        #
+        try:
+            shutil.copyfile("Input/Jerseycolors/"+colorfile, "Output/"+self.team_type+"jersey.png")
+        except FileExistsError:
+            os.remove("Output/"+self.team_type+"jersey.png")
+            shutil.copyfile("Input/Jerseycolors/"+colorfile, "Output/"+self.team_type+"jersey.png")
 
 
 class Score:
-
     def __init__(self, master, column, row, label_left, filenumber):
         self.filenumber = filenumber
         try:
@@ -163,8 +194,8 @@ class ScoreBoardGUI:
             os.makedirs("Output")
         col = 0
         row = 1
-        self.team_one = Team()
-        self.team_two = Team()
+        self.team_one = Team("TeamA")
+        self.team_two = Team("TeamB")
         self.master = master
         master.title("Scoreboard 2.0")
 
@@ -190,6 +221,7 @@ class ScoreBoardGUI:
         self.close_button.grid(columnspan=8, column=col, sticky=E+W)
 
     def setup_teams(self):
+        # ---- find participating teams by logos ----
         listofteams = []
         try:
             for team in os.listdir("Input/Teamlogos"):
@@ -198,21 +230,51 @@ class ScoreBoardGUI:
         except FileNotFoundError:
             listofteams = []
 
+        # ---- Find Jersey Colors -----
+        jerseys = []
+        try:
+            for color in os.listdir("Input/Jerseycolors"):
+                jerseys.append(color)
+        except FileNotFoundError:
+            print("Please Add all jersey colors as png in Folder Input/Jerseycolors")
+
+        # ---- Setup Team Menu ----
         menubar = Menu(self.master)
 
         team_menu_one = Menu(menubar, tearoff=0)
         for team in listofteams:
             team_menu_one.add_command(label=team,
                                       command=lambda team=team: [self.team_one.set(str(team),
-                                                                                  "TeamA.png"), self.setup_penalties()])
+                                                                                  "TeamALogo.png"), self.setup_penalties()])
         menubar.add_cascade(label="Set Team A", menu=team_menu_one)
 
+        jersey_one_menu = Menu(menubar, tearoff=0)
+        for color in jerseys:
+            pic = Image.open("Input/Jerseycolors/" + color)
+            bg_color = "#%02x%02x%02x" % pic.getpixel((pic.size[0] // 2, pic.size[1] // 2))[:3]
+            jersey_one_menu.add_command(label=color,
+                                        command=lambda color=color, bg_color=bg_color: [self.team_one.set_color(color),
+                                                                     self.team_one_label.config(bg=bg_color)])
+
+        menubar.add_cascade(label="Jersey Team A", menu=jersey_one_menu)
+        
         team_menu_two = Menu(menubar, tearoff=0)
         for team in listofteams:
             team_menu_two.add_command(label=str(team),
                                       command=lambda team=team: [self.team_two.set(str(team),
-                                                                                  "TeamB.png"), self.setup_penalties()])
+                                                                 "TeamBLogo.png"), self.setup_penalties()])
         menubar.add_cascade(label="Set Team B", menu=team_menu_two)
+
+        jersey_two_menu = Menu(menubar, tearoff=0)
+        for color in jerseys:
+            pic = Image.open("Input/Jerseycolors/"+color)
+            bg_color = "#%02x%02x%02x" % pic.getpixel((pic.size[0]//2, pic.size[1]//2))[:3]
+            jersey_two_menu.add_command(label=color,
+                                        command=lambda color=color, bg_color=bg_color: [self.team_two.set_color(color),
+                                                                     self.team_two_label.config(bg=bg_color)])
+
+        menubar.add_cascade(label="Jersey Team B", menu=jersey_two_menu)
+        
         self.master.config(menu=menubar)
 
     def setup_penalties(self):
@@ -222,11 +284,11 @@ class ScoreBoardGUI:
 
         if self.team_one.is_set and self.team_two.is_set:
             if self.penalty_set:
-                print("going to")
-                print(self.penalty_objects)
+                # print("going to")
+                # print(self.penalty_objects)
                 self.destroy_penalty()
                 self.penalty_objects = []
-                print("destroyed it")
+                # print("destroyed it")
             self.chosen_team_penalty = IntVar()
             self.close_button.destroy()
             # -------------------
@@ -273,7 +335,7 @@ class ScoreBoardGUI:
             # player_num.get()
             # --------------------------------
             # set chose cards radio buttons:
-            #       Blue=1 Yellow=2 Red=3
+            #       Blue=1 Yellow=2 Yellow/Red=3 Red=4 
             # --------------------------------
             label_cards = Label(self.master,
                   text="Card:",
@@ -284,6 +346,7 @@ class ScoreBoardGUI:
                   sticky=W)
             self.penalty_objects.append(label_cards)
             self.chosen_card = IntVar()
+            # ------ Blue -----
             rad1 = Radiobutton(self.master,
                         text="Blue",
                         padx=20,
@@ -291,22 +354,30 @@ class ScoreBoardGUI:
                         value=1)
             rad1.grid(column=col+2, row=row+3, columnspan=2)
             self.penalty_objects.append(rad1)
-
-            rad1 = Radiobutton(self.master,
+            # ------ Yellow -----
+            rad2 = Radiobutton(self.master,
                                text="Yellow",
                                padx=20,
                                variable=self.chosen_card,
                                value=2)
-            rad1.grid(column=col + 4, row=row + 3, columnspan=2)
-            self.penalty_objects.append(rad1)
-
-            rad1 = Radiobutton(self.master,
-                               text="Red",
+            rad2.grid(column=col + 4, row=row + 3, columnspan=2)
+            self.penalty_objects.append(rad2)
+            # ------ Yellow/Red -----
+            rad3 = Radiobutton(self.master,
+                               text="Yellow/Red",
                                padx=20,
                                variable=self.chosen_card,
                                value=3)
-            rad1.grid(column=col + 6, row=row + 3, columnspan=2)
-            self.penalty_objects.append(rad1)
+            rad3.grid(column=col + 6, row=row + 3, columnspan=2)
+            self.penalty_objects.append(rad3)
+            # ------ Red -----
+            rad4 = Radiobutton(self.master,
+                               text="Red",
+                               padx=20,
+                               variable=self.chosen_card,
+                               value=4)
+            rad4.grid(column=col + 8, row=row + 3, columnspan=2)
+            self.penalty_objects.append(rad4)
 
             # -------------------------
             # Reason for Penalty:
@@ -360,10 +431,16 @@ class ScoreBoardGUI:
                 shutil.copyfile("Input/Cards/Yellow.png", "Output/card.png")
         if self.chosen_card.get() == 3:
             try:
-                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
+                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
             except FileExistsError:
                 os.remove("Output/card.png")
-                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
+                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
+        if self.chosen_card.get() == 3:
+            try:
+                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
+            except FileExistsError:
+                os.remove("Output/card.png")
+                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
         # ------------------------------
         # Move Playername and Number:
         # ------------------------------
@@ -385,8 +462,9 @@ class ScoreBoardGUI:
 
 
 root = Tk()
-root.resizable(False, False)
+# root.resizable(False, False)
 
+root.geometry("600x400")
 my_gui = ScoreBoardGUI(root)
 root.mainloop()
 root.destroy()  # optional; see description below
