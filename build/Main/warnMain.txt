@@ -16,11 +16,11 @@ missing module named 'org.python' - imported by copy, C:\Users\tillv\Documents\P
 missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, pathlib, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py, netrc, getpass
 missing module named org - imported by pickle, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 missing module named UserDict - imported by PIL.PdfParser
-missing module named olefile - imported by PIL.MicImagePlugin, PIL.FpxImagePlugin
+missing module named olefile - imported by PIL.FpxImagePlugin, PIL.MicImagePlugin
+missing module named Tkinter - imported by PIL.ImageTk
 missing module named 'PySide.QtCore' - imported by PIL.ImageQt
 missing module named 'PyQt4.QtCore' - imported by PIL.ImageQt
 missing module named 'PyQt5.QtCore' - imported by PIL.ImageQt
 missing module named pathlib2 - imported by PIL.Image
-missing module named cffi - imported by PIL.ImageTk, PIL.Image, PIL.PyAccess
+missing module named cffi - imported by PIL.Image, PIL.PyAccess, PIL.ImageTk
 missing module named __builtin__ - imported by PIL.Image
-missing module named Tkinter - imported by PIL.ImageTk
