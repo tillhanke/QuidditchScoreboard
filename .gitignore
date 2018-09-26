@@ -3,3 +3,5 @@ __pycache__/
 RealLogos/
 build/
 dist/
+Input/
+Output/
