@@ -268,6 +268,12 @@ class ScoreBoardGUI:
             except FileExistsError:
                 os.remove("Output/card.png")
                 shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
+        if self.chosen_card.get() == 4:
+            try:
+                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
+            except FileExistsError:
+                os.remove("Output/card.png")
+                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
         # ------------------------------
         # Move Playername and Number:
         # ------------------------------
