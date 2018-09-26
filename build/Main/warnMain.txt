@@ -1,6 +1,7 @@
 missing module named resource - imported by posix, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 missing module named posix - imported by os, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 missing module named _posixsubprocess - imported by subprocess, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
+missing module named org - imported by pickle, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 missing module named readline - imported by cmd, code, pdb, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 excluded module named _frozen_importlib - imported by importlib, importlib.abc, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
@@ -11,13 +12,12 @@ missing module named 'java.lang' - imported by platform, C:\Users\tillv\Document
 missing module named vms_lib - imported by platform, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 missing module named termios - imported by tty, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py, getpass
 missing module named grp - imported by shutil, tarfile, pathlib, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
+missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, pathlib, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py, netrc, getpass
 missing module named _dummy_threading - imported by dummy_threading, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
 missing module named 'org.python' - imported by copy, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py, xml.sax
-missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, pathlib, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py, netrc, getpass
-missing module named org - imported by pickle, C:\Users\tillv\Documents\Programms\QuidditchScoreboard\Main.py
-missing module named UserDict - imported by PIL.PdfParser
-missing module named olefile - imported by PIL.FpxImagePlugin, PIL.MicImagePlugin
 missing module named Tkinter - imported by PIL.ImageTk
+missing module named olefile - imported by PIL.FpxImagePlugin, PIL.MicImagePlugin
+missing module named UserDict - imported by PIL.PdfParser
 missing module named 'PySide.QtCore' - imported by PIL.ImageQt
 missing module named 'PyQt4.QtCore' - imported by PIL.ImageQt
 missing module named 'PyQt5.QtCore' - imported by PIL.ImageQt

@@ -2,4 +2,4 @@
 __pycache__/
 RealLogos/
 build/
-Main.exe
+dist/
