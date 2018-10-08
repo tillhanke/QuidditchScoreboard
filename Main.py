@@ -4,6 +4,9 @@ from Score import *
 import os
 import shutil
 from PIL import Image
+from tkinter import filedialog
+# compiled with https://pyinstaller.readthedocs.io/en/stable/usage.html
+
 
 def donothing():
     return None
@@ -12,13 +15,15 @@ def donothing():
 class ScoreBoardGUI:
 
     def __init__(self, master):
+        self.path_main = StringVar()
+        self.path_main.set("")
         self.penalty_set = False
         self.penalty_objects = []
         # try Output folder:
         try:
-            os.listdir("Output")
+            os.listdir(self.path_main.get() + "Output")
         except FileNotFoundError:
-            os.makedirs("Output")
+            os.makedirs(self.path_main.get() + "Output")
         col = 0
         row = 1
         self.team_one = Team("TeamA")
@@ -44,6 +49,11 @@ class ScoreBoardGUI:
         self.penalty_row = row + 7
         self.setup_penalties()
 
+        lbl1 = Label(master=root, textvariable=self.path_main)
+        lbl1.grid(columnspan=8, column=col)
+        button2 = Button(text="Choose main folder containing Input", command=self.browse_button)
+        button2.grid(columnspan=8, column=col)
+
         self.close_button = Button(master, text="Close", command=master.quit)
         self.close_button.grid(columnspan=8, column=col, sticky=E+W)
 
@@ -51,7 +61,7 @@ class ScoreBoardGUI:
         # ---- find participating teams by logos ----
         listofteams = []
         try:
-            for team in os.listdir("Input/Teamlogos"):
+            for team in os.listdir(self.path_main.get() + "Input/Teamlogos"):
                 if team[-4:] == ".png":
                     listofteams.append(team[:-4])
         except FileNotFoundError:
@@ -60,7 +70,7 @@ class ScoreBoardGUI:
         # ---- Find Jersey Colors -----
         jerseys = []
         try:
-            for color in os.listdir("Input/Jerseycolors"):
+            for color in os.listdir(self.path_main.get() + "Input/Jerseycolors"):
                 jerseys.append(color)
         except FileNotFoundError:
             print("Please Add all jersey colors as png in Folder Input/Jerseycolors")
@@ -77,7 +87,7 @@ class ScoreBoardGUI:
 
         jersey_one_menu = Menu(menubar, tearoff=0)
         for color in jerseys:
-            pic = Image.open("Input/Jerseycolors/" + color)
+            pic = Image.open(self.path_main.get() + "Input/Jerseycolors/" + color)
             bg_color = "#%02x%02x%02x" % pic.getpixel((pic.size[0] // 2, pic.size[1] // 2))[:3]
             jersey_one_menu.add_command(label=color,
                                         command=lambda color=color, bg_color=bg_color: [self.team_one.set_color(color),
@@ -94,7 +104,7 @@ class ScoreBoardGUI:
 
         jersey_two_menu = Menu(menubar, tearoff=0)
         for color in jerseys:
-            pic = Image.open("Input/Jerseycolors/"+color)
+            pic = Image.open(self.path_main.get() + "Input/Jerseycolors/"+color)
             bg_color = "#%02x%02x%02x" % pic.getpixel((pic.size[0]//2, pic.size[1]//2))[:3]
             jersey_two_menu.add_command(label=color,
                                         command=lambda color=color, bg_color=bg_color: [self.team_two.set_color(color),
@@ -246,52 +256,67 @@ class ScoreBoardGUI:
         # -------------------------
         if self.chosen_card.get() == 1:
             try:
-                shutil.copyfile("Input/Cards/Blue.png", "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/Blue.png", self.path_main.get() + "Output/card.png")
             except FileExistsError:
-                os.remove("Output/card.png")
-                shutil.copyfile("Input/Cards/Blue.png", "Output/card.png")
+                os.remove(self.path_main.get() + "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/Blue.png", self.path_main.get() + "Output/card.png")
         if self.chosen_card.get() == 2:
             try:
-                shutil.copyfile("Input/Cards/Yellow.png", "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/Yellow.png", self.path_main.get() + "Output/card.png")
             except FileExistsError:
-                os.remove("Output/card.png")
-                shutil.copyfile("Input/Cards/Yellow.png", "Output/card.png")
+                os.remove(self.path_main.get() + "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/Yellow.png", self.path_main.get() + "Output/card.png")
         if self.chosen_card.get() == 3:
             try:
-                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/YellowRed.png", self.path_main.get() + "Output/card.png")
             except FileExistsError:
-                os.remove("Output/card.png")
-                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
+                os.remove(self.path_main.get() + "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/YellowRed.png", self.path_main.get() + "Output/card.png")
         if self.chosen_card.get() == 3:
             try:
-                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/YellowRed.png", self.path_main.get() + "Output/card.png")
             except FileExistsError:
-                os.remove("Output/card.png")
-                shutil.copyfile("Input/Cards/YellowRed.png", "Output/card.png")
+                os.remove(self.path_main.get() + "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/YellowRed.png", self.path_main.get() + "Output/card.png")
         if self.chosen_card.get() == 4:
             try:
-                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/Red.png", self.path_main.get() + "Output/card.png")
             except FileExistsError:
-                os.remove("Output/card.png")
-                shutil.copyfile("Input/Cards/Red.png", "Output/card.png")
+                os.remove(self.path_main.get() + "Output/card.png")
+                shutil.copyfile(self.path_main.get() + "Input/Cards/Red.png", self.path_main.get() + "Output/card.png")
         # ------------------------------
         # Move Playername and Number:
         # ------------------------------
-        with open("Output/penalty_reason.txt", "w") as pen_file:
+        with open(self.path_main.get() + "Output/penalty_reason.txt", "w") as pen_file:
             pen_file.write(self.penalty_reason.get())
         if self.chosen_team_penalty.get() == 1:
             team = self.team_one
         else:
             team = self.team_two
-        with open("Output/penalty_player.txt", "w") as pen_file:
+        with open(self.path_main.get() + "Output/penalty_player.txt", "w") as pen_file:
             pen_file.write(self.player_num_penalty.get() + " " + team.roster[self.player_num_penalty.get()])
-        with open("Output/penalty_team.txt", "w") as pen_file:
+        with open(self.path_main.get() + "Output/penalty_team.txt", "w") as pen_file:
             pen_file.write(team.name.get())
         return None
 
     def destroy_penalty(self):
         for i in self.penalty_objects:
             i.destroy()
+
+    def browse_button(self):
+        # Allow user to select a directory and store it in global var
+        # called folder_path
+        filename = filedialog.askdirectory()
+        self.path_main.set(filename+"/")
+        try:
+            os.listdir(self.path_main.get() + "Input")
+        except FileNotFoundError:
+            print("Input folder not found error. Please select a main folder containing your Input folder.\n" +
+                  "Main Directory reset to ./")
+            self.path_main.set("")
+        if self.path_main.get()!="":
+            self.setup_teams()
+        print(filename)
 
 
 root = Tk()
