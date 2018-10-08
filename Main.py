@@ -45,14 +45,14 @@ class ScoreBoardGUI:
         self.timer_up = Timer(master=self.master, col=col, row=row+3, countdown=False)
         self.timer_down = Timer(master=self.master, col=col+6, row=row+3, countdown=True)  # takes 4 rows!
 
-        self.penalty_column = col
-        self.penalty_row = row + 7
-        self.setup_penalties()
-
         lbl1 = Label(master=root, textvariable=self.path_main)
         lbl1.grid(columnspan=8, column=col)
         button2 = Button(text="Choose main folder containing Input", command=self.browse_button)
         button2.grid(columnspan=8, column=col)
+
+        self.penalty_column = col
+        self.penalty_row = row + 9
+        self.setup_penalties()
 
         self.close_button = Button(master, text="Close", command=master.quit)
         self.close_button.grid(columnspan=8, column=col, sticky=E+W)
