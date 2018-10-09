@@ -5,7 +5,8 @@ import shutil
 
 
 class Team:
-    def __init__(self, team_type):
+    def __init__(self, team_type, path):
+        self.path_main = path
         self.logo = None
         self.name = StringVar()
         self.roster = {}   # Roster will be setup as a Dict with Number as key and name as element
@@ -14,29 +15,29 @@ class Team:
 
     def set(self, team_name, destfile):
         self.logo = team_name+".png"
-        self.logo = "Input/Teamlogos/{}.png".format(team_name)
+        self.logo = self.path_main.get() + "Input/Teamlogos/{}.png".format(team_name)
         try:
-            shutil.copyfile(self.logo, "Output/"+destfile)
+            shutil.copyfile(self.logo, self.path_main.get() + "Output/"+destfile)
         except FileExistsError:
-            os.remove("Output/"+destfile)
-            shutil.copyfile(self.logo, "Output/"+destfile)
+            os.remove(self.path_main.get() + "Output/"+destfile)
+            shutil.copyfile(self.logo, self.path_main.get() + "Output/"+destfile)
         # ---- set National Flag ----
         try:
-            shutil.copyfile("Input/TeamFlagsUpright/"+team_name+".png", "Output/"+self.team_type+"FlagUpright.png")
+            shutil.copyfile(self.path_main.get() + "Input/TeamFlagsUpright/"+team_name+".png", self.path_main.get() + "Output/"+self.team_type+"FlagUpright.png")
         except FileExistsError:
-            os.remove("Output/"+self.team_type+"FlagUpright.png")
-            shutil.copyfile("Input/TeamFlagsUpright/"+team_name+".png", "Output/"+self.team_type+"FlagUpright.png")
+            os.remove(self.path_main.get() + "Output/"+self.team_type+"FlagUpright.png")
+            shutil.copyfile(self.path_main.get() + "Input/TeamFlagsUpright/"+team_name+".png", self.path_main.get() + "Output/"+self.team_type+"FlagUpright.png")
         try:
-            shutil.copyfile("Input/TeamFlags/"+team_name+".png", "Output/"+self.team_type+"Flag.png")
+            shutil.copyfile(self.path_main.get() + "Input/TeamFlags/"+team_name+".png", self.path_main.get() + "Output/"+self.team_type+"Flag.png")
         except FileExistsError:
-            os.remove("Output/"+self.team_type+"Flag.png")
-            shutil.copyfile("Input/TeamFlags/"+team_name+".png", "Output/"+self.team_type+"Flag.png")
+            os.remove(self.path_main.get() + "Output/"+self.team_type+"Flag.png")
+            shutil.copyfile(self.path_main.get() + "Input/TeamFlags/"+team_name+".png", self.path_main.get() + "Output/"+self.team_type+"Flag.png")
         # ---- Set roster ----
-        # with open("Input/Teamrosters/"+team_name+".txt", "r", encoding="utf8") as roster_file:
+        # with open(self.path_main.get() + "Input/Teamrosters/"+team_name+".txt", "r", encoding="utf8") as roster_file:
         #
         # use 'iso-8859-1' to make german umlaute available to the rosters
         #
-        with codecs.open("Input/Teamrosters/"+team_name+".txt", "r", 'iso-8859-1') as roster_file:
+        with codecs.open(self.path_main.get() + "Input/Teamrosters/"+team_name+".txt", "r", 'iso-8859-1') as roster_file:
             content = roster_file.readlines()
             print(content)
             self.name.set(content[0][0:-1])
@@ -44,7 +45,7 @@ class Team:
             print(line)
             number, name = line.split(":")
             self.roster[number] = name
-        with open("Output/{}.txt".format(self.team_type), "w") as file:
+        with open(self.path_main.get() + "Output/{}.txt".format(self.team_type), "w") as file:
             file.write(self.name.get())
         self.is_set = True
 
@@ -54,8 +55,8 @@ class Team:
         # to Output/Team(A/B)jersey.png
         #
         try:
-            shutil.copyfile("Input/Jerseycolors/"+colorfile, "Output/"+self.team_type+"jersey.png")
+            shutil.copyfile(self.path_main.get() + "Input/Jerseycolors/"+colorfile, self.path_main.get() + "Output/"+self.team_type+"jersey.png")
         except FileExistsError:
-            os.remove("Output/"+self.team_type+"jersey.png")
-            shutil.copyfile("Input/Jerseycolors/"+colorfile, "Output/"+self.team_type+"jersey.png")
+            os.remove(self.path_main.get() + "Output/"+self.team_type+"jersey.png")
+            shutil.copyfile(self.path_main.get() + "Input/Jerseycolors/"+colorfile, self.path_main.get() + "Output/"+self.team_type+"jersey.png")
 

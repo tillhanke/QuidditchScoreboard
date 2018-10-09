@@ -7,17 +7,18 @@ class Timer:
         takes a master, upper left corner and a boolean to tell it to count up or down
     '''
 
-    def __init__(self, master, col, row, countdown):
+    def __init__(self, master, col, row, countdown, path):
         self.update_id = None
         self.master = master
         self.countdown = countdown
         self.running = False
+        self.path_main = path
         if countdown:
             self.timer_label = Label(master, text="Down counting timer (set start)")
-            self.timer_file = "Output/timer_down.txt"
+            self.timer_file = self.path_main.get() + "Output/timer_down.txt"
         else:
             self.timer_label = Label(master, text="Up counting timer (set start)")
-            self.timer_file = "Output/timer_up.txt"
+            self.timer_file = self.path_main.get() + "Output/timer_up.txt"
         self.timer_label.grid(columnspan=4, column=col, row=row)
 
         #Entry
@@ -70,7 +71,7 @@ class Timer:
                 else:
                     self.seconds = str(0)
                     self.minutes = str(1+int(self.minutes))
-                with open("Output/timer_up.txt", "w") as f:
+                with open(self.path_main.get() + "Output/timer_up.txt", "w") as f:
                     f.write("%02d" % (int(self.minutes),)+":"+"%02d" % (int(self.seconds),))
             self.current_time.set("%02d" % (int(self.minutes),)+":"+"%02d" % (int(self.seconds),))
             self.update_id = self.master.after(1000, self.update_timer)

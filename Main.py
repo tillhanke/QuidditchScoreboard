@@ -26,8 +26,8 @@ class ScoreBoardGUI:
             os.makedirs(self.path_main.get() + "Output")
         col = 0
         row = 1
-        self.team_one = Team("TeamA")
-        self.team_two = Team("TeamB")
+        self.team_one = Team("TeamA", self.path_main)
+        self.team_two = Team("TeamB", self.path_main)
         self.master = master
         master.title("Scoreboard 2.0")
 
@@ -42,8 +42,8 @@ class ScoreBoardGUI:
 
         self.setup_teams()
 
-        self.timer_up = Timer(master=self.master, col=col, row=row+3, countdown=False)
-        self.timer_down = Timer(master=self.master, col=col+6, row=row+3, countdown=True)  # takes 4 rows!
+        self.timer_up = Timer(master=self.master, col=col, row=row+3, countdown=False, path=self.path_main)
+        self.timer_down = Timer(master=self.master, col=col+6, row=row+3, countdown=True, path=self.path_main)  # takes 4 rows!
 
         lbl1 = Label(master=root, textvariable=self.path_main)
         lbl1.grid(columnspan=8, column=col)
