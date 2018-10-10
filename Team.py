@@ -39,10 +39,10 @@ class Team:
         #
         with codecs.open(self.path_main.get() + "Input/Teamrosters/"+team_name+".txt", "r", 'iso-8859-1') as roster_file:
             content = roster_file.readlines()
-            print(content)
             self.name.set(content[0][0:-1])
         for line in content[1:]:
-            print(line)
+            if ":" not in line:
+                continue
             number, name = line.split(":")
             self.roster[number] = name
         with open(self.path_main.get() + "Output/{}.txt".format(self.team_type), "w") as file:
