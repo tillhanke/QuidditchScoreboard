@@ -287,15 +287,18 @@ class ScoreBoardGUI:
         # ------------------------------
         # Move Playername and Number:
         # ------------------------------
-        with open(self.path_main.get() + "Output/penalty_reason.txt", "w") as pen_file:
+        with codecs.open(self.path_main.get() + "Output/penalty_reason.txt", "w", "utf-8") as pen_file:
+            # with open(self.path_main.get() + "Output/penalty_reason.txt", "w") as pen_file:
             pen_file.write(self.penalty_reason.get())
         if self.chosen_team_penalty.get() == 1:
             team = self.team_one
         else:
             team = self.team_two
-        with open(self.path_main.get() + "Output/penalty_player.txt", "w") as pen_file:
+        with codecs.open(self.path_main.get() + "Output/penalty_player.txt", "w", "utf-8") as pen_file:
+            # with open(self.path_main.get() + "Output/penalty_player.txt", "w") as pen_file:
             pen_file.write(self.player_num_penalty.get() + " " + team.roster[self.player_num_penalty.get()])
-        with open(self.path_main.get() + "Output/penalty_team.txt", "w") as pen_file:
+        with codecs.open(self.path_main.get() + "Output/penalty_team.txt", "w", "utf-8") as pen_file:
+            # with open(self.path_main.get() + "Output/penalty_team.txt", "w") as pen_file:
             pen_file.write(team.name.get())
         return None
 

@@ -37,7 +37,7 @@ class Team:
         #
         # use 'iso-8859-1' to make german umlaute available to the rosters
         #
-        with codecs.open(self.path_main.get() + "Input/Teamrosters/"+team_name+".txt", "r", 'iso-8859-1') as roster_file:
+        with codecs.open(self.path_main.get() + "Input/Teamrosters/"+team_name+".txt", "r", 'utf-8') as roster_file:
             content = roster_file.readlines()
             self.name.set(content[0][0:-1])
         for line in content[1:]:
