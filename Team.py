@@ -48,6 +48,7 @@ class Team:
         with open(self.path_main.get() + "Output/{}.txt".format(self.team_type), "w") as file:
             file.write(self.name.get())
         self.is_set = True
+        print("Team:" + self.name.get() + " successfully set.")
 
     def set_color(self, colorfile):
         #
