@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>settings</class>
+ <widget class="QDialog" name="settings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1081</width>
+    <height>331</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="teamLeft">
+         <property name="text">
+          <string>Team Left</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="teamLeftOptions"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="jerseyLeft">
+         <property name="text">
+          <string>Jersey Color Left</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="jerseyLeftOptions"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="refreshButton">
+         <property name="text">
+          <string>Refresh</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="saveButton">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="teamRight">
+         <property name="text">
+          <string>Team Right</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="teamRightOptions"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="jerseyRight">
+         <property name="text">
+          <string>Jersey Color Right</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="jerseyRightOptions"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Swap Teams</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="closeButton">
+         <property name="text">
+          <string>Close</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>closeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>settings</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>792</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>540</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveButton</sender>
+   <signal>clicked()</signal>
+   <receiver>settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>460</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>refreshButton</sender>
+   <signal>clicked()</signal>
+   <receiver>settings</receiver>
+   <slot>refresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>111</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>settings</receiver>
+   <slot>swap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>684</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>jerseyRightOptions</sender>
+   <signal>activated(QString)</signal>
+   <receiver>settings</receiver>
+   <slot>highlighted_right(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1011</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>983</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>jerseyLeftOptions</sender>
+   <signal>activated(QString)</signal>
+   <receiver>settings</receiver>
+   <slot>highlighted_left(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>477</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>save()</slot>
+  <slot>refresh()</slot>
+  <slot>swap()</slot>
+  <slot>highlighted_right(QString)</slot>
+  <slot>highlighted_left(QString)</slot>
+ </slots>
+</ui>
