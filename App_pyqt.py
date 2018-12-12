@@ -323,21 +323,28 @@ class Timekeeper:
 
 
 class SnitchCatchWindow(QDialog):
-    def __init__(self, scoreboard):
+    def __init__(self, scoreboard, main_window):
         super().__init__()
         self.ui = Ui_SnitchCatch()
         self.ui.setupUi(self)
         self.scoreboard = scoreboard
+        self.main_window = main_window
 
     def save(self):
         if self.ui.teamLeftButton.isChecked():
-            self.scoreboard.teamleft.catch_first = self.ui.firstCatchButton.isChecked()
-            self.scoreboard.teamleft.catch_second = self.ui.secondCatchButton.isChecked()
+            if self.ui.firstCatchButton.isChecked():
+                self.scoreboard.teamleft.catch_first = True
+            if self.ui.secondCatchButton.isChecked():
+                self.scoreboard.teamleft.catch_second = True
+            self.main_window.add_left(30)
         if self.ui.teamRightButton.isChecked():
-            self.scoreboard.teamright.catch_first = self.ui.firstCatchButton.isChecked()
-            self.scoreboard.teamright.catch_second = self.ui.secondCatchButton.isChecked()
-        self.accept()
+            if self.ui.firstCatchButton.isChecked():
+                self.scoreboard.teamright.catch_first = True
+            if self.ui.secondCatchButton.isChecked():
+                self.scoreboard.teamright.catch_second = True
+            self.main_window.add_right(30)
         self.scoreboard.write_score()
+        self.accept()
 
 
 class PenaltyWindow(QDialog):
@@ -410,6 +417,7 @@ class SettingsWindow(QDialog):
         self.ui = Ui_settings()
         self.ui.setupUi(self)
         self.scoreboard = scoreboard
+        self.color_options = ["Red", "Blue", "Green", "Yellow", "Lightgreen", "Choose Color"]
         self.list_of_teams = []
         self.path_main = ""
         # in case settings already are ok.
@@ -418,8 +426,8 @@ class SettingsWindow(QDialog):
         self.set_from_scoreboard()
 
     def set_from_scoreboard(self):
-        self.ui.jerseyLeftOptions.setCurrentText("Choose Color")
-        self.ui.jerseyRightOptions.setCurrentText("Choose Color")
+        self.ui.jerseyLeftOptions.setCurrentText("Red")
+        self.ui.jerseyRightOptions.setCurrentText("Red")
         if self.scoreboard.teamleft.path != "":
             self.ui.teamLeftOptions.setCurrentText(self.scoreboard.teamleft.path)
         if self.scoreboard.teamright.path != "":
@@ -462,7 +470,7 @@ class SettingsWindow(QDialog):
         self.ui.teamRightOptions.addItems(self.list_of_teams)
 
         # refresh Colors (just because)
-        colors = ["Red", "Blue", "Green", "Yellow", "Lightgreen", "Choose Color"]
+        colors = self.color_options
         self.ui.jerseyRightOptions.clear()
         self.ui.jerseyLeftOptions.clear()
         self.ui.jerseyLeftOptions.addItems(colors)
@@ -513,7 +521,7 @@ class MainWindow(QDialog):
         self.penalty_w = PenaltyWindow(self.scoreboard)
         self.settings_w = SettingsWindow(self.scoreboard)
         self.settings_w.show()
-        self.snitch_w = SnitchCatchWindow(self.scoreboard)
+        self.snitch_w = SnitchCatchWindow(self.scoreboard, self)
 
         time_thread = threading.Thread(target=self.update_timer_ui)
         time_thread.start()
@@ -602,7 +610,11 @@ class ScoreBoard:
                             self.teamleft.catch_first = True
                         if line[-1] == "°":
                             self.teamleft.catch_second = True
-                        self.teamleft.score = int(line[:-1])
+                        if line[-2] == "*":
+                            self.teamleft.catch_first = True
+                            self.teamleft.score = int(line[:-2])
+                        else:
+                            self.teamleft.score = int(line[:-1])
                     else:
                         self.teamleft.score = int(line)
             except FileNotFoundError:
@@ -616,7 +628,11 @@ class ScoreBoard:
                             self.teamright.catch_first = True
                         if line[-1] == "°":
                             self.teamright.catch_second = True
-                        self.teamright.score = int(line[:-1])
+                        if line[-2] == "*":
+                            self.teamright.catch_first = True
+                            self.teamright.score = int(line[:-2])
+                        else:
+                            self.teamright.score = int(line[:-1])
                     else:
                         self.teamright.score = int(line)
             except FileNotFoundError:
