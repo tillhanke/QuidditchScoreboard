@@ -18,8 +18,6 @@ import threading
 import sys
 
 
-
-
 '''
 Check connections in scores_ui first!
 
@@ -332,16 +330,12 @@ class SnitchCatchWindow(QDialog):
 
     def save(self):
         if self.ui.teamLeftButton.isChecked():
-            if self.ui.firstCatchButton.isChecked():
-                self.scoreboard.teamleft.catch_first = True
-            if self.ui.secondCatchButton.isChecked():
-                self.scoreboard.teamleft.catch_second = True
+            self.scoreboard.teamleft.snitch_catch.append(True)
+            self.scoreboard.teamright.snitch_catch.append(False)
             self.main_window.add_left(30)
         if self.ui.teamRightButton.isChecked():
-            if self.ui.firstCatchButton.isChecked():
-                self.scoreboard.teamright.catch_first = True
-            if self.ui.secondCatchButton.isChecked():
-                self.scoreboard.teamright.catch_second = True
+            self.scoreboard.teamleft.snitch_catch.append(False)
+            self.scoreboard.teamright.snitch_catch.append(True)
             self.main_window.add_right(30)
         self.scoreboard.write_score()
         self.accept()
@@ -547,14 +541,12 @@ class MainWindow(QDialog):
 
     def reset_left(self):
         self.scoreboard.teamleft.score = 0
-        self.scoreboard.teamleft.catch_second = False
-        self.scoreboard.teamleft.catch_first = False
+        self.scoreboard.teamleft.snitch_catch = []
         self.update_score_ui()
 
     def reset_right(self):
         self.scoreboard.teamright.score = 0
-        self.scoreboard.teamright.catch_first = False
-        self.scoreboard.teamright.catch_second = False
+        self.scoreboard.teamright.snitch_catch = []
         self.update_score_ui()
 
     def add_right(self, amount):
@@ -605,36 +597,30 @@ class ScoreBoard:
             try:
                 with io.open("Output/score_left.txt", "r", encoding="utf-8") as dat:
                     line = dat.readline()
-                    if (line[-1] == "*") or (line[-1] == "°"):
-                        if line[-1] == "*":
-                            self.teamleft.catch_first = True
-                        if line[-1] == "°":
-                            self.teamleft.catch_second = True
-                        if line[-2] == "*":
-                            self.teamleft.catch_first = True
-                            self.teamleft.score = int(line[:-2])
+                    score = ""
+                    for letter in line:
+                        if letter == "*":
+                            self.teamleft.snitch_catch.append(True)
+                        elif letter == "°":
+                            self.teamleft.snitch_catch.append(False)
                         else:
-                            self.teamleft.score = int(line[:-1])
-                    else:
-                        self.teamleft.score = int(line)
+                            score += letter
+                    self.teamleft.score = int(score)
             except FileNotFoundError:
                 None
 
             try:
                 with io.open("Output/score_right.txt", "r", encoding="utf-8") as dat:
                     line = dat.readline()
-                    if (line[-1] == "*") or (line[-1] == "°"):
-                        if line[-1] == "*":
-                            self.teamright.catch_first = True
-                        if line[-1] == "°":
-                            self.teamright.catch_second = True
-                        if line[-2] == "*":
-                            self.teamright.catch_first = True
-                            self.teamright.score = int(line[:-2])
+                    score = ""
+                    for letter in line:
+                        if letter == "*":
+                            self.teamright.snitch_catch.append(True)
+                        elif letter == "°":
+                            self.teamright.snitch_catch.append(False)
                         else:
-                            self.teamright.score = int(line[:-1])
-                    else:
-                        self.teamright.score = int(line)
+                            score += letter
+                    self.teamright.score = int(score)
             except FileNotFoundError:
                 None
 
@@ -767,21 +753,22 @@ class Team:
         self.score = 0
         self.score_str = ""
         self.name = ""
-        self.catch_first = False
-        self.catch_second = False
+        self.snitch_catch = []
         self.path = ""
         self.logo = ""
         self.roster = {}
 
     def get_score_str(self):
-        if self.score_str != "":
+        self.score_str = str(self.score)
+        if len(self.snitch_catch) == 0:
             return self.score_str
-        out = str(self.score)
-        if self.catch_first:
-            out += "*"
-        if self.catch_second:
-            out += "°"
-        return out
+        else:
+            for i in self.snitch_catch:
+                if i:
+                    self.score_str += "*"
+                else:
+                    self.score_str += "°"
+            return self.score_str
 
     def set_path(self, path, datafile=""):
         self.path = path
