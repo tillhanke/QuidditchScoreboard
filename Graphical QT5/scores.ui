@@ -171,35 +171,7 @@
        <property name="verticalSpacing">
         <number>0</number>
        </property>
-       <item row="1" column="4">
-        <layout class="QVBoxLayout" name="scorebutton_right">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QPushButton" name="add10_right">
-           <property name="text">
-            <string>+10</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="resetscore_right">
-           <property name="text">
-            <string>reset</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="sub10_right">
-           <property name="text">
-            <string>-10</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="3">
+       <item row="1" column="2">
         <layout class="QHBoxLayout" name="score_labels">
          <property name="spacing">
           <number>0</number>
@@ -248,7 +220,7 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="2">
+       <item row="1" column="1">
         <layout class="QVBoxLayout" name="scorebutton_left">
          <property name="spacing">
           <number>0</number>
@@ -282,6 +254,34 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="3">
+        <layout class="QVBoxLayout" name="scorebutton_right">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="add10_right">
+           <property name="text">
+            <string>+10</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="resetscore_right">
+           <property name="text">
+            <string>reset</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sub10_right">
+           <property name="text">
+            <string>-10</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="teamname_left">
          <property name="font">
@@ -294,7 +294,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="6">
+       <item row="1" column="4">
         <widget class="QLabel" name="teamname_right">
          <property name="font">
           <font>

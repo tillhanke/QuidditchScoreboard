@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
+from PyQt5 import QtGui
 from scores_ui import Ui_main
 from timekeeper_ui import Ui_Timekeeper
 from setup_ui import Ui_settings
@@ -422,18 +423,19 @@ class PenaltyWindow(QDialog):
 
 
 class SettingsWindow(QDialog):
-    def __init__(self, scoreboard):
+    def __init__(self, scoreboard, main_window):
         super().__init__()
         self.ui = Ui_settings()
         self.ui.setupUi(self)
         self.scoreboard = scoreboard
-        self.color_options = ["Red", "Blue", "Green", "Yellow", "Lightgreen", "Choose Color"]
+        self.color_options = ["Red", "Blue", "Green", "Yellow", "Lightgreen", "Pink", "Choose Color"]
         self.list_of_teams = []
         self.path_main = ""
         # in case settings already are ok.
         # after shutdown or stuff
         self.refresh()
         self.set_from_scoreboard()
+        self.main = main_window
 
     def set_from_scoreboard(self):
         self.ui.jerseyLeftOptions.setCurrentText("Red")
@@ -463,6 +465,14 @@ class SettingsWindow(QDialog):
         if not color_right == "Choose Color":
             self.scoreboard.teamright.color = color_right
         self.scoreboard.write_all()
+        #  palette_left = QtGui.QPalette()
+        # print(1)
+        # print(self.scoreboard.teamleft.color)
+        # print(QtGui.QColor(self.scoreboard.teamleft.color))
+        # color = QtGui.QColor("Red")
+        # print(2)
+        # self.main.ui.farbe.setStyleSheet("QLabel { background-color : %s"%color.name())
+        # self.main.ui.left_color.setPalette(palette_left)
         self.accept()
 
     def refresh(self):
@@ -530,7 +540,7 @@ class MainWindow(QDialog):
 
         self.timekeeper_w = TimekeeperWindow(self.scoreboard, self.ui)
         self.penalty_w = PenaltyWindow(self.scoreboard)
-        self.settings_w = SettingsWindow(self.scoreboard)
+        self.settings_w = SettingsWindow(self.scoreboard, self)
         self.settings_w.show()
         self.snitch_w = SnitchCatchWindow(self.scoreboard, self)
 
@@ -715,21 +725,21 @@ class ScoreBoard:
         penalty_thread.start()
 
     def write_jersey(self):
-        x, y = 200, 120  # size of output Image
+        x, y = 47, 60  # size of output Image
 
-        if self.teamright.color == "" or self.teamright.color=="":
+        if self.teamright.color == "" or self.teamleft.color == "":
             print("Please choose colors for the jerseys!")
             return
 
         # write for team right
         im = Image.new("RGBA", (x, y))
         dr = ImageDraw.Draw(im)
-        dr.polygon([(0, y), (x / 2, y), (x, 0), (x / 2, 0)], fill=self.teamright.color, outline=None)
+        dr.polygon([(0, 0), (x / 2, y), (x, y), (x / 2, 0)], fill=self.teamright.color, outline=None)
         im.save("Output/TeamRightJersey.png")
         # write for team left
         im = Image.new("RGBA", (x, y))
         dr = ImageDraw.Draw(im)
-        dr.polygon([(0, y), (x / 2, y), (x, 0), (x / 2, 0)], fill=self.teamleft.color, outline=None)
+        dr.polygon([(0, 0), (x / 2, y), (x, y), (x / 2, 0)], fill=self.teamleft.color, outline=None)
         im.save("Output/TeamLeftJersey.png")
 
     def write_timer(self):

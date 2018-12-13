@@ -91,6 +91,7 @@ class Ui_settings(object):
         self.pushButton.clicked.connect(settings.swap)
         self.jerseyRightOptions.activated['QString'].connect(settings.highlighted_right)
         self.jerseyLeftOptions.activated['QString'].connect(settings.highlighted_left)
+
         QtCore.QMetaObject.connectSlotsByName(settings)
 
     def retranslateUi(self, settings):
