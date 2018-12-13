@@ -4,6 +4,7 @@ from timekeeper_ui import Ui_Timekeeper
 from setup_ui import Ui_settings
 from penalty_ui import Ui_Penalty
 from snitch_catch_ui import Ui_SnitchCatch
+from sureBro_ui import Ui_sureBro
 import os
 import io
 from PIL import Image, ImageDraw
@@ -27,6 +28,21 @@ self.add10_right.clicked.connect(lambda x: main.add_right(10))
 self.sub10_right.clicked.connect(lambda x: main.add_right(-10))
 
 '''
+
+
+class SureBro(QDialog):
+    def __init__(self, main_window):
+        super().__init__()
+        self.ui = Ui_sureBro()
+        self.ui.setupUi(self)
+        self.main = main_window
+
+    def yes(self):
+        self.main.accept()
+        self.accept()
+
+    def no(self):
+        self.accept()
 
 
 class Timekeeper:
@@ -507,6 +523,7 @@ class MainWindow(QDialog):
         self.ui = Ui_main()
         self.ui.setupUi(self)
         self.show()
+        self.really_ui = SureBro(self)
         # in case of restart
         self.scoreboard.read_all()
         self.set_from_scoreboard()
@@ -560,6 +577,11 @@ class MainWindow(QDialog):
         self.settings_w.show()
 
     def snitch_catch(self):
+        if self.scoreboard.time.running:
+            return
+        self.snitch_w.ui.teamRightButton.setText(self.scoreboard.teamright.name)
+        self.snitch_w.ui.teamLeftButton.setText(self.scoreboard.teamleft.name)
+        self.scoreboard.time.stop()
         self.snitch_w.show()
 
     def open_penalty(self):
@@ -581,7 +603,7 @@ class MainWindow(QDialog):
         self.scoreboard.write_score()
 
     def close(self):
-        self.accept()
+        self.really_ui.show()
 
 
 class ScoreBoard:
@@ -639,6 +661,8 @@ class ScoreBoard:
             try:
                 with io.open("Output/timer.txt", "r", encoding="utf-8") as dat:
                     self.time.time_str = dat.readline()
+                    self.time.min = int(self.time.time_str.split(":")[0])
+                    self.time.sec = int(self.time.time_str.split(":")[1])
             except FileNotFoundError:
                 None
         else:
