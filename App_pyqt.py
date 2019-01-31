@@ -447,7 +447,7 @@ class Timekeeper:
         json_received = json.loads(message)
         # json_received_str = json.dumps(json_received, indent=4, sort_keys=True)
         if 'description' in json_received and json_received['public_id'] == self.gameid:
-            print("recieved dict from ", self.gameid)
+            # print("recieved dict from ", self.gameid)
             if json_received['description'] == 'alive':
                 self.json_game_data['alive_timestamp'] = json_received['timestamp']
             elif json_received['description'] == 'complete':
@@ -528,7 +528,7 @@ class Timekeeper:
             '''
             # print("[CURRENT TEAMS] " + teamname_left + ' - ' + teamname_right)
             # scores
-            print("[CURRENT SCORE] " + score_left + ' - ' + score_right)
+            # print("[CURRENT SCORE] " + score_left + ' - ' + score_right)
 
             self.scoreboard.teamleft.score_str = score_left
             self.scoreboard.teamright.score_str = score_right
@@ -673,26 +673,20 @@ class Timekeeper:
         gametime_str = ''
         # last_connected = False
         while True:
+            time.sleep(0.2)
+            self.syncToServer()
             if self.break_connection:
                 return
             if isinstance(self.json_game_data, dict):
                 # print("yea is instance")
                 try:
                     if 'active_period' in self.json_game_data:
-                        # print("active_period")
-                        if (self.json_game_data['active_period'] == 'regular' or self.json_game_data[
-                            'active_period'] == 'secondOT'):
-                            if (self.json_game_data['gametime'][self.json_game_data['active_period']]['running']):
-                                period_gameduration = \
-                                self.json_game_data['gametime'][self.json_game_data['active_period']][
-                                    'gametimeLastStop_ms'] + (self.getTimestamp_ms() - self.diff) - \
-                                self.json_game_data['gametime'][self.json_game_data['active_period']][
-                                    'timeAtLastStart_ms']
+                        if self.json_game_data['active_period'] == 'regular' or self.json_game_data['active_period'] == 'secondOT':
+                            if self.json_game_data['gametime'][self.json_game_data['active_period']]['running']:
+                                period_gameduration = self.json_game_data['gametime'][self.json_game_data['active_period']]['gametimeLastStop_ms'] + (self.getTimestamp_ms() - self.diff) - self.json_game_data['gametime'][self.json_game_data['active_period']]['timeAtLastStart_ms']
                             else:
-                                period_gameduration = \
-                                self.json_game_data['gametime'][self.json_game_data['active_period']][
-                                    'gametimeLastStop_ms']
-                        elif (self.json_game_data['active_period'] == 'firstOT'):
+                                period_gameduration = self.json_game_data['gametime'][self.json_game_data['active_period']]['gametimeLastStop_ms']
+                        elif self.json_game_data['active_period'] == 'firstOT':
                             period_gameduration = self.getFirstOTGameDuration()
                         gametime_str = self.getGameTimeString(self.json_game_data, period_gameduration)
 
@@ -942,7 +936,7 @@ class TimekeeperWindow(QDialog):
     def connect(self):
         self.scoreboard.time.stop()
         self.timekeeper.gameid, self.timekeeper.auth = self.ui.gameID.displayText(), self.ui.auth.displayText(),
-        # self.timekeeper.gameid, self.timekeeper.auth = "", ""  for debugging insert info
+        # self.timekeeper.gameid, self.timekeeper.auth = "", ""  # for debugging insert info
         self.timekeeper.connect()
         self.scoreboard.timekeeper = self.timekeeper
         if self.timekeeper.connected:
