@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
-from PyQt5 import QtGui
 from scores_ui import Ui_main
 from timekeeper_ui import Ui_Timekeeper
 from setup_ui import Ui_settings
@@ -1015,10 +1014,13 @@ class MainWindow(QDialog):
 
     def timekeeper_start(self):
         if self.timekeeper_w.timekeeper.connected:
+            self.scoreboard.read_all()
             self.timekeeper_w.timekeeper.break_connection = True
             self.timekeeper_w.timekeeper.ws.keep_running = False
             self.timekeeper_w.timekeeper.connected = False
             self.ui.timekeeperButton.setText("Start Timekeeper")
+            self.scoreboard.teamleft.score_str = ""
+            self.scoreboard.teamright.score_str = ""
             return
         else:
             self.timekeeper_w.show()
