@@ -972,30 +972,44 @@ class MainWindow(QDialog):
         self.update_team_ui()
 
     def start_timer(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.time.start()
 
     def stop_timer(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.time.stop()
 
     def set_timer(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         time = self.ui.timeEdit.time()
         self.scoreboard.time.set(ui_label=self.ui.time_label, minutes=time.minute(), seconds=time.second())
 
     def add_left(self, amount):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.teamleft.score += amount
         self.update_score_ui()
 
     def reset_left(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.teamleft.score = 0
         self.scoreboard.teamleft.snitch_catch = []
         self.update_score_ui()
 
     def reset_right(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.teamright.score = 0
         self.scoreboard.teamright.snitch_catch = []
         self.update_score_ui()
 
     def add_right(self, amount):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.teamright.score += amount
         self.update_score_ui()
 
@@ -1013,6 +1027,8 @@ class MainWindow(QDialog):
         self.settings_w.show()
 
     def snitch_catch(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         if self.scoreboard.time.running:
             return
         self.snitch_w.ui.teamRightButton.setText(self.scoreboard.teamright.name)
