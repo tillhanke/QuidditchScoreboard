@@ -1,4 +1,4 @@
-from settings_ui import *
+from setup_ui import *
 from PyQt5.QtWidgets import QDialog, QColorDialog
 import os
 
