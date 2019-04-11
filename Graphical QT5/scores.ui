@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1315</width>
-    <height>1009</height>
+    <width>661</width>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -102,6 +102,17 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="extratimerButton">
+       <property name="text">
+        <string>Get extra timer</string>
        </property>
       </widget>
      </item>
@@ -371,108 +382,62 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QFrame" name="frame">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>84</height>
-      </size>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QWidget" name="horizontalLayoutWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1331</width>
-        <height>80</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetNoConstraint</enum>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="closeButton">
-         <property name="text">
-          <string>Close</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="penaltyButton">
-         <property name="text">
-          <string>Set Penalty</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="timekeeperButton">
-         <property name="text">
-          <string>Start Timekeeper</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="settingsButton">
-         <property name="text">
-          <string>Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="settingsButton">
+       <property name="text">
+        <string>Settings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="timekeeperButton">
+       <property name="text">
+        <string>Start Timekeeper</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="penaltyButton">
+       <property name="text">
+        <string>Set Penalty</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="closeButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -485,8 +450,8 @@
    <slot>start_timer()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>220</y>
+     <x>63</x>
+     <y>116</y>
     </hint>
     <hint type="destinationlabel">
      <x>18</x>
@@ -501,8 +466,8 @@
    <slot>stop_timer()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>554</x>
-     <y>220</y>
+     <x>917</x>
+     <y>116</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -517,8 +482,8 @@
    <slot>set_timer()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1098</x>
-     <y>200</y>
+     <x>1396</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>954</x>
@@ -533,12 +498,12 @@
    <slot>reset_left()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>397</x>
-     <y>444</y>
+     <x>547</x>
+     <y>297</y>
     </hint>
     <hint type="destinationlabel">
      <x>73</x>
-     <y>718</y>
+     <y>504</y>
     </hint>
    </hints>
   </connection>
@@ -549,12 +514,12 @@
    <slot>reset_right()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>900</x>
-     <y>439</y>
+     <x>1126</x>
+     <y>297</y>
     </hint>
     <hint type="destinationlabel">
      <x>954</x>
-     <y>659</y>
+     <y>504</y>
     </hint>
    </hints>
   </connection>
@@ -565,8 +530,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>440</x>
-     <y>959</y>
+     <x>894</x>
+     <y>481</y>
     </hint>
     <hint type="destinationlabel">
      <x>682</x>
@@ -581,12 +546,12 @@
    <slot>timekeeper_start()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>726</x>
-     <y>959</y>
+     <x>699</x>
+     <y>474</y>
     </hint>
     <hint type="destinationlabel">
      <x>954</x>
-     <y>709</y>
+     <y>504</y>
     </hint>
    </hints>
   </connection>
@@ -597,12 +562,12 @@
    <slot>settings_start()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>876</x>
-     <y>953</y>
+     <x>636</x>
+     <y>481</y>
     </hint>
     <hint type="destinationlabel">
      <x>1275</x>
-     <y>670</y>
+     <y>504</y>
     </hint>
    </hints>
   </connection>
@@ -613,12 +578,12 @@
    <slot>open_penalty()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>595</x>
-     <y>962</y>
+     <x>745</x>
+     <y>477</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
-     <y>670</y>
+     <y>504</y>
     </hint>
    </hints>
   </connection>
@@ -629,12 +594,28 @@
    <slot>snitch_catch()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>730</x>
-     <y>530</y>
+     <x>795</x>
+     <y>371</y>
     </hint>
     <hint type="destinationlabel">
      <x>679</x>
-     <y>672</y>
+     <y>504</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>extratimerButton</sender>
+   <signal>clicked()</signal>
+   <receiver>main</receiver>
+   <slot>add_timer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>611</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>810</x>
+     <y>309</y>
     </hint>
    </hints>
   </connection>
@@ -652,5 +633,6 @@
   <slot>settings_start()</slot>
   <slot>open_penalty()</slot>
   <slot>snitch_catch()</slot>
+  <slot>add_timer()</slot>
  </slots>
 </ui>

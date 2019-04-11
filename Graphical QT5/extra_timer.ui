@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>extra_timer</class>
+ <widget class="QDialog" name="extra_timer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>512</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Extra Timer</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Timer Label:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="timer_label"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="current_time">
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>00:00</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="start_timer">
+       <property name="text">
+        <string>Start</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="stop_timer">
+       <property name="text">
+        <string>Stop</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="set">
+         <property name="text">
+          <string>Set</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="timeEdit">
+         <property name="currentSection">
+          <enum>QDateTimeEdit::MinuteSection</enum>
+         </property>
+         <property name="displayFormat">
+          <string>mm:ss</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QRadioButton" name="forward">
+       <property name="text">
+        <string>Forwards</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="backward">
+       <property name="text">
+        <string>Backwards</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>start_timer</sender>
+   <signal>clicked()</signal>
+   <receiver>extra_timer</receiver>
+   <slot>start_timer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>82</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stop_timer</sender>
+   <signal>clicked()</signal>
+   <receiver>extra_timer</receiver>
+   <slot>stop_timer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>set</sender>
+   <signal>clicked()</signal>
+   <receiver>extra_timer</receiver>
+   <slot>set_timer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>307</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>355</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forward</sender>
+   <signal>clicked()</signal>
+   <receiver>extra_timer</receiver>
+   <slot>set_forward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>31</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>23</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backward</sender>
+   <signal>clicked()</signal>
+   <receiver>extra_timer</receiver>
+   <slot>set_backward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>358</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>180</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>extra_timer</receiver>
+   <slot>close_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>455</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>243</x>
+     <y>482</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>start_timer()</slot>
+  <slot>stop_timer()</slot>
+  <slot>set_timer()</slot>
+  <slot>set_forward()</slot>
+  <slot>set_backward()</slot>
+  <slot>close_button()</slot>
+ </slots>
+</ui>

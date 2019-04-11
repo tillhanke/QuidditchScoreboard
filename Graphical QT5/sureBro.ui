@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1595</width>
-    <height>1039</height>
+    <width>677</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,17 +30,11 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/newPrefix/Graphical QT5/please_dont.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -88,7 +82,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton_2</sender>
@@ -97,12 +93,12 @@
    <slot>yes()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>681</x>
-     <y>998</y>
+     <x>310</x>
+     <y>492</y>
     </hint>
     <hint type="destinationlabel">
-     <x>732</x>
-     <y>862</y>
+     <x>676</x>
+     <y>502</y>
     </hint>
    </hints>
   </connection>
@@ -113,12 +109,12 @@
    <slot>no()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>912</x>
-     <y>980</y>
+     <x>441</x>
+     <y>492</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1011</x>
-     <y>860</y>
+     <x>676</x>
+     <y>502</y>
     </hint>
    </hints>
   </connection>
