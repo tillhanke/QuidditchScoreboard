@@ -17,6 +17,7 @@ import json
 import math
 import threading
 import sys
+from MainWindow import MainWindow
 
 
 '''

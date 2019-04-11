@@ -59,5 +59,8 @@ class ExtraTimerWindow(QDialog):
 
     def close_button(self):
         self.timer.stop()
-        os.remove("Output/{}.txt".format(self.label))
+        try:
+            os.remove("Output/{}.txt".format(self.label))
+        except FileNotFoundError as e:
+            None
         self.accept()
