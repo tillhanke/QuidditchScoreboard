@@ -126,6 +126,7 @@
             this.buttonSwapTeams.TabIndex = 10;
             this.buttonSwapTeams.Text = "Swap Teams";
             this.buttonSwapTeams.UseVisualStyleBackColor = true;
+            this.buttonSwapTeams.Click += new System.EventHandler(this.ButtonSwapTeams_Click);
             // 
             // button_CloseSettings
             // 

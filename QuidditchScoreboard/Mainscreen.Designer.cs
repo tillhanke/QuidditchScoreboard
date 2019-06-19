@@ -134,6 +134,7 @@
             this.label_TeamA.Size = new System.Drawing.Size(44, 13);
             this.label_TeamA.TabIndex = 8;
             this.label_TeamA.Text = "Team A";
+
             // 
             // label_TeamB
             // 
@@ -360,8 +361,8 @@
         private System.Windows.Forms.Button button_SetTimer;
         private System.Windows.Forms.Button button_GetExtraTimer;
         private System.Windows.Forms.Label label2;
-        public  System.Windows.Forms.Label label_TeamA;
-        public  System.Windows.Forms.Label label_TeamB;
+        private System.Windows.Forms.Label label_TeamA;
+        private System.Windows.Forms.Label label_TeamB;
         private System.Windows.Forms.Button buttonScoreTeamAPlus;
         private System.Windows.Forms.Button buttonScoreTeamAReset;
         private System.Windows.Forms.Button buttonScoreTeamAMinus;

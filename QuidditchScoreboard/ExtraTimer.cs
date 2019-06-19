@@ -133,7 +133,7 @@ namespace QuidditchScoreboard
         private void UpdateTimerFiles(string timerText)
 
         {
-            string TimerDown = Settings.outputExtraTimer;
+            string TimerDown = Mainscreen.outputExtraTimer;
             System.IO.StreamWriter objWriter;
             objWriter = new System.IO.StreamWriter(TimerDown);
 

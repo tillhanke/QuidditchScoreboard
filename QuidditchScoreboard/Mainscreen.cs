@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using WebSocketSharp; 
 
 namespace QuidditchScoreboard
 {
@@ -17,14 +19,61 @@ namespace QuidditchScoreboard
         int scoreA;
         int scoreB;
 
-        public Mainscreen()
-        {
-            InitializeComponent();
-        
-    }
+        public static string outputScoreA;
+        public static string outputScoreB;
+        public static string outputTimer;
+        public static string outputExtraTimer;
+        public static string Inputfolder;
+        public static string Outputfolder;
+        public static string penaltlyreasons;
+        public static string teamlogos;
+        public static string teamroosters;
+        public static string cards;
+
+        public static string TeamAName = "Team A";
+        public static string TeamBName ="Team B";
 
        
 
+        public Mainscreen()
+        {
+            InitializeComponent();
+            //Set filepaths
+            System.IO.StreamWriter objWriter;
+            Inputfolder = @"C:\Input";
+            Outputfolder = @"C:\Output";
+            outputScoreA = Outputfolder + @"\TeamAScore.txt";
+            outputScoreB = Outputfolder + @"\TeamBScore.txt";
+            outputTimer = Outputfolder + @"\Timer.txt";
+            outputExtraTimer = Outputfolder + @"\ExtraTimer.txt";
+            teamlogos = Inputfolder + @"\Teamlogos";
+            cards = Inputfolder + @"\Cards";
+            teamroosters = Inputfolder + @"\Teamrosters";
+
+            Directory.CreateDirectory(Outputfolder);
+            Directory.CreateDirectory(Inputfolder);
+            Directory.CreateDirectory(teamlogos);
+            Directory.CreateDirectory(cards);
+            Directory.CreateDirectory(teamroosters);
+
+            using (objWriter = File.AppendText(outputScoreA))
+            using (objWriter = File.AppendText(outputScoreB))
+            using (objWriter = File.AppendText(outputTimer))
+            using (objWriter = File.AppendText(outputExtraTimer))
+
+             
+            //    Directory.CreateDirectory(outputTimer);
+            //  Directory.CreateDirectory(outputExtraTimer);
+            // Directory.CreateDirectory("my folder");
+            objWriter.Close();
+        }
+
+
+        public void UpdateLables()
+        {
+            label_TeamA.Text = TeamAName;
+            label_TeamB.Text = TeamBName;
+        }
 
         #region OpenNewForms
         private void Button_StartTimeKeeper_Click(object sender, EventArgs e)
@@ -41,7 +90,7 @@ namespace QuidditchScoreboard
 
         private void Button_Settings_Click(object sender, EventArgs e)
         {
-            Settings Settings1 = new Settings();
+            Settings Settings1 = new Settings(this);
             Settings1.Show();
         }
 
@@ -59,17 +108,20 @@ namespace QuidditchScoreboard
         }
 
         #endregion
-
+       
         private void Mainscreen_Load(object sender, EventArgs e)
         {
             t = new System.Timers.Timer();
             t.Interval = 1000;
             t.Elapsed += OnTimeEvent;
+            UpdateLables();
+
         }
 
         #region ManualGameTime
         private void OnTimeEvent (object sender, System.Timers.ElapsedEventArgs e)
         {
+            UpdateLables();
             Invoke(new Action(() =>
             {
                 s += 1;
@@ -97,6 +149,7 @@ namespace QuidditchScoreboard
         private void Button_StopGameTime_Click(object sender, EventArgs e)
         {
             t.Stop();
+            UpdateLables();
 
           UpdateScoreFiles(textBoxScoreTeamA.Text, textBoxScoreTeamB.Text, string.Format("{0}:{1}", m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')));  
         }
@@ -122,25 +175,26 @@ namespace QuidditchScoreboard
         private void UpdateScoreFiles (String ScoreAText, String ScoreBText, string timerText)
 
             {
-             string filenameScoreB = Settings.outputScoreA;
-            string filenameScoreA = Settings.outputScoreB;
-             string TimerUp = Settings.outputTimer;
+             string filenameScoreB = outputScoreB;
+            string filenameScoreA = outputScoreA;
+             string TimerUp = outputTimer;
 
 
-        System.IO.StreamWriter objWriter;
+        
             System.IO.StreamWriter objWriter2;
             System.IO.StreamWriter objWriter3;
-            objWriter = new System.IO.StreamWriter(filenameScoreA);
-            objWriter2 = new System.IO.StreamWriter(filenameScoreB);
-            objWriter3 = new System.IO.StreamWriter(TimerUp);
+            System.IO.StreamWriter objWriter4;
+            objWriter2 = new System.IO.StreamWriter(filenameScoreA);
+            objWriter3 = new System.IO.StreamWriter(filenameScoreB);
+            objWriter4 = new System.IO.StreamWriter(TimerUp);
 
-            objWriter.Write(ScoreAText);
-            objWriter2.Write(ScoreBText);
-            objWriter3.Write(timerText);
+            objWriter2.Write(ScoreAText);
+            objWriter3.Write(ScoreBText);
+            objWriter4.Write(timerText);
 
-            objWriter.Close();
             objWriter2.Close();
             objWriter3.Close();
+            objWriter4.Close();
             }
 
         private void ButtonScoreTeamBPlus_Click(object sender, EventArgs e)
@@ -240,9 +294,10 @@ namespace QuidditchScoreboard
             textBoxScoreTeamB.Text = scoreB.ToString();
 
             UpdateScoreFiles(textBoxScoreTeamA.Text, textBoxScoreTeamB.Text, string.Format("{0}:{1}", m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')));
+            UpdateLables();
         }
 
-       
+     
 
         private void buttonScoreTeamAPlus_Click(object sender, EventArgs e)
         {
@@ -252,7 +307,7 @@ namespace QuidditchScoreboard
         }
 
         #endregion
-
+       
        
     }
 }

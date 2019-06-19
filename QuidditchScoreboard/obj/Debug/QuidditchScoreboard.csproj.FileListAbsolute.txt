@@ -29,3 +29,7 @@ C:\Users\media markt\Source\Repos\QuidditchScoreboard\QuidditchScoreboard\bin\De
 C:\Users\media markt\Source\Repos\QuidditchScoreboard\QuidditchScoreboard\bin\Debug\QuidditchScoreboard.exe
 C:\Users\media markt\Source\Repos\QuidditchScoreboard\QuidditchScoreboard\bin\Debug\QuidditchScoreboard.pdb
 C:\Users\media markt\source\repos\QuidditchScoreboard\QuidditchScoreboard\obj\Debug\QuidditchScoreboard.OutputPaths.resources
+C:\Users\media markt\source\repos\QuidditchScoreboard\QuidditchScoreboard\bin\Debug\websocket-sharp.dll
+C:\Users\media markt\source\repos\QuidditchScoreboard\QuidditchScoreboard\obj\Debug\QuidditchScoreboard.csproj.CopyComplete
+C:\Users\media markt\source\repos\QuidditchScoreboard\QuidditchScoreboard\bin\Debug\Newtonsoft.Json.dll
+C:\Users\media markt\source\repos\QuidditchScoreboard\QuidditchScoreboard\bin\Debug\Newtonsoft.Json.xml
