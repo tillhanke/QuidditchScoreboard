@@ -22,6 +22,7 @@ class PenaltyWindow(QDialog):
         self.ui.setupUi(self)
         self.scoreboard = scoreboard
         self.team = None
+        self.team_chosen()
         try:
             with io.open("Input/penalty_reasons.txt", "r", encoding="utf-8") as dat:
                 self.reasons = dat.readlines()
@@ -32,6 +33,7 @@ class PenaltyWindow(QDialog):
     def on_open(self):
         self.ui.teamLeftButton.setText(self.scoreboard.teamleft.name)
         self.ui.teamRightButton.setText(self.scoreboard.teamright.name)
+        self.ui.list_reasons.addItems(self.reasons)
 
     def team_chosen(self):
         players = []
@@ -46,12 +48,15 @@ class PenaltyWindow(QDialog):
                 players.append([str(key), str(value)])
 
         players = sorted(players, key=lambda l: l[1], reverse=False)
+        self.ui.list_players.clear()
         self.ui.list_players.addItems(["{0}: {1}".format(x, y) for x, y in players])
-        self.ui.list_reasons.addItems(self.reasons)
 
     def ok(self):
         if self.ui.input_number.text() != "":
-            player = "{0} {1}".format(self.ui.input_number.text(), self.team.roster[self.ui.input_number.text()])
+            if self.ui.input_number.text() in self.team.roster:
+                player = "{0} {1}".format(self.ui.input_number.text(), self.team.roster[self.ui.input_number.text()])
+            else:
+                player = "{0}".format(self.ui.input_number.text())
         else:
             player = self.ui.list_players.currentText()
         if self.ui.input_reason.text() != "":

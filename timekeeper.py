@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
+from Naked.toolshed.shell import execute_js, muterun_js
 from PyQt5 import QtGui
 import os
 import io
@@ -12,7 +13,7 @@ import math
 import threading
 import sys
 import codecs
-
+import subprocess
 
 class Timekeeper:
     def __init__(self, scoreboard, main_window):
@@ -37,6 +38,15 @@ class Timekeeper:
         self.ws = None
         self.main_window = main_window
 
+    def connect_js(self, auth, gameid):
+        self.timekeeper_proc = subprocess.Popen('node .\quidditchme_api\quidditchme_api.js' + " " + auth + " " + gameid)
+        self.connected = True
+
+    def disconnect_js(self):
+        self.timekeeper_proc.kill()
+        self.connected = False
+
+    '''
     def connect(self):
         try:
             config = json.loads(
@@ -44,7 +54,8 @@ class Timekeeper:
                     "utf-8"))
             # print(config)
             self.ws = websocket.WebSocketApp(
-                "ws" + ("s" if self.ssl else "") + "://" + config['server'] + ":" + str(self.port) + "/ws",
+                #"ws" + ("s" if self.ssl else "") + "://" + config['socket_address'] + ":" + str(self.port) + "/ws",
+                "wss://quidditch.me",
                 on_open=lambda *x: Timekeeper.on_open(self, *x),
                 on_message=lambda *x: Timekeeper.on_message(self, *x),
                 on_close=lambda *x: Timekeeper.on_close(self, *x),
@@ -60,9 +71,11 @@ class Timekeeper:
 
     def on_open(self, ws):
         ws.send('{"auth":"' + self.auth + '","games":["' + self.gameid + '"]}')
+        print("Auth and gameid sent.")
 
     def on_message(self, ws, message):
         json_received = json.loads(message)
+        print("received")
         # json_received_str = json.dumps(json_received, indent=4, sort_keys=True)
         if 'description' in json_received and json_received['public_id'] == self.gameid:
             # print("recieved dict from ", self.gameid)
@@ -261,10 +274,10 @@ class Timekeeper:
             self.connected = False
             print("Error in score:", e)
 
-
 if __name__ == "__main__":
     timek = Timekeeper("", "")
     timek.connect()
     time.sleep(10)
     # print(timek.connected)
 
+    '''

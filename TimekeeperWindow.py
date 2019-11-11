@@ -27,11 +27,14 @@ class TimekeeperWindow(QDialog):
 
     def connect(self):
         self.scoreboard.time.stop()
-        self.timekeeper.gameid, self.timekeeper.auth = self.ui.gameID.displayText(), self.ui.auth.displayText(),
-        # self.timekeeper.gameid, self.timekeeper.auth = "", ""  # for debugging insert info
-        self.timekeeper.connect()
+        self.timekeeper.auth, self.timekeeper.gameid = self.ui.auth.displayText(), self.ui.gameID.displayText(),
+        #self.timekeeper.gameid, self.timekeeper.auth = "A-403-559-343", "83d4b05926f1b081e2f6da408bf5b1e5"  # for debugging insert info
+        #self.timekeeper.connect()
+        self.timekeeper.connect_js(self.timekeeper.auth, self.timekeeper.gameid)
         self.scoreboard.timekeeper = self.timekeeper
         if self.timekeeper.connected:
             self.main.ui.timekeeperButton.setText("Stop Timekeeper")
         self.accept()
 
+    def disconnect(self):
+        self.timekeeper.disconnect_js()

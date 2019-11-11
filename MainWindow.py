@@ -20,7 +20,7 @@ from Penalty import PenaltyWindow
 from Settings import SettingsWindow
 from SnitchCatch import SnitchCatchWindow
 from Extra_Timer import ExtraTimerWindow
-
+from timekeeper import Timekeeper
 
 class MainWindow(QDialog):
     def __init__(self):
@@ -99,12 +99,15 @@ class MainWindow(QDialog):
     def timekeeper_start(self):
         if self.timekeeper_w.timekeeper.connected:
             self.timekeeper_w.timekeeper.break_connection = True
-            self.timekeeper_w.timekeeper.ws.keep_running = False
+            #self.timekeeper_w.timekeeper.ws.keep_running = False
             self.timekeeper_w.timekeeper.connected = False
             self.scoreboard.read_all()
+            self.timekeeper_w.disconnect()
+            print("Disconnected Timekeeper")
             self.ui.timekeeperButton.setText("Start Timekeeper")
             return
         else:
+            self.scoreboard.read_all()
             self.timekeeper_w.show()
 
     def settings_start(self):
@@ -121,6 +124,7 @@ class MainWindow(QDialog):
         self.snitch_w.show()
 
     def open_penalty(self):
+        self.penalty_w = PenaltyWindow(self.scoreboard)
         self.penalty_w.show()
         self.penalty_w.on_open()
 

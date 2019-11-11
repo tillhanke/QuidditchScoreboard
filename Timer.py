@@ -65,4 +65,3 @@ class Timer:
         self.sec = seconds
         self.time_str = "%02d" % self.min + ":" + "%02d" % self.sec
         ui_label.setText(self.time_str)
-

@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import os
 
 class Ui_Penalty(object):
     def setupUi(self, Penalty):
@@ -27,6 +28,17 @@ class Ui_Penalty(object):
         font.setPointSize(15)
         self.teamRightButton.setFont(font)
         self.teamRightButton.setObjectName("teamRightButton")
+        penalty_team_tk = open("quidditchme_api/penalty_team.txt", "r")
+        penalty_team = penalty_team_tk.read()
+        if(penalty_team == "A"):
+            self.teamLeftButton.setChecked(True)
+            self.teamRightButton.setChecked(False)
+        elif(penalty_team == "B"):
+            self.teamLeftButton.setChecked(False)
+            self.teamRightButton.setChecked(True)
+        else:
+            self.teamLeftButton.setChecked(False)
+            self.teamRightButton.setChecked(False)
         self.horizontalLayout.addWidget(self.teamRightButton)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -63,6 +75,34 @@ class Ui_Penalty(object):
         font.setPointSize(10)
         self.redButton.setFont(font)
         self.redButton.setObjectName("redButton")
+        if(os.path.isfile("quidditchme_api/penalty_card.txt")):
+            penalty_card_tk = open("quidditchme_api/penalty_card.txt", "r")
+            penalty_card = penalty_card_tk.read()
+            if(penalty_card == "blue"):
+                self.blueButton.setChecked(True)
+                self.yellowButton.setChecked(False)
+                self.yellowredButton.setChecked(False)
+                self.redButton.setChecked(False)
+            elif(penalty_card == "yellow"):
+                self.blueButton.setChecked(False)
+                self.yellowButton.setChecked(True)
+                self.yellowredButton.setChecked(False)
+                self.redButton.setChecked(False)
+            elif(penalty_card == "yellowred"):
+                self.blueButton.setChecked(False)
+                self.yellowButton.setChecked(False)
+                self.yellowredButton.setChecked(True)
+                self.redButton.setChecked(False)
+            elif(penalty_card == "red"):
+                self.blueButton.setChecked(False)
+                self.yellowButton.setChecked(False)
+                self.yellowredButton.setChecked(False)
+                self.redButton.setChecked(True)
+            else:
+                self.blueButton.setChecked(False)
+                self.yellowButton.setChecked(False)
+                self.yellowredButton.setChecked(False)
+                self.redButton.setChecked(False)
         self.horizontalLayout_2.addWidget(self.redButton)
         self.horizontalLayout_4.addLayout(self.horizontalLayout_2)
         self.horizontalLayout_3.addWidget(self.frame)
@@ -81,6 +121,9 @@ class Ui_Penalty(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.input_number.sizePolicy().hasHeightForWidth())
         self.input_number.setSizePolicy(sizePolicy)
+        if(os.path.isfile("quidditchme_api/penalty_playernumber.txt")):
+            input_number_tk = open("quidditchme_api/penalty_playernumber.txt", "r")
+            self.input_number.setText(input_number_tk.read())
         self.input_number.setObjectName("input_number")
         self.horizontalLayout_5.addWidget(self.input_number)
         self.label_2 = QtWidgets.QLabel(Penalty)
@@ -95,6 +138,11 @@ class Ui_Penalty(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.input_number.textChanged.connect(self.NumberInputHandler)
+        if(os.path.isfile("quidditchme_api/penalty_playernumber.txt")):
+            self.list_players.setEnabled(False)
+            if(os.stat("quidditchme_api/penalty_playernumber.txt").st_size == 0):
+                self.list_players.setEnabled(True)
         self.label_3 = QtWidgets.QLabel(Penalty)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -108,6 +156,9 @@ class Ui_Penalty(object):
         sizePolicy.setHeightForWidth(self.input_reason.sizePolicy().hasHeightForWidth())
         self.input_reason.setSizePolicy(sizePolicy)
         self.input_reason.setObjectName("input_reason")
+        if(os.path.isfile("quidditchme_api/penalty_reason.txt")):
+            input_reason_tk = open("quidditchme_api/penalty_reason.txt", "r")
+            self.input_reason.setText(input_reason_tk.read())
         self.horizontalLayout_6.addWidget(self.input_reason)
         self.label_4 = QtWidgets.QLabel(Penalty)
         font = QtGui.QFont()
@@ -118,6 +169,11 @@ class Ui_Penalty(object):
         self.list_reasons = QtWidgets.QComboBox(Penalty)
         self.list_reasons.setObjectName("list_reasons")
         self.horizontalLayout_6.addWidget(self.list_reasons)
+        self.input_reason.textChanged.connect(self.ReasonInputHandler)
+        if(os.path.isfile("quidditchme_api/penalty_reason.txt")):
+            self.list_reasons.setEnabled(False)
+            if(os.stat("quidditchme_api/penalty_reason.txt").st_size == 0):
+                self.list_reasons.setEnabled(True)
         self.verticalLayout_2.addLayout(self.horizontalLayout_6)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
@@ -142,6 +198,18 @@ class Ui_Penalty(object):
         self.teamRightButton.clicked.connect(Penalty.team_chosen)
         QtCore.QMetaObject.connectSlotsByName(Penalty)
 
+    def NumberInputHandler(self):
+        if(self.input_number.text() == ""):
+            self.list_players.setEnabled(True)
+        else:
+            self.list_players.setEnabled(False)
+
+    def ReasonInputHandler(self):
+        if(self.input_reason.text() == ""):
+            self.list_reasons.setEnabled(True)
+        else:
+            self.list_reasons.setEnabled(False)
+
     def retranslateUi(self, Penalty):
         _translate = QtCore.QCoreApplication.translate
         Penalty.setWindowTitle(_translate("Penalty", "Penalty"))
@@ -157,4 +225,3 @@ class Ui_Penalty(object):
         self.label_4.setText(_translate("Penalty", "OR choose one:"))
         self.cancelButton.setText(_translate("Penalty", "Cancel"))
         self.okButton.setText(_translate("Penalty", "Ok"))
-

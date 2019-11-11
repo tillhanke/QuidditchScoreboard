@@ -39,6 +39,8 @@ class Ui_Timekeeper(object):
         self.auth = QtWidgets.QLineEdit(Timekeeper)
         self.auth.setObjectName("auth")
         self.horizontalLayout_2.addWidget(self.auth)
+        auth_tk = open("Input/Auth.txt", "r")
+        self.auth.setText(auth_tk.read())
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
