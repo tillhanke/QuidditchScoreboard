@@ -58,11 +58,15 @@ class MainWindow(QDialog):
         if self.timekeeper_w.timekeeper.connected:
             return
         self.scoreboard.time.start()
+        self.ui.stopTimer.setEnabled(True);
+        self.ui.startTimer.setEnabled(False);
 
     def stop_timer(self):
         if self.timekeeper_w.timekeeper.connected:
             return
         self.scoreboard.time.stop()
+        self.ui.stopTimer.setEnabled(False);
+        self.ui.startTimer.setEnabled(True);
 
     def set_timer(self):
         if self.timekeeper_w.timekeeper.connected:
@@ -134,14 +138,26 @@ class MainWindow(QDialog):
 
     def update_timer_ui(self):
         while self.result() == 0:
-            self.ui.time_label.setText(self.scoreboard.time.time_str)
+            if self.timekeeper_w.timekeeper.connected:
+                gametime = open("Output/timer.txt").read()
+                if(str(self.scoreboard.teamleft.get_score_str()) != open("Output/score_left.txt", "r").read() or str(self.scoreboard.teamright.get_score_str()) != open("Output/score_right.txt", "r").read()):
+                   self.update_score_ui_tk()
+            else:
+                gametime = self.scoreboard.time.time_str
+            self.ui.time_label.setText(gametime)
             time.sleep(0.5)
 
     def update_score_ui(self):
-        self.ui.score_right.setText(str(self.scoreboard.teamright.get_score_str()))
         self.ui.score_left.setText(str(self.scoreboard.teamleft.get_score_str()))
+        self.ui.score_right.setText(str(self.scoreboard.teamright.get_score_str()))
         self.scoreboard.write_score()
 
     def close(self):
         self.scoreboard.time.stop()
         self.really_ui.show()
+
+    def update_score_ui_tk(self):
+        score_left = open("Output/score_left.txt", "r").read()
+        score_right = open("Output/score_right.txt", "r").read()
+        self.ui.score_left.setText(score_left)
+        self.ui.score_right.setText(score_right)

@@ -44,6 +44,7 @@ class Timekeeper:
 
     def disconnect_js(self):
         self.timekeeper_proc.kill()
+        open("quidditchme_api/connected.txt", "w").write("false")
         self.connected = False
 
     '''

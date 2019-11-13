@@ -206,6 +206,7 @@ class Ui_main(object):
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem3)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
+        self.stopTimer.setEnabled(False);
 
         self.retranslateUi(main)
         self.add10_left.clicked.connect(lambda x: main.add_left(10))

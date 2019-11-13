@@ -166,13 +166,14 @@
     for(var ii=0;ii<team_letters.length;ii++)
     {
       let team_letter=team_letters[ii];
+      let team_side = team_sides[ii];
       try{score_before[team_letter] = fs.readFileSync('score_'+team_sides[ii]+'.txt', 'utf8');}catch(err){score_before[team_letter]='';}
       if(score_before[team_letter]!=score[team_letter])
       {
         fs.writeFile('score_'+team_sides[ii]+'.txt', score[team_letter], (err) => 
         {
           if(err){log(err);}
-          else{log(getCurrentTime(), chalk.bold('Score is ')+chalk.bold.cyan(score.A+'-'+score.B)+chalk(' ==> saved to file "score_'+team_sides[ii]+'.txt".'));}
+          else{log(getCurrentTime(), chalk.bold('Score is ')+chalk.bold.cyan(score.A+'-'+score.B)+chalk(' ==> saved to file "score_'+team_side+'.txt".'));}
         });
       }
     }
@@ -282,6 +283,7 @@
       {
         let penalty_str = ""
         let last_penalty = data.events.penalty[data.events.penalty.length-1]
+        if(typeof last_penalty === "undefined") return false;
         penalty_str = (last_penalty.team + ","
                     + last_penalty.color + ","
                     + last_penalty.player_name + ","

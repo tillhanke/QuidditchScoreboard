@@ -25,9 +25,10 @@ class SureBro(QDialog):
     def yes(self):
         if self.main.timekeeper_w.timekeeper.connected:
             self.main.timekeeper_w.timekeeper.break_connection = True
-            self.main.timekeeper_w.timekeeper.ws.keep_running = False
+            #self.main.timekeeper_w.timekeeper.ws.keep_running = False
             self.main.timekeeper_w.timekeeper.connected = False
             self.main.ui.timekeeperButton.setText("Start Timekeeper")
+            self.main.timekeeper_w.timekeeper.timekeeper_proc.kill()
         for timer in self.main.extra_timers:
             timer.close()
         self.main.accept()
