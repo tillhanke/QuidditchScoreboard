@@ -28,9 +28,12 @@ class SureBro(QDialog):
             #self.main.timekeeper_w.timekeeper.ws.keep_running = False
             self.main.timekeeper_w.timekeeper.connected = False
             self.main.ui.timekeeperButton.setText("Start Timekeeper")
-            self.main.timekeeper_w.timekeeper.timekeeper_proc.kill()
+            self.main.timekeeper_w.timekeeper.disconnect_js()
         for timer in self.main.extra_timers:
             timer.close()
+        open("Output/score_left.txt", "w").write("0")
+        open("Output/score_right.txt", "w").write("0")
+        open("Output/timer.txt", "w").write("00:00")
         self.main.accept()
         self.accept()
 

@@ -61,6 +61,6 @@ class ExtraTimerWindow(QDialog):
         self.timer.stop()
         try:
             os.remove("Output/{}.txt".format(self.label))
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             None
         self.accept()

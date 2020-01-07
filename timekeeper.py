@@ -23,7 +23,7 @@ class Timekeeper:
         self.json_game_data = {}
         self.diff = 0
         self.auth = ""  # authentication
-        self.remote_server = 'quidditch.me'  # 'timekeeper.lucas-scheuvens.de'
+        self.remote_server = 'quidditch.live'  # 'timekeeper.lucas-scheuvens.de'
         self.ssl = True  # if self.remote_server == 'timekeeper.lucas-scheuvens.de' else False
         self.port = 443  # if self.remote_server == 'timekeeper.lucas-scheuvens.de' else 8769
         self.team_left = None
@@ -39,12 +39,17 @@ class Timekeeper:
         self.main_window = main_window
 
     def connect_js(self, auth, gameid):
-        self.timekeeper_proc = subprocess.Popen('node .\quidditchme_api\quidditchme_api.js' + " " + auth + " " + gameid)
+        self.timekeeper_proc = subprocess.Popen('node .\quidditchlive_api\quidditchlive_api.js' + " " + auth + " " + gameid)
         self.connected = True
 
     def disconnect_js(self):
         self.timekeeper_proc.kill()
-        open("quidditchme_api/connected.txt", "w").write("false")
+        open("quidditchlive_api/connected.txt", "w").write("false")
+        open("quidditchlive_api/penalty_card.txt", "w").write("")
+        open("quidditchlive_api/penalty_playername.txt", "w").write("")
+        open("quidditchlive_api/penalty_playernumber.txt", "w").write("")
+        open("quidditchlive_api/penalty_reason.txt", "w").write("")
+        open("quidditchlive_api/penalty_team.txt", "w").write("")
         self.connected = False
 
     '''

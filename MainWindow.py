@@ -51,6 +51,14 @@ class MainWindow(QDialog):
         self.update_team_ui()
 
     def add_timer(self):
+        '''
+        if(self.ui.extratimerButtonchecked == False):
+            self.ui.expand(self)
+            self.ui.extratimerButton.setText("Close extra timer")
+        elif(self.ui.extratimerButtonchecked == True):
+            self.ui.shrink(self)
+            self.ui.extratimerButton.setText("Get extra timer")
+        '''
         self.extra_timers.append(ExtraTimerWindow())
         self.extra_timers[-1].show()
 
