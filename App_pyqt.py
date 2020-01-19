@@ -17,6 +17,7 @@ import json
 import math
 import threading
 import sys
+import subprocess
 from MainWindow import MainWindow
 
 
@@ -32,6 +33,11 @@ self.sub10_right.clicked.connect(lambda x: main.add_right(-10))
 
 
 if __name__ == "__main__":
+    if(os.path.isdir("./quidditchlive_api/node_modules") == False):
+        print("Installing packages for Timekeeper connection")
+        os.chdir("./quidditchlive_api")
+        os.system("npm install")
+        os.chdir("..")
     app = QApplication(sys.argv)
     w = MainWindow()
     w.show()
