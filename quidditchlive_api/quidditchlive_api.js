@@ -133,7 +133,7 @@
           saved_data = data;
           //log(saved_data.events);
           saveScoreData(saved_data);
-		      savePenalty(saved_data);
+          savePenalty(saved_data);
         });
         socket.on('err', function(data)
         {
@@ -272,6 +272,11 @@
         if(err){log(err);}
         else{log(getCurrentTime(), chalk.bold('New penalty entry saved to penalty file "penalty_reason.txt".'));}
       });
+      fs.writeFile('penalty_teamname.txt', penalty_details[5], (err) => 
+      {
+        if(err){log(err);}
+        else{log(getCurrentTime(), chalk.bold('New penalty entry saved to penalty file "penalty_teamname.txt".'));}
+      });
     }
   }
 
@@ -288,8 +293,12 @@
                     + last_penalty.color + ","
                     + last_penalty.player_name + ","
                     + last_penalty.player_number + ","
-                    + last_penalty.reason)
-        // log(penalty_str)
+                    + last_penalty.reason + ",");
+        if(last_penalty.team == "A")
+          penalty_str += data.teams.A.name;
+        else if(last_penalty.team == "B")
+          penalty_str += data.teams.B.name;
+        //log(penalty_str)
         return penalty_str;
       }
     }

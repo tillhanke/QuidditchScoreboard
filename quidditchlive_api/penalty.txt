@@ -1,1 +1,1 @@
-B,yellow,null,7,Willfully ignoring being knocked out
+A,yellow,ich,8,Illegal physical contact,Unicorns
