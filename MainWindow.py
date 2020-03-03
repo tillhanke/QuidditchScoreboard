@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import QtGui
 import os
 import io
@@ -12,6 +13,7 @@ import math
 import threading
 import sys
 import codecs
+import subprocess
 from Scoreboard import ScoreBoard
 from main_ui import Ui_main
 from SureBro import SureBro
@@ -45,6 +47,8 @@ class MainWindow(QDialog):
         time_thread.start()
         # self.ui.timekeeperButton.deleteLater()
 
+        self.scorecrawl_connected = 0
+
     def set_from_scoreboard(self):
         self.ui.time_label.setText(self.scoreboard.time.time_str)
         self.update_score_ui()
@@ -66,15 +70,15 @@ class MainWindow(QDialog):
         if self.timekeeper_w.timekeeper.connected:
             return
         self.scoreboard.time.start()
-        self.ui.stopTimer.setEnabled(True);
-        self.ui.startTimer.setEnabled(False);
+        self.ui.stopTimer.setEnabled(True)
+        self.ui.startTimer.setEnabled(False)
 
     def stop_timer(self):
         if self.timekeeper_w.timekeeper.connected:
             return
         self.scoreboard.time.stop()
-        self.ui.stopTimer.setEnabled(False);
-        self.ui.startTimer.setEnabled(True);
+        self.ui.stopTimer.setEnabled(False)
+        self.ui.startTimer.setEnabled(True)
 
     def set_timer(self):
         if self.timekeeper_w.timekeeper.connected:
@@ -169,3 +173,48 @@ class MainWindow(QDialog):
         score_right = open("Output/score_right.txt", "r").read()
         self.ui.score_left.setText(score_left)
         self.ui.score_right.setText(score_right)
+
+    def scorecrawl_start(self):
+        if(self.scorecrawl_connected == False):
+            self.connect_sc()
+            self.ui.scorecrawlButton.setText("Stop score crawl")
+        else:
+            self.disconnect_sc()
+            self.ui.scorecrawlButton.setText("Start score crawl")
+    
+    def connect_sc(self):
+        sc_file = open("quidditchlive_api/GameIDs_ScoreCrawl.txt", "w")
+        sc_file.write("")
+        sc_file.close()
+        sc_file = open("quidditchlive_api/GameIDs_ScoreCrawl.txt", "a")
+        first = 1
+        for i in range(self.ui.scrolllayout.count()):
+            if(self.ui.scrolllayout.itemAt(i).widget().isChecked()):
+                if(first == 0):
+                    sc_file.write("\n")
+                sc_file.write(self.ui.scrolllayout.itemAt(i).widget().text()[:13])
+                first = 0
+        sc_file.close()
+
+        self.scorecrawl_proc = subprocess.Popen('node .\quidditchlive_api\quidditchlive_scorecrawl.js')
+        self.scorecrawl_connected = True
+
+    def disconnect_sc(self):
+        self.scorecrawl_proc.kill()
+        print("Quidditch Score Crawl disconnected.")
+        self.scorecrawl_connected = False
+
+    def read_gameids_sc(self):
+        open("quidditchlive_api/gameidstonames.txt", "w").write("")
+        self.gameidstonames_proc = subprocess.Popen('node .\quidditchlive_api\quidditchlive_gameidtonames.js')
+        time.sleep(3)
+        self.gameidstonames_proc.kill()
+        for i in reversed(range(self.ui.scrolllayout.count())): 
+            self.ui.scrolllayout.itemAt(i).widget().setParent(None)
+        with open("quidditchlive_api/gameidstonames.txt") as f:
+            self.gameids_list = f.readlines()
+        # you may also want to remove whitespace characters like `\n` at the end of each line
+        self.gameids_list = [x.strip() for x in self.gameids_list]
+        for entry in self.gameids_list:
+            self.ui.name = QtWidgets.QCheckBox(entry)
+            self.ui.scrolllayout.addWidget(self.ui.name)

@@ -40,6 +40,22 @@ if __name__ == "__main__":
         os.chdir("..")
     app = QApplication(sys.argv)
     w = MainWindow()
+    '''
+    stylesheet = """
+        QPushButton{
+            margin: 5px;
+            background-color: #C0C0C0;
+            border: 2px solid black;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+
+    """
+    app.setStyleSheet(stylesheet)
+    '''
     w.show()
     updater = threading.Thread(target=w.update)
     updater.start()
