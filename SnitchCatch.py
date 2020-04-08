@@ -1,3 +1,4 @@
+'''
 from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
 from PyQt5 import QtGui
 import os
@@ -34,3 +35,4 @@ class SnitchCatchWindow(QDialog):
             self.main_window.add_right(30)
         self.scoreboard.write_score()
         self.accept()
+'''

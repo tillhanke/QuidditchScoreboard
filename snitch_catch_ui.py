@@ -1,3 +1,4 @@
+'''
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'snitch_catch.ui'
@@ -58,3 +59,4 @@ class Ui_SnitchCatch(object):
         self.okButton.setText(_translate("SnitchCatch", "Ok"))
         self.cancelButton.setText(_translate("SnitchCatch", "Cancel"))
 
+'''

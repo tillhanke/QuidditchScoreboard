@@ -12,7 +12,7 @@ import os
 class Ui_Penalty(object):
     def setupUi(self, Penalty):
         Penalty.setObjectName("Penalty")
-        Penalty.resize(1359, 921)
+        Penalty.resize(1359, 500)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Penalty)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout()

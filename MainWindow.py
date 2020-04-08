@@ -20,7 +20,7 @@ from SureBro import SureBro
 from TimekeeperWindow import TimekeeperWindow
 from Penalty import PenaltyWindow
 from Settings import SettingsWindow
-from SnitchCatch import SnitchCatchWindow
+#from SnitchCatch import SnitchCatchWindow
 from Extra_Timer import ExtraTimerWindow
 from timekeeper import Timekeeper
 
@@ -30,7 +30,9 @@ class MainWindow(QDialog):
         self.scoreboard = ScoreBoard(self)
         self.ui = Ui_main()
         self.ui.setupUi(self)
-        self.show()
+        #self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
+        #self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
+        self.showMaximized()
         self.really_ui = SureBro(self)
         # in case of restart
         self.scoreboard.read_all()
@@ -40,7 +42,7 @@ class MainWindow(QDialog):
         self.penalty_w = PenaltyWindow(self.scoreboard)
         self.settings_w = SettingsWindow(self.scoreboard, self)
         self.settings_w.show()
-        self.snitch_w = SnitchCatchWindow(self.scoreboard, self)
+        #self.snitch_w = SnitchCatchWindow(self.scoreboard, self)
         self.extra_timers = []
 
         time_thread = threading.Thread(target=self.update_timer_ui)
@@ -72,6 +74,8 @@ class MainWindow(QDialog):
         self.scoreboard.time.start()
         self.ui.stopTimer.setEnabled(True)
         self.ui.startTimer.setEnabled(False)
+        self.ui.snitchcatch_right.setEnabled(False)
+        self.ui.snitchcatch_left.setEnabled(False)
 
     def stop_timer(self):
         if self.timekeeper_w.timekeeper.connected:
@@ -79,6 +83,8 @@ class MainWindow(QDialog):
         self.scoreboard.time.stop()
         self.ui.stopTimer.setEnabled(False)
         self.ui.startTimer.setEnabled(True)
+        self.ui.snitchcatch_right.setEnabled(True)
+        self.ui.snitchcatch_left.setEnabled(True)
 
     def set_timer(self):
         if self.timekeeper_w.timekeeper.connected:
@@ -129,6 +135,19 @@ class MainWindow(QDialog):
     def settings_start(self):
         self.settings_w.show()
 
+    def snitch_catch_left(self):
+        self.scoreboard.teamleft.snitch_catch.append(True)
+        self.scoreboard.teamright.snitch_catch.append(False)
+        self.add_left(30)
+        self.scoreboard.write_score()
+
+    def snitch_catch_right(self):
+        self.scoreboard.teamleft.snitch_catch.append(False)
+        self.scoreboard.teamright.snitch_catch.append(True)
+        self.add_right(30)
+        self.scoreboard.write_score()
+
+    '''
     def snitch_catch(self):
         if self.timekeeper_w.timekeeper.connected:
             return
@@ -138,6 +157,7 @@ class MainWindow(QDialog):
         self.snitch_w.ui.teamLeftButton.setText(self.scoreboard.teamleft.name)
         self.scoreboard.time.stop()
         self.snitch_w.show()
+    '''
 
     def open_penalty(self):
         self.penalty_w = PenaltyWindow(self.scoreboard)
@@ -218,3 +238,6 @@ class MainWindow(QDialog):
         for entry in self.gameids_list:
             self.ui.name = QtWidgets.QCheckBox(entry)
             self.ui.scrolllayout.addWidget(self.ui.name)
+    
+    def closeEvent(self, event):
+        self.accept()
