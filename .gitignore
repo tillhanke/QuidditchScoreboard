@@ -3,7 +3,6 @@ __pycache__/
 RealLogos/
 build/
 dist/
-Input/
 Output/
 timekeeper.py
 quidditchlive_api/node_modules/
