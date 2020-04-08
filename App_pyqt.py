@@ -3,7 +3,7 @@ from scores_ui import Ui_main
 from timekeeper_ui import Ui_Timekeeper
 from setup_ui import Ui_settings
 from penalty_ui import Ui_Penalty
-from snitch_catch_ui import Ui_SnitchCatch
+#from snitch_catch_ui import Ui_SnitchCatch
 from sureBro_ui import Ui_sureBro
 import os
 import io
@@ -40,23 +40,11 @@ if __name__ == "__main__":
         os.chdir("..")
     app = QApplication(sys.argv)
     w = MainWindow()
-    '''
-    stylesheet = """
-        QPushButton{
-            margin: 5px;
-            background-color: #C0C0C0;
-            border: 2px solid black;
-            color: black;
-            padding: 10px 20px;
-            text-align: center;
-            font-size: 14px;
-            border-radius: 8px;
-        }
-
-    """
-    app.setStyleSheet(stylesheet)
-    '''
-    w.show()
+    
+    with open("qsb.stylesheet", "r") as fh:
+        app.setStyleSheet(fh.read())
+    
+    #w.showMaximized()
     updater = threading.Thread(target=w.update)
     updater.start()
     sys.exit(app.exec_())

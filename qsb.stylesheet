@@ -1,0 +1,67 @@
+QPushButton:!hover{
+    margin: 5px;
+    background-color: #C0C0C0;
+    border: 2px solid black;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+}
+QPushButton:hover{
+    background-color: #A9A9A9;
+    margin: 5px;
+    border: 2px solid black;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+}
+QPushButton:disabled{
+    background-color: #DCDCDC;
+    margin: 5px;
+    border: 2px solid black;
+    color: #808080;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+}
+QWidget#tab1, QWidget#tab2, QWidget#tab3{
+    background-image: url(background.png);
+}
+QWidget#score_left, QWidget#score_right{
+    margin: 20px;
+}
+QWidget#teamname_left, QWidget#teamname_right{
+    font-size: 50px;
+    margin: 30px;
+}
+QWidget#snitchcatch_left, QWidget#snitchcatch_right{
+    margin: 5px;
+    background-color: #CCAC00;
+    border: 2px solid black;
+    color: black;
+    padding: 40px 40px 40px 40px;
+    text-align: center;
+    font-size: 20px;
+}
+QWidget#snitchcatch_left:hover, QWidget#snitchcatch_right:hover{
+    margin: 5px;
+    background-color: #A38A00;
+    border: 2px solid black;
+    color: black;
+    padding: 40px 40px 40px 40px;
+    text-align: center;
+    font-size: 20px;
+}
+QWidget#snitchcatch_left:disabled, QWidget#snitchcatch_right:disabled{
+    margin: 5px;
+    background-color: #A39370;
+    border: 2px solid black;
+    color: black;
+    padding: 40px 40px 40px 40px;
+    text-align: center;
+    font-size: 20px;
+}
