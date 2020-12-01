@@ -118,12 +118,14 @@ class ScoreBoard:
                 writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
                 writer.writeheader()
                 writer.writerow({"Name": str(self.penalty["player"]), "Team": str(self.penalty["team"].name), "Reason": str(self.penalty["reason"])})
+            '''
             with io.open("Output/PenaltyTeam.txt", "w", encoding="utf-8") as dat:
                 dat.write(self.penalty["team"].name)
             with io.open("Output/PenaltyPlayer.txt", "w", encoding="utf-8") as dat:
                 dat.write(self.penalty["player"])
             with io.open("Output/PenaltyReason.txt", "w", encoding="utf-8") as dat:
                 dat.write(self.penalty["reason"])
+            '''
             try:
                 shutil.copyfile("Input/Cards/" + self.penalty["card"], "Output/card.png")
             except FileExistsError:
