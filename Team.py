@@ -4,7 +4,7 @@ import os
 import io
 from PIL import Image, ImageDraw
 import shutil
-import websocket
+#import websocket
 import time
 import urllib.request
 import json
@@ -50,8 +50,8 @@ class Team:
         # set name and roster
         try:
             with codecs.open("Input/Teamrosters/"+self.path+".txt", "r", 'utf-8') as roster_file:
-                content = roster_file.readlines()
-                self.name = content[0][0:-1]
+                content = roster_file.read().splitlines()
+                self.name = content[0]
             for line in content[1:]:
                 if ":" not in line:
                     continue

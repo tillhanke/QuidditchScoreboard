@@ -188,43 +188,32 @@
       {
         let points = {'A': 0, 'B': 0};
         let points_str = {'A': '0', 'B': '0'};
-        let periods = ['regular', 'firstOT', 'secondOT'];
         for(var team in points)
         {
-          for(var ii=0;ii<periods.length;ii++)
-          {
-            let period = periods[ii];
-            let period_data = data.score[team][period];
-            if(period_data.quaffelPoints!=null)
-            {
-              points[team]+=period_data.quaffelPoints;
-            }
-            if(period_data.snitchPoints!=null)
-            {
-              points[team]+=period_data.snitchPoints;
-            }
-            points_str[team] = points[team].toString();
-          }
+					let period_data = data.score[team].total;
+					if(period_data!=null)
+					{
+						points[team]+=period_data;
+					}
+					if(period_data.snitchPoints!=null)
+					{
+						points[team]+=period_data.snitchPoints;
+					}
+					points_str[team] = points[team].toString();
         }
         for(var team in points_str)
         {
           let other_team=(team=='B')?'A':'B';
-          for(var ii=0;ii<periods.length;ii++)
-          {
-            let period = periods[ii];
-            let caught = data.score[team][period].snitchCaught;
-            let caught_other_team = data.score[other_team][period].snitchCaught;
-            if(caught!=null)
-            {
-              if(caught || caught_other_team)
-              {
-                if(caught){points_str[team]+='*';}
-                else{points_str[team]+='°';}
-              }
-              else if(period=='regular' && !caught && !caught_other_team){break;}
-              else if(period=='firstOT' && !caught && !caught_other_team && (getFirstOTGameTimeFromGameDuration(data, getFirstOTGameDuration())==0)){points_str[team]+='°';}
-              else if(period=='secondOT' && !caught && !caught_other_team && (points.A!=points.B)){points_str[team]+='°';}
-            }
+
+					let caught = data.score[team].snitchCaught;
+					let caught_other_team = data.score[other_team].snitchCaught;
+					if(caught!=null)
+					{
+						if(caught || caught_other_team)
+						{
+							if(caught){points_str[team]+='*';}
+							else{points_str[team]+='°';}
+						}
           }
         }
         return points_str;
@@ -309,7 +298,13 @@
   /*****************/
   /*** GAME TIME *** ==> latest after 30 seconds you realize if you aren't connected to the timekeeper anymore
   /*****************/
-  function getGameTimeString(obj, gameduration){let gametime;if(obj.active_period=='firstOT'){gametime = getFirstOTGameTimeFromGameDuration(obj, gameduration);}else if(obj.active_period=='regular' || obj.active_period=='secondOT'){gametime = gameduration;}else{return false;}let minutes = parseInt(Math.floor(gametime/1000/60));let seconds = parseInt(Math.floor(gametime/1000-minutes*60));return minutes.pad(2)+":"+seconds.pad(2);}
+  function getGameTimeString(obj, gameduration){
+		let gametime;
+		gametime = gameduration;
+		let minutes = parseInt(Math.floor(gametime/1000/60));
+		let seconds = parseInt(Math.floor(gametime/1000-minutes*60));
+		return minutes.pad(2)+":"+seconds.pad(2);
+	}
   function getFirstOTGameTimeFromGameDuration(obj, gameduration){let time_left = obj.gametime.firstOT.periodLength_ms-gameduration;let gametime = Math.ceil(time_left/1000)*1000;if(gametime<0){gametime=0;}return gametime;}
   function getFirstOTGameDuration(){let period_gameduration;if(saved_data.gametime.firstOT.running){period_gameduration = saved_data.gametime.firstOT.gameDurationLastStop_ms+(getTimestamp_ms()-diff)-saved_data.gametime.firstOT.timeAtLastStart_ms;if(period_gameduration>saved_data.gametime.firstOT.periodLength_ms){period_gameduration=saved_data.gametime.firstOT.periodLength_ms;}}else{period_gameduration = saved_data.gametime.firstOT.gameDurationLastStop_ms;}return period_gameduration;}
   async function gametimeLoop(delay){
@@ -320,17 +315,13 @@
     await customSleep(delay);
     if(Object.keys(saved_data).length!=0){
       try{
-        if('active_period' in saved_data){
-          let period_gameduration;
-          if(saved_data.active_period=='regular' || saved_data.active_period=='secondOT'){
-            if(saved_data.gametime[saved_data.active_period].running){
-              period_gameduration = saved_data.gametime[saved_data.active_period].gametimeLastStop_ms+(getTimestamp_ms()-diff)-saved_data.gametime[saved_data.active_period].timeAtLastStart_ms;
-            }
-            else{
-              period_gameduration = saved_data.gametime[saved_data.active_period].gametimeLastStop_ms;}
-            }
-        else if(saved_data['active_period']=='firstOT'){period_gameduration = getFirstOTGameDuration()
-        }
+				let period_gameduration;
+				if(saved_data.gametime.running){
+					period_gameduration = saved_data.gametime.last_stop+(getTimestamp_ms()-diff)-saved_data.gametime.last_start;
+				}
+				else{
+					period_gameduration = saved_data.gametime.last_stop;
+				}
         let gametime_str = getGameTimeString(saved_data, period_gameduration);
         if(gametime_str!=last_gametime_str){
           last_gametime_str = gametime_str;
@@ -347,6 +338,7 @@
           process.chdir('..');
           process.chdir('quidditchlive_api');
           }
+				/*
         if('alive_timestamp' in saved_data){
           let delta_from_last_alive_ms = ((getTimestamp_ms()-diff)-saved_data.alive_timestamp*1000);
           let connected = delta_from_last_alive_ms<30000;
@@ -362,8 +354,8 @@
               else{log(getCurrentTime(), chalk.bold('The timekeeper is currently ')+chalk.bold.red('not connected')+chalk(' ==> saved to file "connected.txt".'));}
             });
           } 
-        } 
         }
+				*/
       }
       catch(err){log(err);}
       }

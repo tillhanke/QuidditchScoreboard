@@ -4,7 +4,7 @@ import os
 import io
 from PIL import Image, ImageDraw
 import shutil
-import websocket
+#import websocket
 import time
 import urllib.request
 import json
@@ -25,7 +25,7 @@ class PenaltyWindow(QDialog):
         self.team_chosen()
         try:
             with io.open("Input/penalty_reasons.txt", "r", encoding="utf-8") as dat:
-                self.reasons = dat.readlines()
+                self.reasons = dat.read().splitlines()
         except FileNotFoundError:
             self.reasons = []
         # ui setups
@@ -49,7 +49,7 @@ class PenaltyWindow(QDialog):
 
         players = sorted(players, key=lambda l: l[1], reverse=False)
         self.ui.list_players.clear()
-        self.ui.list_players.addItems(["{0}: {1}".format(x, y) for x, y in players])
+        self.ui.list_players.addItems(["{0} {1}".format(x, y) for x, y in players])
 
     def ok(self):
         if self.ui.input_number.text() != "":

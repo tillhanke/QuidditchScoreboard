@@ -4,13 +4,14 @@ import os
 import io
 from PIL import Image, ImageDraw
 import shutil
-import websocket
+#import websocket
 import time
 import urllib.request
 import json
 import math
 import threading
 import sys
+import csv
 import codecs
 from Team import *
 from Timer import *
@@ -110,6 +111,13 @@ class ScoreBoard:
         if len(self.penalty) == 0:
             return
         else:
+            if os.path.isfile('Output/penalty.csv'):
+                os.remove('Output/penalty.csv')
+            with open('Output/penalty.csv','w') as file:
+                fieldnames = ["Name", 'Team', 'Reason']
+                writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
+                writer.writeheader()
+                writer.writerow({"Name": str(self.penalty["player"]), "Team": str(self.penalty["team"].name), "Reason": str(self.penalty["reason"])})
             with io.open("Output/PenaltyTeam.txt", "w", encoding="utf-8") as dat:
                 dat.write(self.penalty["team"].name)
             with io.open("Output/PenaltyPlayer.txt", "w", encoding="utf-8") as dat:

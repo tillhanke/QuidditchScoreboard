@@ -5,7 +5,7 @@ import os
 import io
 from PIL import Image, ImageDraw
 import shutil
-import websocket
+#import websocket
 import time
 import urllib.request
 import json
