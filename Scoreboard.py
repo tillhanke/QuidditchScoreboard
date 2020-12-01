@@ -174,11 +174,7 @@ class ScoreBoard:
 
     def reset_penalty(self):
         time.sleep(15)
-        with open("Output/PenaltyTeam.txt", "w") as dat:
-            dat.write("")
-        with open("Output/PenaltyPlayer.txt", "w") as dat:
-            dat.write("")
-        with open("Output/PenaltyReason.txt", "w") as dat:
+        with open("Output/penalty.csv", "w") as dat:
             dat.write("")
         im = Image.new("RGBA", (100, 100))
         im.save("Output/card.png")

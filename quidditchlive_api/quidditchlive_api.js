@@ -159,7 +159,22 @@
     process.chdir('..');
     process.chdir('Output');
     let score = await getScore(data);
+		let overtime_setscore = await getOvertimeSetscore(data);
     if(score===false){log(getCurrentTime(), chalk.bold.blue('No score data available.'));return true;}
+		if(overtime_setscore===false) {
+			fs.writeFile('overtime_setscore.txt', "", (err) => 
+			{
+				if(err){log(err);}
+				else{log(getCurrentTime(), chalk.bold('No overtime.'));}
+			});
+		}
+		else {
+			fs.writeFile('overtime_setscore.txt', overtime_setscore.toString(), (err) => 
+			{
+				if(err){log(err);}
+				else{log(getCurrentTime(), chalk.bold('Overtime setscore is ')+chalk.bold.cyan(overtime_setscore)+chalk(' ==> saved to file overtime_setscore.txt".'));}
+			});
+		}
     let score_before={A:null,B:null};
     let team_letters = ['A', 'B'];
     let team_sides = ['left', 'right'];
@@ -180,6 +195,21 @@
     process.chdir('..');
     process.chdir('quidditchlive_api');
   }
+	async function getOvertimeSetscore(data)
+	{
+		try
+		{
+			if(data['data_available'])
+			{
+				if(data.overtime_setscore!=null)
+				{
+					return data.overtime_setscore;
+				}
+			}
+		}
+		catch(err){log(err);}
+    return false;
+	}
   async function getScore(data)
   {
     try
@@ -204,15 +234,13 @@
         for(var team in points_str)
         {
           let other_team=(team=='B')?'A':'B';
-
-					let caught = data.score[team].snitchCaught;
-					let caught_other_team = data.score[other_team].snitchCaught;
+					let caught = data.score[team].snitch_caught;
+					let caught_other_team = data.score[other_team].snitch_caught;
 					if(caught!=null)
 					{
 						if(caught || caught_other_team)
 						{
 							if(caught){points_str[team]+='*';}
-							else{points_str[team]+='°';}
 						}
           }
         }
@@ -225,6 +253,8 @@
   
   async function savePenalty(data)
   {
+		process.chdir('..');
+		process.chdir('quidditchlive_api');
     let penalty = await getPenalty(data);
     if(penalty===false){log(getCurrentTime(), chalk.bold.blue('No penalty data available.'));return true;}
     let penalty_before = null;
@@ -267,6 +297,8 @@
         else{log(getCurrentTime(), chalk.bold('New penalty entry saved to penalty file "penalty_teamname.txt".'));}
       });
     }
+		process.chdir('..');
+		process.chdir('Output');
   }
 
   async function getPenalty(data)
