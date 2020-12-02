@@ -1,1 +1,1 @@
-B,blue,null,25,Continuing play after being beat,Team B
+A,red,null,2,Wearing forbidden equipment,Team A

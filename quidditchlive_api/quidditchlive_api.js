@@ -165,7 +165,6 @@
 			fs.writeFile('overtime_setscore.txt', "", (err) => 
 			{
 				if(err){log(err);}
-				else{log(getCurrentTime(), chalk.bold('No overtime.'));}
 			});
 		}
 		else {
@@ -261,6 +260,10 @@
     try{penalty_before = fs.readFileSync('penalty.txt', 'utf8');}catch(err){penalty_before='';}
     if(penalty_before!=penalty)
     {
+			fs.writeFile('new_penalty.txt', "1", (err) => 
+      {
+        if(err){log(err);}
+      });
       fs.writeFile('penalty.txt', penalty, (err) =>
       {
         if(err){log(err);}

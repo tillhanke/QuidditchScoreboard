@@ -48,7 +48,10 @@ class MainWindow(QDialog):
         time_thread = threading.Thread(target=self.update_timer_ui)
         time_thread.start()
         # self.ui.timekeeperButton.deleteLater()
-
+        
+        new_penalty_thread = threading.Thread(target=self.new_penalty)
+        new_penalty_thread.start()
+        
         self.scorecrawl_connected = 0
 
     def set_from_scoreboard(self):
@@ -183,6 +186,21 @@ class MainWindow(QDialog):
         self.ui.score_left.setText(str(self.scoreboard.teamleft.get_score_str()))
         self.ui.score_right.setText(str(self.scoreboard.teamright.get_score_str()))
         self.scoreboard.write_score()
+    
+    def new_penalty(self):
+        alt = 0
+        while self.result() == 0:
+            alt = (alt+1)%2
+            if self.timekeeper_w.timekeeper.connected:
+                new_penalty = open("quidditchlive_api/new_penalty.txt").read()
+                if(new_penalty == "1"):
+                    if(alt == 0):
+                        self.ui.penaltyButton.setStyleSheet('background-color: #228B22')
+                    else:
+                        self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
+                else:
+                    self.ui.penaltyButton.setProperty("new_penalty", "0")
+            time.sleep(0.5)
 
     def close(self):
         self.scoreboard.time.stop()

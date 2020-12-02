@@ -28,6 +28,26 @@ QPushButton:disabled{
     font-size: 18px;
     border-radius: 8px;
 }
+QPushButton[new_penalty="0"]:!hover{
+    margin: 5px;
+    background-color: #C0C0C0;
+    border: 2px solid black;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+}
+QPushButton:hover[new_penalty="0"]{
+    margin: 5px;
+    background-color: #A9A9A9;
+    border: 2px solid black;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+}
 QWidget#tab1, QWidget#tab2, QWidget#tab3{
     background-image: url(background.png);
 }

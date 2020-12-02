@@ -84,5 +84,6 @@ class PenaltyWindow(QDialog):
                                    "card": card
                                    }
         self.scoreboard.write_penalty()
+        open("quidditchlive_api/new_penalty.txt", "w").write("0")
         self.accept()
 
