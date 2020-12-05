@@ -1,2 +1,3 @@
-A-489-739-140: Paris - Berlin
-A-884-231-792: Team A - Team B
+A-910-115-906: Bonn - Paris
+A-403-513-169: Bochum - Dodos
+A-737-867-942: Hamburg - Mamburg

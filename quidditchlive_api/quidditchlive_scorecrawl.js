@@ -188,51 +188,36 @@
       {
         let points = {'A': 0, 'B': 0};
         let points_str = {'A': '0', 'B': '0'};
-        let periods = ['regular', 'firstOT', 'secondOT'];
         for(var team in points)
         {
-          for(var ii=0;ii<periods.length;ii++)
-          {
-            let period = periods[ii];
-            let period_data = data.score[team][period];
-            if(period_data.quaffelPoints!=null)
-            {
-              points[team]+=period_data.quaffelPoints;
-            }
-            if(period_data.snitchPoints!=null)
-            {
-              points[team]+=period_data.snitchPoints;
-            }
-            points_str[team] = points[team].toString();
-          }
+					let period_data = data.score[team].total;
+					if(period_data!=null)
+					{
+						points[team]+=period_data;
+					}
+					if(period_data.snitchPoints!=null)
+					{
+						points[team]+=period_data.snitchPoints;
+					}
+					points_str[team] = points[team].toString();
         }
         for(var team in points_str)
         {
           let other_team=(team=='B')?'A':'B';
-          for(var ii=0;ii<periods.length;ii++)
-          {
-            let period = periods[ii];
-            let caught = data.score[team][period].snitchCaught;
-            let caught_other_team = data.score[other_team][period].snitchCaught;
-            if(caught!=null)
-            {
-              if(caught || caught_other_team)
-              {
-                if(caught){points_str[team]+='*';}
-                else{points_str[team]+='°';}
-              }
-              else if(period=='regular' && !caught && !caught_other_team){break;}
-              else if(period=='firstOT' && !caught && !caught_other_team && (getFirstOTGameTimeFromGameDuration(data, getFirstOTGameDuration())==0)){points_str[team]+='°';}
-              else if(period=='secondOT' && !caught && !caught_other_team && (points.A!=points.B)){points_str[team]+='°';}
-            }
+					let caught = data.score[team].snitch_caught;
+					let caught_other_team = data.score[other_team].snitch_caught;
+					if(caught!=null)
+					{
+						if(caught || caught_other_team)
+						{
+							if(caught){points_str[team]+='*';}
+						}
           }
         }
         return points_str;
       }
     }
-    catch(err){
-      log(err);
-    }
+    catch(err){log(err);}
     return false;
   }
   /*****************/

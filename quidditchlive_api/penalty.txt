@@ -1,1 +1,1 @@
-A,yellow,null,1,Illegal physical contact,Team A
+A,blue,null,0,Delay of game,Bonn

@@ -54,7 +54,7 @@ class PenaltyWindow(QDialog):
     def ok(self):
         if self.ui.input_number.text() != "":
             if self.ui.input_number.text() in self.team.roster:
-                player = "{0} {1}".format(self.ui.input_number.text(), self.team.roster[self.ui.input_number.text()])
+                player = "{0} - {1}".format(self.ui.input_number.text(), self.team.roster[self.ui.input_number.text()])
             else:
                 player = "{0}".format(self.ui.input_number.text())
         else:
