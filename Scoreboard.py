@@ -92,9 +92,9 @@ class ScoreBoard:
 
     def write_teams(self):
         self.window.update_team_ui()
-        with io.open("Output/TeamLeft.txt", "w", encoding="utf-8") as dat:
+        with io.open("Output/TeamLeft.csv", "w", encoding="utf-8") as dat:
             dat.write(self.teamleft.name)
-        with io.open("Output/TeamRight.txt", "w", encoding="utf-8") as dat:
+        with io.open("Output/TeamRight.csv", "w", encoding="utf-8") as dat:
             dat.write(self.teamright.name)
 
     def write_score(self):
