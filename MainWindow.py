@@ -49,8 +49,8 @@ class MainWindow(QDialog):
         time_thread.start()
         # self.ui.timekeeperButton.deleteLater()
         
-        new_penalty_thread = threading.Thread(target=self.new_penalty)
-        new_penalty_thread.start()
+        #new_penalty_thread = threading.Thread(target=self.new_penalty)
+        #new_penalty_thread.start()
         
         self.scorecrawl_connected = 0
 
@@ -188,6 +188,7 @@ class MainWindow(QDialog):
         self.scoreboard.write_score()
     def new_penalty(self):
         alt = 0
+        '''
         while self.result() == 0:
             alt = (alt+1)%2
             if self.timekeeper_w.timekeeper.connected:
@@ -200,6 +201,7 @@ class MainWindow(QDialog):
                 else:
                     self.ui.penaltyButton.setProperty("new_penalty", "0")
             time.sleep(0.5)
+        '''
     def close(self):
         self.scoreboard.time.stop()
         self.really_ui.show()

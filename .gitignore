@@ -4,4 +4,9 @@ RealLogos/
 build/
 dist/
 Output/
+Output/card.png
 quidditchlive_api/node_modules/
+Input/TeamLogos/
+Input/Teamrosters/
+Input/penaltyreasons.txt
+Input/GameIDs.txt

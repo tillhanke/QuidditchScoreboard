@@ -34,6 +34,7 @@ class SureBro(QDialog):
         open("Output/score_left.txt", "w").write("0")
         open("Output/score_right.txt", "w").write("0")
         open("Output/timer.txt", "w").write("00:00")
+        open("quidditchlive_api/new_penalty.txt", "w").write("0")
         self.main.accept()
         self.accept()
 

@@ -50,7 +50,7 @@ class PenaltyWindow(QDialog):
 
         players = sorted(players, key=lambda l: l[1], reverse=False)
         self.ui.list_players.clear()
-        self.ui.list_players.addItems(["{0} {1}".format(x, y) for x, y in players])
+        self.ui.list_players.addItems(["{0} - {1}".format(x, y) for x, y in players])
 
     def ok(self):
         if self.ui.input_number.text() != "":
