@@ -28,7 +28,7 @@ class ScoreBoard:
     def read_all(self):
         if os.path.isdir("Output"):
             try:
-                with io.open("Output/score_left.txt", "r", encoding="utf-8") as dat:
+                with io.open("Output/score_left.csv", "r", encoding="utf-8") as dat:
                     line = dat.readline()
                     score = ""
                     for letter in line:
@@ -43,7 +43,7 @@ class ScoreBoard:
                 None
 
             try:
-                with io.open("Output/score_right.txt", "r", encoding="utf-8") as dat:
+                with io.open("Output/score_right.csv", "r", encoding="utf-8") as dat:
                     line = dat.readline()
                     score = ""
                     for letter in line:
@@ -70,7 +70,7 @@ class ScoreBoard:
                 None
 
             try:
-                with io.open("Output/timer.txt", "r", encoding="utf-8") as dat:
+                with io.open("Output/timer.csv", "r", encoding="utf-8") as dat:
                     self.time.time_str = dat.readline()
                     self.time.min = int(self.time.time_str.split(":")[0])
                     self.time.sec = int(self.time.time_str.split(":")[1])
@@ -102,9 +102,9 @@ class ScoreBoard:
         writes the scores to the files "Output/score*"
         :return:
         '''
-        with io.open("Output/score_left.txt", "w", encoding="utf-8") as dat:
+        with io.open("Output/score_left.csv", "w", encoding="utf-8") as dat:
             dat.write(self.teamleft.get_score_str())
-        with io.open("Output/score_right.txt", "w", encoding="utf-8") as dat:
+        with io.open("Output/score_right.csv", "w", encoding="utf-8") as dat:
             dat.write(self.teamright.get_score_str())
 
     def write_penalty(self):

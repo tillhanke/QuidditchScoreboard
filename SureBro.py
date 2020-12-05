@@ -31,10 +31,11 @@ class SureBro(QDialog):
             self.main.timekeeper_w.timekeeper.disconnect_js()
         for timer in self.main.extra_timers:
             timer.close()
-        open("Output/score_left.txt", "w").write("0")
-        open("Output/score_right.txt", "w").write("0")
-        open("Output/timer.txt", "w").write("00:00")
+        open("Output/score_left.csv", "w").write("0")
+        open("Output/score_right.csv", "w").write("0")
+        open("Output/timer.csv", "w").write("00:00")
         open("quidditchlive_api/new_penalty.txt", "w").write("0")
+        open("Output/overtime_setscore.csv", "w").write("")
         self.main.accept()
         self.accept()
 

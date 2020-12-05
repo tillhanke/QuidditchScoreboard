@@ -49,8 +49,8 @@ class MainWindow(QDialog):
         time_thread.start()
         # self.ui.timekeeperButton.deleteLater()
         
-        #new_penalty_thread = threading.Thread(target=self.new_penalty)
-        #new_penalty_thread.start()
+        new_penalty_thread = threading.Thread(target=self.new_penalty)
+        new_penalty_thread.start()
         
         self.scorecrawl_connected = 0
 
@@ -174,8 +174,8 @@ class MainWindow(QDialog):
     def update_timer_ui(self):
         while self.result() == 0:
             if self.timekeeper_w.timekeeper.connected:
-                gametime = open("Output/timer.txt").read()
-                if(str(self.scoreboard.teamleft.get_score_str()) != open("Output/score_left.txt", "r").read() or str(self.scoreboard.teamright.get_score_str()) != open("Output/score_right.txt", "r").read()):
+                gametime = open("Output/timer.csv").read()
+                if(str(self.scoreboard.teamleft.get_score_str()) != open("Output/score_left.csv", "r").read() or str(self.scoreboard.teamright.get_score_str()) != open("Output/score_right.csv", "r").read()):
                    self.update_score_ui_tk()
             else:
                 gametime = self.scoreboard.time.time_str
@@ -195,11 +195,16 @@ class MainWindow(QDialog):
                 new_penalty = open("quidditchlive_api/new_penalty.txt").read()
                 if(new_penalty == "1"):
                     if(alt == 0):
+                        self.ui.penaltyButton.setStyleSheet('background-color: #D77D00')
+                    else:
+                        self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
+                elif(new_penalty == "2"):
+                    if(alt == 0):
                         self.ui.penaltyButton.setStyleSheet('background-color: #228B22')
                     else:
                         self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
                 else:
-                    self.ui.penaltyButton.setProperty("new_penalty", "0")
+                    self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
             time.sleep(0.5)
         '''
     def close(self):
@@ -207,8 +212,8 @@ class MainWindow(QDialog):
         self.really_ui.show()
 
     def update_score_ui_tk(self):
-        score_left = open("Output/score_left.txt", "r").read()
-        score_right = open("Output/score_right.txt", "r").read()
+        score_left = open("Output/score_left.csv", "r").read()
+        score_right = open("Output/score_right.csv", "r").read()
         self.ui.score_left.setText(score_left)
         self.ui.score_right.setText(score_right)
 

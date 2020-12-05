@@ -120,7 +120,7 @@
     if(public_id && auth)
     {
       process.chdir('quidditchlive_api');
-      let filenames = ['score_left.txt','score_right.txt','gametime.txt','connected.txt'];
+      let filenames = ['score_left.csv','score_right.csv','gametime.csv','connected.txt'];
       for(var ii=0;ii<filenames.length;ii++){try{fs.unlinkSync(filenames[ii]);}catch(err){/*nothing*/}}
       log(getCurrentTime(), chalk.bold('Establishing connection with '+socket_address+'.'));
       const socket = io(socket_address);
@@ -160,7 +160,7 @@
 		let overtime_setscore = await getOvertimeSetscore(data);
     if(score===false){log(getCurrentTime(), chalk.bold.blue('No score data available.'));return true;}
 		if(overtime_setscore===false) {
-			fs.writeFile('overtime_setscore.txt', "", (err) => 
+			fs.writeFile('overtime_setscore.csv', "", (err) => 
 			{
 				if(err){log(err);}
 			});
@@ -172,10 +172,10 @@
 					process.chdir('..');
 					process.chdir('Output');
 				}
-			fs.writeFile('overtime_setscore.txt', overtime_setscore.toString(), (err) => 
+			fs.writeFile('overtime_setscore.csv', overtime_setscore.toString(), (err) => 
 			{
 				if(err){log(err);}
-				else{log(getCurrentTime(), chalk.bold('Overtime setscore is ')+chalk.bold.cyan(overtime_setscore)+chalk(' ==> saved to file overtime_setscore.txt".'));}
+				else{log(getCurrentTime(), chalk.bold('Overtime setscore is ')+chalk.bold.cyan(overtime_setscore)+chalk(' ==> saved to file overtime_setscore.csv".'));}
 			});
 		}
     let score_before={A:null,B:null};
@@ -185,7 +185,7 @@
     {
       let team_letter=team_letters[ii];
       let team_side = team_sides[ii];
-      try{score_before[team_letter] = fs.readFileSync('score_'+team_sides[ii]+'.txt', 'utf8');}catch(err){score_before[team_letter]='';}
+      try{score_before[team_letter] = fs.readFileSync('score_'+team_sides[ii]+'.csv', 'utf8');}catch(err){score_before[team_letter]='';}
       if(score_before[team_letter]!=score[team_letter])
       {
 				let directory = process.cwd().split("\\");
@@ -194,10 +194,10 @@
 					process.chdir('..');
 					process.chdir('Output');
 				}
-        fs.writeFile('score_'+team_sides[ii]+'.txt', score[team_letter], (err) => 
+        fs.writeFile('score_'+team_sides[ii]+'.csv', score[team_letter], (err) => 
         {
           if(err){log(err);}
-          else{log(getCurrentTime(), chalk.bold('Score is ')+chalk.bold.cyan(score.A+'-'+score.B)+chalk(' ==> saved to file "score_'+team_side+'.txt".'));}
+          else{log(getCurrentTime(), chalk.bold('Score is ')+chalk.bold.cyan(score.A+'-'+score.B)+chalk(' ==> saved to file "score_'+team_side+'.csv".'));}
         });
       }
     }
@@ -263,26 +263,44 @@
     let penalty = await getPenalty(data);
     if(penalty===false){log(getCurrentTime(), chalk.bold.blue('No penalty data available.'));return true;}
     let penalty_before = null;
-    try{penalty_before = fs.readFileSync('penalty.txt', 'utf8');}catch(err){penalty_before='';}
+    try{
+			let directory = process.cwd().split("\\");
+			directory = directory[directory.length - 1];
+			if (directory == "Output") {
+					process.chdir('..');
+					process.chdir('quidditchlive_api');
+			}
+			penalty_before = fs.readFileSync('penalty.txt', 'utf8');
+		}
+		catch(err){
+			penalty_before='';
+		}
     if(penalty_before!=penalty)
     {
+			let penalty_details = penalty.split(",")
+			
 			let directory = process.cwd().split("\\");
 			directory = directory[directory.length - 1];
 			if (directory == "Output") {
 				process.chdir('..');
 				process.chdir('quidditchlive_api');
 			}
-			log("New penalty:", penalty);
-			log("Old penalty:", penalty_before);
-			fs.writeFile('new_penalty.txt', "1", (err) => 
-      {
-        if(err){log(err);}
-      });
+			if(penalty_details[3]=="null" && penalty_details[4]=="null") {
+				fs.writeFile('new_penalty.txt', "1", (err) => 
+				{
+					if(err){log(err);}
+				});
+			}
+			else {
+				fs.writeFile('new_penalty.txt', "2", (err) => 
+				{
+					if(err){log(err);}
+				});
+			}
       fs.writeFile('penalty.txt', penalty, (err) =>
       {
         if(err){log(err);}
       });
-      let penalty_details = penalty.split(",")
       fs.writeFile('penalty_team.txt', penalty_details[0], (err) => 
       {
         if(err){log(err);}
@@ -378,12 +396,12 @@
 						process.chdir('..');
 						process.chdir('Output');
 					}
-          fs.writeFile('timer.txt', gametime_str, (err) => {
+          fs.writeFile('timer.csv', gametime_str, (err) => {
             if(err){
               log(err);
             }
             else{
-              log(getCurrentTime(), chalk.bold('Gametime is ')+chalk.bold.blue(gametime_str)+chalk(' ==> saved to file "timer.txt".'))
+              log(getCurrentTime(), chalk.bold('Gametime is ')+chalk.bold.blue(gametime_str)+chalk(' ==> saved to file "timer.csv".'))
               ;}
           });
           }

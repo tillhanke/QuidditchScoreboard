@@ -1,1 +1,1 @@
-A,yellowejection,Becker,25,Willfully ignoring being knocked out,Bochum
+B,blue,null,null,Immunity violation,Team B

@@ -38,7 +38,7 @@ QPushButton[new_penalty="0"]:!hover{
     font-size: 18px;
     border-radius: 8px;
 }
-QPushButton:hover[new_penalty="0"]{
+QPushButton[new_penalty="0"]:hover{
     margin: 5px;
     background-color: #A9A9A9;
     border: 2px solid black;

@@ -51,6 +51,7 @@ class Timekeeper:
         open("quidditchlive_api/penalty_reason.txt", "w").write("")
         open("quidditchlive_api/penalty_team.txt", "w").write("")
         open("quidditchlive_api/penalty_teamname.txt", "w").write("")
+        open("quidditchlive_api/new_penalty.txt", "w").write("0")
         self.connected = False
 
     '''
