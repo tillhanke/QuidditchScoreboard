@@ -156,8 +156,6 @@
   /*************************/
   async function saveScoreData(data)
   {
-    process.chdir('..');
-    process.chdir('Output');
     let score = await getScore(data);
 		let overtime_setscore = await getOvertimeSetscore(data);
     if(score===false){log(getCurrentTime(), chalk.bold.blue('No score data available.'));return true;}
@@ -168,6 +166,12 @@
 			});
 		}
 		else {
+			let directory = process.cwd().split("\\");
+				directory = directory[directory.length - 1];
+				if (directory == "quidditchlive_api") {
+					process.chdir('..');
+					process.chdir('Output');
+				}
 			fs.writeFile('overtime_setscore.txt', overtime_setscore.toString(), (err) => 
 			{
 				if(err){log(err);}
@@ -184,6 +188,12 @@
       try{score_before[team_letter] = fs.readFileSync('score_'+team_sides[ii]+'.txt', 'utf8');}catch(err){score_before[team_letter]='';}
       if(score_before[team_letter]!=score[team_letter])
       {
+				let directory = process.cwd().split("\\");
+				directory = directory[directory.length - 1];
+				if (directory == "quidditchlive_api") {
+					process.chdir('..');
+					process.chdir('Output');
+				}
         fs.writeFile('score_'+team_sides[ii]+'.txt', score[team_letter], (err) => 
         {
           if(err){log(err);}
@@ -191,8 +201,6 @@
         });
       }
     }
-    process.chdir('..');
-    process.chdir('quidditchlive_api');
   }
 	async function getOvertimeSetscore(data)
 	{
@@ -252,18 +260,24 @@
   
   async function savePenalty(data)
   {
-		process.chdir('..');
-		process.chdir('quidditchlive_api');
     let penalty = await getPenalty(data);
     if(penalty===false){log(getCurrentTime(), chalk.bold.blue('No penalty data available.'));return true;}
     let penalty_before = null;
     try{penalty_before = fs.readFileSync('penalty.txt', 'utf8');}catch(err){penalty_before='';}
     if(penalty_before!=penalty)
     {
+			let directory = process.cwd().split("\\");
+			directory = directory[directory.length - 1];
+			if (directory == "Output") {
+				process.chdir('..');
+				process.chdir('quidditchlive_api');
+			}
+			/*
 			fs.writeFile('new_penalty.txt', "1", (err) => 
       {
         if(err){log(err);}
       });
+			*/
       fs.writeFile('penalty.txt', penalty, (err) =>
       {
         if(err){log(err);}
@@ -300,8 +314,6 @@
         else{log(getCurrentTime(), chalk.bold('New penalty entry saved to penalty file "penalty_teamname.txt".'));}
       });
     }
-		process.chdir('..');
-		process.chdir('Output');
   }
 
   async function getPenalty(data)
@@ -360,8 +372,12 @@
         let gametime_str = getGameTimeString(saved_data, period_gameduration);
         if(gametime_str!=last_gametime_str){
           last_gametime_str = gametime_str;
-          process.chdir('..');
-          process.chdir('Output');
+          let directory = process.cwd().split("\\");
+					directory = directory[directory.length - 1];
+					if (directory == "quidditchlive_api") {
+						process.chdir('..');
+						process.chdir('Output');
+					}
           fs.writeFile('timer.txt', gametime_str, (err) => {
             if(err){
               log(err);
@@ -370,8 +386,6 @@
               log(getCurrentTime(), chalk.bold('Gametime is ')+chalk.bold.blue(gametime_str)+chalk(' ==> saved to file "timer.txt".'))
               ;}
           });
-          process.chdir('..');
-          process.chdir('quidditchlive_api');
           }
 				/*
         if('alive_timestamp' in saved_data){

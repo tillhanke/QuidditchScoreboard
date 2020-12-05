@@ -1,1 +1,1 @@
-A,red,null,2,Wearing forbidden equipment,Team A
+A,yellow,null,1,Illegal physical contact,Team A
