@@ -34,6 +34,7 @@ class PenaltyWindow(QDialog):
         self.ui.teamLeftButton.setText(self.scoreboard.teamleft.name)
         self.ui.teamRightButton.setText(self.scoreboard.teamright.name)
         self.ui.list_reasons.addItems(self.reasons)
+        open("quidditchlive_api/new_penalty.txt", "w").write("0")
 
     def team_chosen(self):
         players = []
@@ -84,6 +85,5 @@ class PenaltyWindow(QDialog):
                                    "card": card
                                    }
         self.scoreboard.write_penalty()
-        #open("quidditchlive_api/new_penalty.txt", "w").write("0")
         self.accept()
 

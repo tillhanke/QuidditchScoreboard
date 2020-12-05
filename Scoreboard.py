@@ -131,8 +131,6 @@ class ScoreBoard:
             except FileExistsError:
                 os.remove("Output/card.png")
                 shutil.copyfile("Input/Cards/" + self.penalty["card"], "Output/card.png")
-        penalty_thread = threading.Thread(target=self.reset_penalty)
-        penalty_thread.start()
 
     def write_jersey(self):
         x, y = 47, 60  # size of output Image
@@ -171,13 +169,6 @@ class ScoreBoard:
             shutil.copyfile(self.teamright.logo, "Output/TeamRightLogo.png")
         except FileNotFoundError as e:
             print(e)
-
-    def reset_penalty(self):
-        time.sleep(15)
-        with open("Output/penalty.csv", "w") as dat:
-            dat.write("")
-        im = Image.new("RGBA", (100, 100))
-        im.save("Output/card.png")
 
     def swap(self):
         inter = self.teamright

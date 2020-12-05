@@ -272,12 +272,12 @@
 				process.chdir('..');
 				process.chdir('quidditchlive_api');
 			}
-			/*
+			log("New penalty:", penalty);
+			log("Old penalty:", penalty_before);
 			fs.writeFile('new_penalty.txt', "1", (err) => 
       {
         if(err){log(err);}
       });
-			*/
       fs.writeFile('penalty.txt', penalty, (err) =>
       {
         if(err){log(err);}
