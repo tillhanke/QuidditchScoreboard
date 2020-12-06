@@ -160,7 +160,7 @@
 		let overtime_setscore = await getOvertimeSetscore(data);
     if(score===false){log(getCurrentTime(), chalk.bold.blue('No score data available.'));return true;}
 		if(overtime_setscore===false) {
-			fs.writeFile('overtime_setscore.csv', "", (err) => 
+			fs.writeFile('overtime_setscore.csv', "Overtime setscore\n", (err) => 
 			{
 				if(err){log(err);}
 			});
@@ -172,7 +172,7 @@
 					process.chdir('..');
 					process.chdir('Output');
 				}
-			fs.writeFile('overtime_setscore.csv', overtime_setscore.toString(), (err) => 
+			fs.writeFile('overtime_setscore.csv', "Overtime setscore\n"+overtime_setscore.toString(), (err) => 
 			{
 				if(err){log(err);}
 				else{log(getCurrentTime(), chalk.bold('Overtime setscore is ')+chalk.bold.cyan(overtime_setscore)+chalk(' ==> saved to file overtime_setscore.csv".'));}
@@ -194,7 +194,7 @@
 					process.chdir('..');
 					process.chdir('Output');
 				}
-        fs.writeFile('score_'+team_sides[ii]+'.csv', score[team_letter], (err) => 
+        fs.writeFile('score_'+team_sides[ii]+'.csv', "Score "+team_sides[ii]+"\n"+score[team_letter], (err) => 
         {
           if(err){log(err);}
           else{log(getCurrentTime(), chalk.bold('Score is ')+chalk.bold.cyan(score.A+'-'+score.B)+chalk(' ==> saved to file "score_'+team_side+'.csv".'));}
@@ -396,7 +396,7 @@
 						process.chdir('..');
 						process.chdir('Output');
 					}
-          fs.writeFile('timer.csv', gametime_str, (err) => {
+          fs.writeFile('timer.csv', "Gametime\n"+gametime_str, (err) => {
             if(err){
               log(err);
             }

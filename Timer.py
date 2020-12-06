@@ -31,7 +31,7 @@ class Timer:
 
     def write(self):
         with open(self.path, "w") as dat:
-            dat.write(self.time_str)
+            dat.write("Gametime\n"+self.time_str)
 
     def run(self):
         while self.running:

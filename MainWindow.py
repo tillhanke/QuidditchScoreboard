@@ -174,7 +174,7 @@ class MainWindow(QDialog):
     def update_timer_ui(self):
         while self.result() == 0:
             if self.timekeeper_w.timekeeper.connected:
-                gametime = open("Output/timer.csv").read()
+                gametime = open("Output/timer.csv", "r", encoding="utf-8").readlines()[1]
                 if(str(self.scoreboard.teamleft.get_score_str()) != open("Output/score_left.csv", "r").read() or str(self.scoreboard.teamright.get_score_str()) != open("Output/score_right.csv", "r").read()):
                    self.update_score_ui_tk()
             else:
@@ -212,8 +212,8 @@ class MainWindow(QDialog):
         self.really_ui.show()
 
     def update_score_ui_tk(self):
-        score_left = open("Output/score_left.csv", "r").read()
-        score_right = open("Output/score_right.csv", "r").read()
+        score_left = open("Output/score_left.csv", "r").readlines()[1]
+        score_right = open("Output/score_right.csv", "r").readlines()[1]
         self.ui.score_left.setText(score_left)
         self.ui.score_right.setText(score_right)
 

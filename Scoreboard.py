@@ -21,7 +21,7 @@ class ScoreBoard:
     def __init__(self, window):
         self.teamleft = Team()
         self.teamright = Team()
-        self.time = Timer(path="Output/timer.txt", upCounting=True)
+        self.time = Timer(path="Output/timer.csv", upCounting=True)
         self.window = window
         self.penalty = {}  # all information about a specific penalty will be saved in this dict
 
@@ -29,7 +29,7 @@ class ScoreBoard:
         if os.path.isdir("Output"):
             try:
                 with io.open("Output/score_left.csv", "r", encoding="utf-8") as dat:
-                    line = dat.readline()
+                    line = dat.readlines()[1]
                     score = ""
                     for letter in line:
                         if letter == "*":
@@ -44,7 +44,7 @@ class ScoreBoard:
 
             try:
                 with io.open("Output/score_right.csv", "r", encoding="utf-8") as dat:
-                    line = dat.readline()
+                    line = dat.readlines()[1]
                     score = ""
                     for letter in line:
                         if letter == "*":
@@ -59,19 +59,22 @@ class ScoreBoard:
 
             try:
                 with io.open("Output/left_path.txt", "r", encoding="utf-8") as dat:
-                    self.teamleft.set_path(dat.readline())
+                    line = dat.readline()
+                    self.teamleft.set_path(line)
             except FileNotFoundError:
                 None
 
             try:
                 with io.open("Output/right_path.txt", "r", encoding="utf-8") as dat:
-                    self.teamright.set_path(dat.readline())
+                    line = dat.readline()
+                    self.teamright.set_path(line)
             except FileNotFoundError:
                 None
 
             try:
                 with io.open("Output/timer.csv", "r", encoding="utf-8") as dat:
-                    self.time.time_str = dat.readline()
+                    line = dat.readlines()[1]
+                    self.time.time_str = line
                     self.time.min = int(self.time.time_str.split(":")[0])
                     self.time.sec = int(self.time.time_str.split(":")[1])
             except FileNotFoundError:
@@ -93,9 +96,9 @@ class ScoreBoard:
     def write_teams(self):
         self.window.update_team_ui()
         with io.open("Output/TeamLeft.csv", "w", encoding="utf-8") as dat:
-            dat.write(self.teamleft.name)
+            dat.write("Team Left\n"+self.teamleft.name)
         with io.open("Output/TeamRight.csv", "w", encoding="utf-8") as dat:
-            dat.write(self.teamright.name)
+            dat.write("Team Right\n"+self.teamright.name)
 
     def write_score(self):
         '''
@@ -103,9 +106,9 @@ class ScoreBoard:
         :return:
         '''
         with io.open("Output/score_left.csv", "w", encoding="utf-8") as dat:
-            dat.write(self.teamleft.get_score_str())
+            dat.write("Score left\n"+self.teamleft.get_score_str())
         with io.open("Output/score_right.csv", "w", encoding="utf-8") as dat:
-            dat.write(self.teamright.get_score_str())
+            dat.write("Score right\n"+self.teamright.get_score_str())
 
     def write_penalty(self):
         if len(self.penalty) == 0:

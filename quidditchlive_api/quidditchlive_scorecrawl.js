@@ -170,7 +170,7 @@
         scores_str += " | ";
       scores_str += scores[data.public_id[i]];
     }
-    fs.writeFile("Output/ScoreCrawl.csv", scores_str, (err) =>
+    fs.writeFile("Output/ScoreCrawl.csv", "Scorecrawl\n"+scores_str, (err) =>
       {
         if(err){
           log(err);

@@ -5,6 +5,7 @@ build/
 dist/
 Output/
 Output/card.png
+*.png
 quidditchlive_api/node_modules/
 Input/TeamLogos/
 Input/Teamrosters/
