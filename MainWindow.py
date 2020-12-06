@@ -178,7 +178,7 @@ class MainWindow(QDialog):
     def update_timer_ui(self):
         while self.result() == 0:
             if self.timekeeper_w.timekeeper.connected:
-                gametime = open("Output/timer.csv", "r", encoding="utf-8").readlines()[1]
+                gametime = open("Output/Timer.txt", "r", encoding="utf-8").read()
                 if(str(self.scoreboard.teamleft.get_score_str()) != open("Output/score_left.csv", "r").read() or str(self.scoreboard.teamright.get_score_str()) != open("Output/score_right.csv", "r").read()):
                    self.update_score_ui_tk()
             else:
@@ -215,17 +215,16 @@ class MainWindow(QDialog):
     def gameinfo(self):
         while self.result() == 0:
             try:
-                gametime = open("Output/timer.csv", "r").readlines()[1]
                 score_left = open("Output/score_left.csv", "r").readlines()[1]
                 score_right = open("Output/score_right.csv", "r").readlines()[1]
                 team_left = open("Output/TeamLeft.csv", "r").readlines()[1]
                 team_right = open("Output/TeamRight.csv", "r").readlines()[1]
                 
                 with open('Output/Gameinfo.csv','w') as file:
-                    fieldnames = ["Gametime", "Team Left", "Score Left", "Team Right", "Score Right"]
+                    fieldnames = ["Team Left", "Score Left", "Team Right", "Score Right"]
                     writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
                     writer.writeheader()
-                    writer.writerow({"Gametime": gametime, "Team Left": team_left, "Score Left": score_left, "Team Right": team_right, "Score Right": score_right})
+                    writer.writerow({"Team Left": team_left, "Score Left": score_left, "Team Right": team_right, "Score Right": score_right})
                 
             except:
                 continue

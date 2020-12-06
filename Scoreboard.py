@@ -7,8 +7,8 @@ import shutil
 #import websocket
 import time
 import urllib.request
-import json
 import math
+import json
 import threading
 import sys
 import csv
@@ -21,7 +21,7 @@ class ScoreBoard:
     def __init__(self, window):
         self.teamleft = Team()
         self.teamright = Team()
-        self.time = Timer(path="Output/timer.csv", upCounting=True)
+        self.time = Timer(path="Output/Timer.txt", upCounting=True)
         self.window = window
         self.penalty = {}  # all information about a specific penalty will be saved in this dict
 
@@ -72,9 +72,8 @@ class ScoreBoard:
                 None
 
             try:
-                with io.open("Output/timer.csv", "r", encoding="utf-8") as dat:
-                    line = dat.readlines()[1]
-                    self.time.time_str = line
+                with io.open("Output/Timer.txt", "r", encoding="utf-8") as dat:
+                    self.time.time_str = dat.read()
                     self.time.min = int(self.time.time_str.split(":")[0])
                     self.time.sec = int(self.time.time_str.split(":")[1])
             except FileNotFoundError:

@@ -35,7 +35,7 @@ class SureBro(QDialog):
         open("Output/score_right.csv", "w").write("Score Right\n0")
         open("Output/TeamLeft.csv", "w").write("Team Left\n")
         open("Output/TeamLeft.csv", "w").write("Team Right\n")
-        open("Output/timer.csv", "w").write("Gametime\n00:00")
+        open("Output/Timer.txt", "w").write("00:00")
         open("Output/Gameinfo.csv", "w").write("Gametime,Team Left,Score Left,Team Right,Score Right\n")
         open("quidditchlive_api/new_penalty.txt", "w").write("0")
         open("Output/overtime_setscore.csv", "w").write("Overtime setscore\n")

@@ -396,12 +396,12 @@
 						process.chdir('..');
 						process.chdir('Output');
 					}
-          fs.writeFile('timer.csv', "Gametime\n"+gametime_str, (err) => {
+          fs.writeFile('Timer.txt', gametime_str, (err) => {
             if(err){
               log(err);
             }
             else{
-              log(getCurrentTime(), chalk.bold('Gametime is ')+chalk.bold.blue(gametime_str)+chalk(' ==> saved to file "timer.csv".'))
+              log(getCurrentTime(), chalk.bold('Gametime is ')+chalk.bold.blue(gametime_str)+chalk(' ==> saved to file "Timer.txt".'))
               ;}
           });
           }
