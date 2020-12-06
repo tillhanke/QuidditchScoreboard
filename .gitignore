@@ -7,6 +7,7 @@ Output/
 Output/card.png
 *.png
 quidditchlive_api/node_modules/
+quidditchlive_api/*.txt
 Input/TeamLogos/
 Input/Teamrosters/
 Input/penaltyreasons.txt
