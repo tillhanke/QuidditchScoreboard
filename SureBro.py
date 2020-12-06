@@ -11,6 +11,7 @@ import json
 import math
 import threading
 import sys
+import csv
 import codecs
 from sureBro_ui import Ui_sureBro
 
@@ -33,14 +34,19 @@ class SureBro(QDialog):
             timer.close()
         open("Output/score_left.csv", "w").write("Score Left\n0")
         open("Output/score_right.csv", "w").write("Score Right\n0")
-        open("Output/TeamLeft.csv", "w").write("Team Left\n")
-        open("Output/TeamLeft.csv", "w").write("Team Right\n")
+        open("Output/TeamLeft.csv", "w").write("Team Left\nTeam A")
+        open("Output/TeamLeft.csv", "w").write("Team Right\nTeam B")
         open("Output/Timer.txt", "w").write("00:00")
-        open("Output/Gameinfo.csv", "w").write("Team Left,Score Left,Team Right,Score Right\n")
+        open("Output/Gameinfo.csv", "w").write("Team Left,Score Left,Team Right,Score Right\nTeam A,0,Team B,0")
         open("quidditchlive_api/new_penalty.txt", "w").write("0")
-        open("Output/overtime_setscore.csv", "w").write("Overtime setscore\n")
+        open("Output/overtime_setscore.csv", "w").write("Overtime setscore\n0")
         open("Output/left_path.txt", "w").write("")
         open("Output/right_path.txt", "w").write("")
+        with open('Output/penalty.csv','w') as file:
+            fieldnames = ["Name", 'Team', 'Reason']
+            writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
+            writer.writeheader()
+            writer.writerow({"Name": "Playername", "Team": "Teamname", "Reason": "Reason"})
         self.main.accept()
         self.accept()
 

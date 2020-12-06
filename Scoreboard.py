@@ -113,8 +113,6 @@ class ScoreBoard:
         if len(self.penalty) == 0:
             return
         else:
-            if os.path.isfile('Output/penalty.csv'):
-                os.remove('Output/penalty.csv')
             with open('Output/penalty.csv','w') as file:
                 fieldnames = ["Name", 'Team', 'Reason']
                 writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
