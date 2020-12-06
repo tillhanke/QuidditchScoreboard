@@ -58,4 +58,4 @@ class Team:
                 number, name = line.split(":")
                 self.roster[number] = name
         except FileNotFoundError as e:
-            print(e)
+            pass

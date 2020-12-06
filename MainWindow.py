@@ -213,6 +213,11 @@ class MainWindow(QDialog):
         '''
         
     def gameinfo(self):
+        score_left_old = -1
+        score_right_old = -1
+        team_left_old = ""
+        team_right_old = ""
+        
         while self.result() == 0:
             try:
                 score_left = open("Output/score_left.csv", "r").readlines()[1]
@@ -220,14 +225,21 @@ class MainWindow(QDialog):
                 team_left = open("Output/TeamLeft.csv", "r").readlines()[1]
                 team_right = open("Output/TeamRight.csv", "r").readlines()[1]
                 
-                with open('Output/Gameinfo.csv','w') as file:
-                    fieldnames = ["Team Left", "Score Left", "Team Right", "Score Right"]
-                    writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
-                    writer.writeheader()
-                    writer.writerow({"Team Left": team_left, "Score Left": score_left, "Team Right": team_right, "Score Right": score_right})
+                if(score_left != score_left_old or score_right != score_right_old or team_left != team_left_old or team_right != team_right_old):
+                    with open('Output/Gameinfo.csv','w') as file:
+                        fieldnames = ["Team Left", "Score Left", "Team Right", "Score Right"]
+                        writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
+                        writer.writeheader()
+                        writer.writerow({"Team Left": team_left, "Score Left": score_left, "Team Right": team_right, "Score Right": score_right})
+                 
+                score_left_old = score_left
+                score_right_old = score_right
+                team_left_old = team_left
+                team_right_old = team_right
                 
             except:
                 continue
+
             time.sleep(0.5)
         
     def close(self):
