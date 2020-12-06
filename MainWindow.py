@@ -11,6 +11,7 @@ import urllib.request
 import json
 import math
 import threading
+import csv
 import sys
 import codecs
 import subprocess
@@ -51,6 +52,9 @@ class MainWindow(QDialog):
         
         new_penalty_thread = threading.Thread(target=self.new_penalty)
         new_penalty_thread.start()
+        
+        gameinfo_thread = threading.Thread(target=self.gameinfo)
+        gameinfo_thread.start()
         
         self.scorecrawl_connected = 0
 
@@ -207,6 +211,26 @@ class MainWindow(QDialog):
                     self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
             time.sleep(0.5)
         '''
+        
+    def gameinfo(self):
+        while self.result() == 0:
+            try:
+                gametime = open("Output/timer.csv", "r").readlines()[1]
+                score_left = open("Output/score_left.csv", "r").readlines()[1]
+                score_right = open("Output/score_right.csv", "r").readlines()[1]
+                team_left = open("Output/TeamLeft.csv", "r").readlines()[1]
+                team_right = open("Output/TeamRight.csv", "r").readlines()[1]
+                
+                with open('Output/Gameinfo.csv','w') as file:
+                    fieldnames = ["Gametime", "Team Left", "Score Left", "Team Right", "Score Right"]
+                    writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
+                    writer.writeheader()
+                    writer.writerow({"Gametime": gametime, "Team Left": team_left, "Score Left": score_left, "Team Right": team_right, "Score Right": score_right})
+                
+            except:
+                continue
+            time.sleep(0.5)
+        
     def close(self):
         self.scoreboard.time.stop()
         self.really_ui.show()
