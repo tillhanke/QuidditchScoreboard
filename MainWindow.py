@@ -3,7 +3,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import QtGui
 import os
 import io
-from PIL import Image, ImageDraw
 import shutil
 #import websocket
 import time
@@ -143,12 +142,16 @@ class MainWindow(QDialog):
         self.settings_w.show()
 
     def snitch_catch_left(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.teamleft.snitch_catch.append(True)
         self.scoreboard.teamright.snitch_catch.append(False)
         self.add_left(30)
         self.scoreboard.write_score()
 
     def snitch_catch_right(self):
+        if self.timekeeper_w.timekeeper.connected:
+            return
         self.scoreboard.teamleft.snitch_catch.append(False)
         self.scoreboard.teamright.snitch_catch.append(True)
         self.add_right(30)
@@ -236,8 +239,14 @@ class MainWindow(QDialog):
                 score_right_old = score_right
                 team_left_old = team_left
                 team_right_old = team_right
+
+                overtime_setscore_content = open("Output/overtime_setscore.csv", "r").readlines()
+                if (len(overtime_setscore_content) > 1):
+                    if(overtime_setscore_content[1] != "0" and self.timekeeper_w.timekeeper.connected):
+                        self.ui.oss_label.setText("Overtime setscore: " + overtime_setscore_content[1])
                 
-            except:
+            except Exception as e:
+                print(e)
                 continue
 
             time.sleep(0.5)
@@ -296,6 +305,9 @@ class MainWindow(QDialog):
         for entry in self.gameids_list:
             self.ui.name = QtWidgets.QCheckBox(entry)
             self.ui.scrolllayout.addWidget(self.ui.name)
+
+    def delete_oss(self):
+        self.ui.oss_label.setText("")
     
     def closeEvent(self, event):
         self.accept()

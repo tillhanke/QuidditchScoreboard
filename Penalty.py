@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
 from PyQt5 import QtGui
 import os
 import io
-from PIL import Image, ImageDraw
 import shutil
 #import websocket
 import time
@@ -39,11 +38,13 @@ class PenaltyWindow(QDialog):
     def team_chosen(self):
         players = []
         if self.ui.teamRightButton.isChecked():
+            players = []
             self.team = self.scoreboard.teamright
             for key, value in self.team.roster.items():
                 players.append([str(key), str(value)])
 
         elif self.ui.teamLeftButton.isChecked():
+            players = []
             self.team = self.scoreboard.teamleft
             for key, value in self.team.roster.items():
                 players.append([str(key), str(value)])

@@ -7,7 +7,6 @@ from penalty_ui import Ui_Penalty
 from sureBro_ui import Ui_sureBro
 import os
 import io
-from PIL import Image, ImageDraw
 import codecs
 import shutil
 #import websocket

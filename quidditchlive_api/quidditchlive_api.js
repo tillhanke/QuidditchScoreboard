@@ -1,15 +1,9 @@
+import chalk from 'chalk';
+import fetch from 'node-fetch';
+import io from 'socket.io-client';
+import fs from 'fs'
+
 (async function() {
-
-  'use strict'
-
-  const io = require('socket.io-client');
-  const fetch = require("node-fetch");
-  const chalk = require("chalk");
-  const readlineSync = require('readline-sync');
-  const fs = require('fs');
-  const http = require('http');
-  const svg2img = require('svg2img');
-  const download = require('download-file')
   const log = console.log; 
 
   /**********************/
@@ -124,6 +118,7 @@
       for(var ii=0;ii<filenames.length;ii++){try{fs.unlinkSync(filenames[ii]);}catch(err){/*nothing*/}}
       log(getCurrentTime(), chalk.bold('Establishing connection with '+socket_address+'.'));
       const socket = io(socket_address);
+      
       socket.on('connect', function()
       {
         socket.emit('auth', {auth: auth, games: [public_id], no_delta: true});
@@ -147,6 +142,13 @@
           log(getCurrentTime(), chalk.red.inverse('Disconnected'));
           process.exit();
         });
+      });
+      socket.on("connect_error", (reason) => {
+        log(reason);
+        setTimeout(() => {
+          log("Retrying...");
+          socket.connect();
+        }, 1000);
       });
     }else{log(getCurrentTime(), chalk.red.inverse('Both, game id and authentication must be set. Exiting. '));process.exit();}
   }

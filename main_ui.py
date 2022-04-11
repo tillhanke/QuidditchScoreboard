@@ -8,6 +8,26 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+def clickable(widget):
+ 
+        class Filter(QtCore.QObject):
+
+            clicked = QtCore.pyqtSignal()
+            def eventFilter(self, obj, event):
+            
+                if obj == widget:
+                    if event.type() == QtCore.QEvent.MouseButtonRelease:
+                        if obj.rect().contains(event.pos()):
+                            self.clicked.emit()
+                            # The developer can opt for .emit(obj) to get the object within the slot.
+                            return True
+                
+                return False
+
+        filter = Filter(widget)
+        widget.installEventFilter(filter)
+        return filter.clicked
+
 class Ui_main(object):
     def setupUi(self, main):
 
@@ -92,6 +112,7 @@ class Ui_main(object):
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
         self.time_label.setObjectName("time_label")
         self.gridLayout_2.addWidget(self.time_label, 1, 0, 1, 1)
+
         self.verticalLayout.addLayout(self.gridLayout_2)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
@@ -133,6 +154,21 @@ class Ui_main(object):
         self.score_labels = QtWidgets.QHBoxLayout()
         self.score_labels.setSpacing(0)
         self.score_labels.setObjectName("score_labels")
+
+        self.oss_label = QtWidgets.QLabel(main)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.oss_label.sizePolicy().hasHeightForWidth())
+        self.oss_label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.oss_label.setFont(font)
+        self.oss_label.setTextFormat(QtCore.Qt.AutoText)
+        self.oss_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.oss_label.setObjectName("oss_label")
+        self.scoreLayout.addWidget(self.oss_label, 2, 2)
+
         self.score_left = QtWidgets.QLabel(main)
         self.score_left.setFixedSize(400, 300)
         font = QtGui.QFont()
@@ -335,6 +371,7 @@ class Ui_main(object):
         self.extratimerButton.clicked.connect(main.add_timer)
         self.scorecrawlButton.clicked.connect(main.scorecrawl_start)
         self.readGameIDs.clicked.connect(main.read_gameids_sc)
+        clickable(self.oss_label).connect(main.delete_oss)
         QtCore.QMetaObject.connectSlotsByName(main)
 
 

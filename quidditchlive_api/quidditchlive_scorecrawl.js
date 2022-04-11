@@ -1,16 +1,9 @@
+import chalk from 'chalk';
+import fetch from 'node-fetch';
+import io from 'socket.io-client';
+import fs from 'fs'
+
 (async function() {
-
-  'use strict'
-
-  const io = require('socket.io-client');
-  const fetch = require("node-fetch");
-  const chalk = require("chalk");
-  const readlineSync = require('readline-sync');
-  const http = require('http');
-  const svg2img = require('svg2img');
-  const download = require('download-file')
-  const fs = require('fs');
-  const { exec } = require("child_process");
   const log = console.log; 
 
 
