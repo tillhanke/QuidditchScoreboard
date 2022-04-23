@@ -162,6 +162,12 @@ import fs from 'fs'
 		let overtime_setscore = await getOvertimeSetscore(data);
     if(score===false){log(getCurrentTime(), chalk.bold.blue('No score data available.'));return true;}
 		if(overtime_setscore===false) {
+      let directory = process.cwd().split("\\");
+      directory = directory[directory.length - 1];
+				if (directory == "quidditchlive_api") {
+					process.chdir('..');
+					process.chdir('Output');
+				}
 			fs.writeFile('overtime_setscore.csv', "Overtime setscore\n", (err) => 
 			{
 				if(err){log(err);}
@@ -169,7 +175,7 @@ import fs from 'fs'
 		}
 		else {
 			let directory = process.cwd().split("\\");
-				directory = directory[directory.length - 1];
+      directory = directory[directory.length - 1];
 				if (directory == "quidditchlive_api") {
 					process.chdir('..');
 					process.chdir('Output');
@@ -190,7 +196,21 @@ import fs from 'fs'
       try{score_before[team_letter] = fs.readFileSync('score_'+team_sides[ii]+'.csv', 'utf8');}catch(err){score_before[team_letter]='';}
       if(score_before[team_letter]!=score[team_letter])
       {
-				let directory = process.cwd().split("\\");
+        let directory = process.cwd().split("\\");
+        directory = directory[directory.length - 1];
+          if (directory == "Output") {
+            process.chdir('..');
+            process.chdir('quidditchlive_api');
+        }
+        if(data.events.score.length != 0) {
+          fs.writeFile('last_score.txt', data.events.score[data.events.score.length - 1].team+","+data.events.score[data.events.score.length - 1].player_number, (err) => 
+          {
+            if(err){log(err);}
+            else{log(getCurrentTime(), chalk.bold('Goal scored by ')+chalk.bold.cyan(data.events.score[data.events.score.length - 1].player_number)+chalk(' from Team ')+chalk.bold.cyan(data.events.score[data.events.score.length - 1].team)+chalk(' ==> saved to file "last_score.txt".'));}
+          });
+        }
+
+				directory = process.cwd().split("\\");
 				directory = directory[directory.length - 1];
 				if (directory == "quidditchlive_api") {
 					process.chdir('..');

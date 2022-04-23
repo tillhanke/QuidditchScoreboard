@@ -54,6 +54,9 @@ class MainWindow(QDialog):
         
         gameinfo_thread = threading.Thread(target=self.gameinfo)
         gameinfo_thread.start()
+
+        last_goal_thread = threading.Thread(target=self.last_goal)
+        last_goal_thread.start()
         
         self.scorecrawl_connected = 0
 
@@ -193,6 +196,7 @@ class MainWindow(QDialog):
         self.ui.score_left.setText(str(self.scoreboard.teamleft.get_score_str()))
         self.ui.score_right.setText(str(self.scoreboard.teamright.get_score_str()))
         self.scoreboard.write_score()
+
     def new_penalty(self):
         
         while self.result() == 0:
@@ -247,6 +251,37 @@ class MainWindow(QDialog):
                     open("quidditchlive_api/new_penalty.txt", "w").write("0")
             time.sleep(0.5)
         
+    def last_goal(self):
+        while self.result() == 0:
+            if self.timekeeper_w.timekeeper.connected:
+                last_goal_info = open("quidditchlive_api/last_score.txt").read().split(",")
+                if(len(last_goal_info) == 1):
+                    continue
+                if(last_goal_info[1] == "null"):
+                    continue
+                last_goal_team = last_goal_info[0]
+                last_goal_number = last_goal_info[1]
+
+                if(last_goal_team == "A"):
+                    team = self.scoreboard.teamleft
+                elif(last_goal_team == "B"):
+                    team = self.scoreboard.teamright
+
+                if last_goal_number != "":
+                    if last_goal_number in team.roster:
+                            player = "{0} - {1}".format(last_goal_number, team.roster[last_goal_number])
+                    else:
+                            player = "{0}".format(last_goal_number)
+                else:
+                    player = player
+                try:
+                    with io.open("Output/last_goal.csv", "w", encoding="utf-8") as dat:
+                        dat.write("Last goal\n"+team.name+","+player)
+                except:
+                    print("File last_goal.csv is busy")
+                    continue
+
+            time.sleep(0.5)
 
     def gameinfo(self):
         score_left_old = -1
