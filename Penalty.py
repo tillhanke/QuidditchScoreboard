@@ -87,4 +87,3 @@ class PenaltyWindow(QDialog):
                                    }
         self.scoreboard.write_penalty()
         self.accept()
-

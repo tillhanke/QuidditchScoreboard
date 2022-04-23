@@ -24,6 +24,7 @@ class Team:
         self.path = ""
         self.logo = ""
         self.roster = {}
+        self.rosterpic = ""
 
     def get_score_str(self):
         if self.score_str != "":
@@ -47,6 +48,7 @@ class Team:
                 dat.write(self.path)
         # set logo path
         self.logo = "Input/Teamlogos/" + self.path + ".png"
+        self.rosterpic = "Input/TeamrosterPNGs/" + self.path + ".png"
         # set name and roster
         try:
             with codecs.open("Input/Teamrosters/"+self.path+".txt", "r", 'utf-8') as roster_file:

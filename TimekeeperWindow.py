@@ -30,6 +30,8 @@ class TimekeeperWindow(QDialog):
         self.timekeeper.auth, self.timekeeper.gameid = self.ui.auth.displayText(), self.ui.gameID.displayText(),
         #self.timekeeper.gameid, self.timekeeper.auth = "A-403-559-343", "83d4b05926f1b081e2f6da408bf5b1e5"  # for debugging insert info
         #self.timekeeper.connect()
+        if (self.timekeeper.gameid == ""):
+            return
         self.timekeeper.connect_js(self.timekeeper.auth, self.timekeeper.gameid)
         self.scoreboard.timekeeper = self.timekeeper
         if self.timekeeper.connected:

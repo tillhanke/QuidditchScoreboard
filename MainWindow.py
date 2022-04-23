@@ -194,27 +194,60 @@ class MainWindow(QDialog):
         self.ui.score_right.setText(str(self.scoreboard.teamright.get_score_str()))
         self.scoreboard.write_score()
     def new_penalty(self):
-        alt = 0
-        '''
+        
         while self.result() == 0:
-            alt = (alt+1)%2
             if self.timekeeper_w.timekeeper.connected:
                 new_penalty = open("quidditchlive_api/new_penalty.txt").read()
-                if(new_penalty == "1"):
-                    if(alt == 0):
-                        self.ui.penaltyButton.setStyleSheet('background-color: #D77D00')
+                if(new_penalty == "2"):
+                    penalty_team_tk = open("quidditchlive_api/penalty_team.txt", "r")
+                    penalty_team = penalty_team_tk.read()
+                    if(penalty_team == "A"):
+                        team = self.scoreboard.teamleft
+                    elif(penalty_team == "B"):
+                        team = self.scoreboard.teamright
+
+                    if(os.path.isfile("quidditchlive_api/penalty_card.txt")):
+                        penalty_card_tk = open("quidditchlive_api/penalty_card.txt", "r")
+                        penalty_card = penalty_card_tk.read()
+                        if(penalty_card == "blue"):
+                            card = "Blue.png"
+                        elif(penalty_card == "yellow"):
+                            card = "Yellow.png"
+                        elif(penalty_card == "yellowejection"):
+                            card = "YellowEjection.png"
+                        elif(penalty_card == "red"):
+                            card = "Red.png"
+                        elif(penalty_card == "ejection"):
+                            card = "Ejection.png"
+
+                    if(os.path.isfile("quidditchlive_api/penalty_playernumber.txt")):
+                        input_number_tk = open("quidditchlive_api/penalty_playernumber.txt", "r")
+                        number = input_number_tk.read()
+
+                    if(os.path.isfile("quidditchlive_api/penalty_reason.txt")):
+                        input_reason_tk = open("quidditchlive_api/penalty_reason.txt", "r")
+                        reason = input_reason_tk.read()
+                    if(reason == "null"):
+                        reason = ""
+
+                    if number != "":
+                        if number in team.roster:
+                            player = "{0} - {1}".format(number, team.roster[number])
+                        else:
+                            player = "{0}".format(number)
                     else:
-                        self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
-                elif(new_penalty == "2"):
-                    if(alt == 0):
-                        self.ui.penaltyButton.setStyleSheet('background-color: #228B22')
-                    else:
-                        self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
-                else:
-                    self.ui.penaltyButton.setStyleSheet('background-color: #C0C0C0')
+                        player = player
+
+                    self.scoreboard.penalty = {"player": player,
+                                            "reason": reason,
+                                            "team": team,
+                                            "card": card
+                                            }
+                    self.scoreboard.write_penalty()
+                    open("quidditchlive_api/new_penalty.txt", "w").write("0")
             time.sleep(0.5)
-        '''
         
+
     def gameinfo(self):
         score_left_old = -1
         score_right_old = -1
