@@ -156,20 +156,24 @@ class ScoreBoard:
     def write_logo(self):
         try:
             shutil.copyfile(self.teamleft.logo, "Output/TeamLeftLogo.png")
+            self.teamleft.rosterpic = "Input/TeamrosterPNGs/" + self.teamleft.path + "Left.png"
             shutil.copyfile(self.teamleft.rosterpic, "Output/TeamLeftRoster.png")
         except FileExistsError:
             os.remove("Output/TeamLeftLogo.png")
             shutil.copyfile(self.teamleft.logo, "Output/TeamLeftLogo.png")
+            self.teamleft.rosterpic = "Input/TeamrosterPNGs/" + self.teamleft.path + "Left.png"
             shutil.copyfile(self.teamleft.rosterpic, "Output/TeamLeftRoster.png")
         except FileNotFoundError as e:
             print(e)
 
         try:
             shutil.copyfile(self.teamright.logo, "Output/TeamRightLogo.png")
+            self.teamright.rosterpic = "Input/TeamrosterPNGs/" + self.teamright.path + "Right.png"
             shutil.copyfile(self.teamright.rosterpic, "Output/TeamRightRoster.png")
         except FileExistsError:
             os.remove("Output/TeamRightLogo.png")
             shutil.copyfile(self.teamright.logo, "Output/TeamRightLogo.png")
+            self.teamright.rosterpic = "Input/TeamrosterPNGs/" + self.teamright.path + "Right.png"
             shutil.copyfile(self.teamright.rosterpic, "Output/TeamRightRoster.png")
         except FileNotFoundError as e:
             print(e)
