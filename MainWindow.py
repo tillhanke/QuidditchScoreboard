@@ -384,6 +384,7 @@ class MainWindow(QDialog):
             self.ui.scrolllayout.addWidget(self.ui.name)
 
     def delete_oss(self):
+        open("Output/overtime_setscore.csv", "w").write("Overtime setscore\n")
         self.ui.oss_label.setText("")
     
     def closeEvent(self, event):
