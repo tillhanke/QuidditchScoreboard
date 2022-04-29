@@ -85,3 +85,40 @@ QWidget#snitchcatch_left:disabled, QWidget#snitchcatch_right:disabled{
     text-align: center;
     font-size: 20px;
 }
+QWidget#scrollcontent{
+    font-size: 30px;
+}
+
+QCheckBox {
+    spacing: 5px;
+}
+
+QCheckBox::indicator {
+    border: 1px solid black;
+    width: 18px;
+    height: 18px;
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: #F5F5F5;
+}
+
+QCheckBox::indicator:unchecked:hover {
+    background-color: #ccc;
+}
+
+QCheckBox::indicator:unchecked:pressed {
+    background-color: #ccc;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #2196F3;
+}
+
+QCheckBox::indicator:checked:hover {
+    background-color: #4682B4;
+}
+
+QCheckBox::checkmark {
+    color: black;
+}

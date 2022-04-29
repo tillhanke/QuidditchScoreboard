@@ -347,6 +347,7 @@ class Ui_main(object):
         self.scroll.setWidgetResizable(True)
         self.scrollcontent = QtWidgets.QWidget(self.scroll)
         self.scrolllayout = QtWidgets.QVBoxLayout(self.scrollcontent)
+        self.scrolllayout.setAlignment(QtCore.Qt.AlignTop)
         self.scrollcontent.setLayout(self.scrolllayout)
         self.scroll.setWidget(self.scrollcontent)
 

@@ -375,12 +375,13 @@ class MainWindow(QDialog):
         self.gameidstonames_proc.kill()
         for i in reversed(range(self.ui.scrolllayout.count())): 
             self.ui.scrolllayout.itemAt(i).widget().setParent(None)
-        with open("quidditchlive_api/gameidstonames.txt") as f:
+        with open("quidditchlive_api/gameidstonames.txt", encoding="utf-8-sig") as f:
             self.gameids_list = f.readlines()
         # you may also want to remove whitespace characters like `\n` at the end of each line
         self.gameids_list = [x.strip() for x in self.gameids_list]
         for entry in self.gameids_list:
             self.ui.name = QtWidgets.QCheckBox(entry)
+            self.ui.name.setObjectName("scrollcontent")
             self.ui.scrolllayout.addWidget(self.ui.name)
 
     def delete_oss(self):

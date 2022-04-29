@@ -37,6 +37,8 @@ if __name__ == "__main__":
         os.chdir("./quidditchlive_api")
         os.system("npm install")
         os.chdir("..")
+    open("Output/left_path.txt", "w").write("")
+    open("Output/right_path.txt", "w").write("")
     app = QApplication(sys.argv)
     w = MainWindow()
     

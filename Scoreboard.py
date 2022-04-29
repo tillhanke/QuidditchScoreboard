@@ -58,20 +58,6 @@ class ScoreBoard:
                 None
 
             try:
-                with io.open("Output/left_path.txt", "r", encoding="utf-8-sig") as dat:
-                    line = dat.readline()
-                    self.teamleft.set_path(line)
-            except FileNotFoundError:
-                None
-
-            try:
-                with io.open("Output/right_path.txt", "r", encoding="utf-8-sig") as dat:
-                    line = dat.readline()
-                    self.teamright.set_path(line)
-            except FileNotFoundError:
-                None
-
-            try:
                 with io.open("Output/Timer.txt", "r", encoding="utf-8-sig") as dat:
                     self.time.time_str = dat.read()
                     self.time.min = int(self.time.time_str.split(":")[0])
