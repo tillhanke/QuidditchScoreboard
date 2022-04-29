@@ -1,14 +1,7 @@
-.idea/
 __pycache__/
-RealLogos/
-build/
-dist/
 Output/
-Output/card.png
 *.png
 quidditchlive_api/node_modules/
 quidditchlive_api/*.txt
-Input/TeamLogos/
-Input/Teamrosters/
-Input/penaltyreasons.txt
-Input/GameIDs.txt
+Input/
+Output/
