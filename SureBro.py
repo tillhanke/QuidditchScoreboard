@@ -35,23 +35,20 @@ class SureBro(QDialog):
         open("Output/score_left.csv", "w").write("Score Left\n0")
         open("Output/score_right.csv", "w").write("Score Right\n0")
         open("Output/TeamLeft.csv", "w").write("Team Left\nTeam A")
-        open("Output/TeamLeft.csv", "w").write("Team Right\nTeam B")
+        open("Output/TeamRight.csv", "w").write("Team Right\nTeam B")
         open("Output/Timer.txt", "w").write("00:00")
         open("Output/Gameinfo.csv", "w").write("Team Left,Score Left,Team Right,Score Right\nTeam A,0,Team B,0")
         open("quidditchlive_api/new_penalty.txt", "w").write("0")
         open("Output/overtime_setscore.csv", "w").write("Overtime setscore\n0")
         open("Output/left_path.txt", "w").write("")
         open("Output/right_path.txt", "w").write("")
+        open("Output/last_goal.csv", "w").write("Last goal\n")
         with open('Output/penalty.csv','w') as file:
             fieldnames = ["Name", 'Team', 'Reason']
             writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
             writer.writeheader()
             writer.writerow({"Name": "Playername", "Team": "Teamname", "Reason": "Reason"})
-        with open('Output/ScoreCrawl.csv','w') as file:
-            fieldnames = ["Scorecrawl"]
-            writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
-            writer.writeheader()
-            writer.writerow({"Scorecrawl": ""})
+        open("Output/ScoreCrawl.csv", "w").write("Scorecrawl\n")
         self.main.accept()
         self.accept()
 
