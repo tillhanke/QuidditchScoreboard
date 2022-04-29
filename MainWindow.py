@@ -30,9 +30,10 @@ class MainWindow(QDialog):
         self.scoreboard = ScoreBoard(self)
         self.ui = Ui_main()
         self.ui.setupUi(self)
-        #self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
-        #self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
+        self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
+        self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
         self.showMaximized()
+        #self.setFixedSize(self.layout.sizeHint())
         self.really_ui = SureBro(self)
         # in case of restart
         self.scoreboard.read_all()
@@ -315,7 +316,6 @@ class MainWindow(QDialog):
                         self.ui.oss_label.setText("Overtime setscore: " + overtime_setscore_content[1])
                 
             except Exception as e:
-                print(e)
                 continue
 
             time.sleep(0.5)
@@ -361,6 +361,11 @@ class MainWindow(QDialog):
     def disconnect_sc(self):
         self.scorecrawl_proc.kill()
         print("Quidditch Score Crawl disconnected.")
+        with open('Output/ScoreCrawl.csv','w') as file:
+            fieldnames = ["Scorecrawl"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
+            writer.writeheader()
+            writer.writerow({"Scorecrawl": ""})
         self.scorecrawl_connected = False
 
     def read_gameids_sc(self):

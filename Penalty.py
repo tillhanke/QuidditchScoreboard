@@ -71,12 +71,14 @@ class PenaltyWindow(QDialog):
             reason = self.ui.list_reasons.currentText()
         if self.ui.redButton.isChecked():
             card = "Red.png"
-        elif self.ui.yellowredButton.isChecked():
-            card = "YellowRed.png"
+        elif self.ui.yellowejectionButton.isChecked():
+            card = "YellowEjection.png"
         elif self.ui.yellowButton.isChecked():
             card = "Yellow.png"
         elif self.ui.blueButton.isChecked():
             card = "Blue.png"
+        elif self.ui.ejectionButton.isChecked():
+            card = "Ejection.png"
         else:
             print("Please choose card")
             return None

@@ -9,21 +9,16 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 def clickable(widget):
- 
         class Filter(QtCore.QObject):
-
             clicked = QtCore.pyqtSignal()
             def eventFilter(self, obj, event):
-            
                 if obj == widget:
                     if event.type() == QtCore.QEvent.MouseButtonRelease:
                         if obj.rect().contains(event.pos()):
                             self.clicked.emit()
                             # The developer can opt for .emit(obj) to get the object within the slot.
                             return True
-                
                 return False
-
         filter = Filter(widget)
         widget.installEventFilter(filter)
         return filter.clicked
@@ -100,10 +95,10 @@ class Ui_main(object):
         self.timerLayout.addItem(spacerItem_tl2)
         self.gridLayout_2.addLayout(self.timerLayout, 2, 0, 1, 1)
         self.time_label = QtWidgets.QLabel(main)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.time_label.sizePolicy().hasHeightForWidth())
+        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        #sizePolicy.setHorizontalStretch(0)
+        #sizePolicy.setVerticalStretch(0)
+        #sizePolicy.setHeightForWidth(self.time_label.sizePolicy().hasHeightForWidth())
         self.time_label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(15)
@@ -132,10 +127,10 @@ class Ui_main(object):
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.score_header = QtWidgets.QLabel(main)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.score_header.sizePolicy().hasHeightForWidth())
+        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        #sizePolicy.setHorizontalStretch(0)
+        #sizePolicy.setVerticalStretch(0)
+        #sizePolicy.setHeightForWidth(self.score_header.sizePolicy().hasHeightForWidth())
         self.score_header.setSizePolicy(sizePolicy)
         self.score_header.setBaseSize(QtCore.QSize(3, 0))
         font = QtGui.QFont()
@@ -156,10 +151,10 @@ class Ui_main(object):
         self.score_labels.setObjectName("score_labels")
 
         self.oss_label = QtWidgets.QLabel(main)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.oss_label.sizePolicy().hasHeightForWidth())
+        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        #sizePolicy.setHorizontalStretch(0)
+        #sizePolicy.setVerticalStretch(0)
+        #sizePolicy.setHeightForWidth(self.oss_label.sizePolicy().hasHeightForWidth())
         self.oss_label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(15)
@@ -170,7 +165,7 @@ class Ui_main(object):
         self.scoreLayout.addWidget(self.oss_label, 2, 2)
 
         self.score_left = QtWidgets.QLabel(main)
-        self.score_left.setFixedSize(400, 300)
+        self.score_left.setFixedSize(250, 300)
         font = QtGui.QFont()
         font.setPointSize(60)
         self.score_left.setFont(font)
@@ -185,7 +180,7 @@ class Ui_main(object):
         self.point.setObjectName("point")
         self.score_labels.addWidget(self.point)
         self.score_right = QtWidgets.QLabel(main)
-        self.score_right.setFixedSize(400, 300)
+        self.score_right.setFixedSize(250, 300)
         font = QtGui.QFont()
         font.setPointSize(60)
         self.score_right.setFont(font)
@@ -231,13 +226,16 @@ class Ui_main(object):
         self.scorebutton_right.addWidget(self.sub10_right)
         self.scoreLayout.addLayout(self.scorebutton_right, 0, 3)
         self.teamname_left = QtWidgets.QLabel(main)
+        self.teamname_left.setWordWrap(True)
         self.teamname_left.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        self.teamname_left.setFixedHeight(300)
         font = QtGui.QFont()
         font.setPointSize(15)
         self.teamname_left.setFont(font)
         self.teamname_left.setObjectName("teamname_left")
         self.scoreLayout.addWidget(self.teamname_left, 0, 0)
         self.teamname_right = QtWidgets.QLabel(main)
+        self.teamname_right.setWordWrap(True)
         font = QtGui.QFont()
         font.setPointSize(15)
         self.teamname_right.setFont(font)

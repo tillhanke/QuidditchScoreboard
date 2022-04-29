@@ -21,7 +21,7 @@ class SettingsWindow(QDialog):
         self.ui = Ui_settings()
         self.ui.setupUi(self)
         self.scoreboard = scoreboard
-        self.color_options = ["Red", "Blue", "Green", "Yellow", "Lightgreen", "Pink", "Choose Color"]
+        self.color_options = ["Choose Color", "Red", "Blue", "Green", "Yellow", "Lightgreen", "Pink"]
         self.list_of_teams = []
         self.path_main = ""
         # in case settings already are ok.
@@ -31,8 +31,8 @@ class SettingsWindow(QDialog):
         self.main = main_window
 
     def set_from_scoreboard(self):
-        self.ui.jerseyLeftOptions.setCurrentText("Red")
-        self.ui.jerseyRightOptions.setCurrentText("Red")
+        self.ui.jerseyLeftOptions.setCurrentText("Choose Color")
+        self.ui.jerseyRightOptions.setCurrentText("Choose Color")
         if self.scoreboard.teamleft.path != "":
             self.ui.teamLeftOptions.setCurrentText(self.scoreboard.teamleft.path)
         if self.scoreboard.teamright.path != "":

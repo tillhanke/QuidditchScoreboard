@@ -47,6 +47,11 @@ class SureBro(QDialog):
             writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
             writer.writeheader()
             writer.writerow({"Name": "Playername", "Team": "Teamname", "Reason": "Reason"})
+        with open('Output/ScoreCrawl.csv','w') as file:
+            fieldnames = ["Scorecrawl"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
+            writer.writeheader()
+            writer.writerow({"Scorecrawl": ""})
         self.main.accept()
         self.accept()
 

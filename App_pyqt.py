@@ -42,7 +42,6 @@ if __name__ == "__main__":
     
     with open("qsb.stylesheet", "r") as fh:
         app.setStyleSheet(fh.read())
-    
     #w.showMaximized()
     updater = threading.Thread(target=w.update)
     updater.start()
