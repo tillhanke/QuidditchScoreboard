@@ -59,6 +59,7 @@ class MainWindow(QDialog):
         last_goal_thread.start()
         
         self.scorecrawl_connected = 0
+        self.gameids_list = []
 
     def set_from_scoreboard(self):
         self.ui.time_label.setText(self.scoreboard.time.time_str)
@@ -331,8 +332,9 @@ class MainWindow(QDialog):
 
     def scorecrawl_start(self):
         if(self.scorecrawl_connected == False):
-            self.connect_sc()
-            self.ui.scorecrawlButton.setText("Stop score crawl")
+            ans = self.connect_sc()
+            if(ans != -1):
+                self.ui.scorecrawlButton.setText("Stop score crawl")
         else:
             self.disconnect_sc()
             self.ui.scorecrawlButton.setText("Start score crawl")
@@ -350,9 +352,11 @@ class MainWindow(QDialog):
                 sc_file.write(self.ui.scrolllayout.itemAt(i).widget().text()[:13])
                 first = 0
         sc_file.close()
-
+        if(first == 1):
+            return -1
         self.scorecrawl_proc = subprocess.Popen('node .\quidditchlive_api\quidditchlive_scorecrawl.js')
         self.scorecrawl_connected = True
+        return 1
 
     def disconnect_sc(self):
         self.scorecrawl_proc.kill()

@@ -43,9 +43,9 @@ class Ui_main(object):
         self.tab1.setObjectName("tab1")
         self.tabWidget.addTab(self.tab1, "")
 
-        self.tab2 = QtWidgets.QWidget()
-        self.tab2.setObjectName("tab2")
-        self.tabWidget.addTab(self.tab2, "")
+        #self.tab2 = QtWidgets.QWidget()
+        #self.tab2.setObjectName("tab2")
+        #self.tabWidget.addTab(self.tab2, "")
 
         self.tab3 = QtWidgets.QWidget()
         self.tab3.setObjectName("tab3")
@@ -317,7 +317,7 @@ class Ui_main(object):
         self.stopTimer.setEnabled(False)
 
         self.scLayout = QtWidgets.QVBoxLayout(self.tab3)
-        self.scLayout.setContentsMargins(50, 50, 50, 0)
+        self.scLayout.setContentsMargins(50, 50, 50, 100)
         self.scLayout.setObjectName("scLayout")
         self.scLayout.setAlignment(QtCore.Qt.AlignCenter)
         self.scLayout.setAlignment(QtCore.Qt.AlignTop)
@@ -407,5 +407,5 @@ class Ui_main(object):
         self.scorecrawlButton.setText(_translate("main", "Start score crawl"))
         self.readGameIDs.setText(_translate("main", "Read GameIDs"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _translate("main", "Main Window"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), _translate("main", "Extra Timers"))
+        #self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), _translate("main", "Extra Timers"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab3), _translate("main", "Score Crawl"))
