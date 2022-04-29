@@ -43,6 +43,7 @@ class Team:
 
     def set_path(self, path, datafile=""):
         self.path = path
+        self.roster = {}
         if not datafile == "":
             with open(datafile, "w") as dat:
                 dat.write(self.path)
@@ -51,7 +52,7 @@ class Team:
         self.rosterpic = "Input/TeamrosterPNGs/" + self.path + ".png"
         # set name and roster
         try:
-            with codecs.open("Input/Teamrosters/"+self.path+".txt", "r", 'utf-8') as roster_file:
+            with codecs.open("Input/Teamrosters/"+self.path+".txt", "r", 'utf-8-sig') as roster_file:
                 content = roster_file.read().splitlines()
                 self.name = content[0]
             for line in content[1:]:

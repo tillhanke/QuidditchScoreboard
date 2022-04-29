@@ -28,7 +28,7 @@ class ScoreBoard:
     def read_all(self):
         if os.path.isdir("Output"):
             try:
-                with io.open("Output/score_left.csv", "r", encoding="utf-8") as dat:
+                with io.open("Output/score_left.csv", "r", encoding="utf-8-sig") as dat:
                     line = dat.readlines()[1]
                     score = ""
                     for letter in line:
@@ -43,7 +43,7 @@ class ScoreBoard:
                 None
 
             try:
-                with io.open("Output/score_right.csv", "r", encoding="utf-8") as dat:
+                with io.open("Output/score_right.csv", "r", encoding="utf-8-sig") as dat:
                     line = dat.readlines()[1]
                     score = ""
                     for letter in line:
@@ -58,21 +58,21 @@ class ScoreBoard:
                 None
 
             try:
-                with io.open("Output/left_path.txt", "r", encoding="utf-8") as dat:
+                with io.open("Output/left_path.txt", "r", encoding="utf-8-sig") as dat:
                     line = dat.readline()
                     self.teamleft.set_path(line)
             except FileNotFoundError:
                 None
 
             try:
-                with io.open("Output/right_path.txt", "r", encoding="utf-8") as dat:
+                with io.open("Output/right_path.txt", "r", encoding="utf-8-sig") as dat:
                     line = dat.readline()
                     self.teamright.set_path(line)
             except FileNotFoundError:
                 None
 
             try:
-                with io.open("Output/Timer.txt", "r", encoding="utf-8") as dat:
+                with io.open("Output/Timer.txt", "r", encoding="utf-8-sig") as dat:
                     self.time.time_str = dat.read()
                     self.time.min = int(self.time.time_str.split(":")[0])
                     self.time.sec = int(self.time.time_str.split(":")[1])
@@ -94,9 +94,9 @@ class ScoreBoard:
 
     def write_teams(self):
         self.window.update_team_ui()
-        with io.open("Output/TeamLeft.csv", "w", encoding="utf-8") as dat:
+        with open("Output/TeamLeft.csv", "w", encoding="utf-8-sig") as dat:
             dat.write("Team Left\n"+self.teamleft.name)
-        with io.open("Output/TeamRight.csv", "w", encoding="utf-8") as dat:
+        with open("Output/TeamRight.csv", "w", encoding="utf-8-sig") as dat:
             dat.write("Team Right\n"+self.teamright.name)
 
     def write_score(self):
@@ -104,9 +104,9 @@ class ScoreBoard:
         writes the scores to the files "Output/score*"
         :return:
         '''
-        with io.open("Output/score_left.csv", "w", encoding="utf-8") as dat:
+        with open("Output/score_left.csv", "w", encoding="utf-8-sig") as dat:
             dat.write("Score left\n"+self.teamleft.get_score_str())
-        with io.open("Output/score_right.csv", "w", encoding="utf-8") as dat:
+        with open("Output/score_right.csv", "w", encoding="utf-8-sig") as dat:
             dat.write("Score right\n"+self.teamright.get_score_str())
 
     def write_penalty(self):
@@ -119,11 +119,11 @@ class ScoreBoard:
                 writer.writeheader()
                 writer.writerow({"Name": str(self.penalty["player"]), "Team": str(self.penalty["team"].name), "Reason": str(self.penalty["reason"])})
             '''
-            with io.open("Output/PenaltyTeam.txt", "w", encoding="utf-8") as dat:
+            with io.open("Output/PenaltyTeam.txt", "w", encoding="utf-8-sig") as dat:
                 dat.write(self.penalty["team"].name)
-            with io.open("Output/PenaltyPlayer.txt", "w", encoding="utf-8") as dat:
+            with io.open("Output/PenaltyPlayer.txt", "w", encoding="utf-8-sig") as dat:
                 dat.write(self.penalty["player"])
-            with io.open("Output/PenaltyReason.txt", "w", encoding="utf-8") as dat:
+            with io.open("Output/PenaltyReason.txt", "w", encoding="utf-8-sig") as dat:
                 dat.write(self.penalty["reason"])
             '''
             try:

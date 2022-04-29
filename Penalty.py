@@ -23,7 +23,7 @@ class PenaltyWindow(QDialog):
         self.team = None
         self.team_chosen()
         try:
-            with io.open("Input/penalty_reasons.txt", "r", encoding="utf-8") as dat:
+            with io.open("Input/penalty_reasons.txt", "r", encoding="utf-8-sig") as dat:
                 self.reasons = dat.read().splitlines()
         except FileNotFoundError:
             self.reasons = []
