@@ -120,7 +120,7 @@ class ScoreBoard:
                 shutil.copyfile("Input/Cards/" + self.penalty["card"], "Output/card.png")
 
     def write_jersey(self):
-        x, y = 47, 60  # size of output Image
+        x, y = 150, 20  # size of output Image
 
         if self.teamright.color == "" or self.teamleft.color == "":
             print("Please choose colors for the jerseys!")
@@ -129,12 +129,12 @@ class ScoreBoard:
         # write for team right
         im = Image.new("RGBA", (x, y))
         dr = ImageDraw.Draw(im)
-        dr.polygon([(0, 0), (x / 2, y), (x, y), (x / 2, 0)], fill=self.teamright.color, outline=None)
+        dr.rectangle([(0, 0), (x, y)], fill=self.teamright.color, outline=None)
         im.save("Output/TeamRightJersey.png")
         # write for team left
         im = Image.new("RGBA", (x, y))
         dr = ImageDraw.Draw(im)
-        dr.polygon([(0, 0), (x / 2, y), (x, y), (x / 2, 0)], fill=self.teamleft.color, outline=None)
+        dr.rectangle([(0, 0), (x, y)], fill=self.teamleft.color, outline=None)
         im.save("Output/TeamLeftJersey.png")
 
     def write_timer(self):
