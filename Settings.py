@@ -90,13 +90,5 @@ class SettingsWindow(QDialog):
         self.ui.jerseyRightOptions.addItems(colors)
 
     def swap(self):
-        r = self.ui.jerseyRightOptions.currentIndex()
-        l = self.ui.jerseyLeftOptions.currentIndex()
-        self.ui.jerseyRightOptions.setCurrentIndex(l)
-        self.ui.jerseyLeftOptions.setCurrentIndex(r)
-        r = self.ui.teamRightOptions.currentIndex()
-        l = self.ui.teamLeftOptions.currentIndex()
-        self.ui.teamRightOptions.setCurrentIndex(l)
-        self.ui.teamLeftOptions.setCurrentIndex(r)
         self.scoreboard.swap()
 

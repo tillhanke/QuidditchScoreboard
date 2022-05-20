@@ -61,6 +61,7 @@ class MainWindow(QDialog):
         
         self.scorecrawl_connected = 0
         self.gameids_list = []
+        self.swapped = 0
 
     def set_from_scoreboard(self):
         self.ui.time_label.setText(self.scoreboard.time.time_str)
@@ -114,6 +115,7 @@ class MainWindow(QDialog):
             return
         self.scoreboard.teamleft.score = 0
         self.scoreboard.teamleft.snitch_catch = []
+        self.scoreboard.swapped = 0
         self.update_score_ui()
 
     def reset_right(self):
@@ -121,6 +123,7 @@ class MainWindow(QDialog):
             return
         self.scoreboard.teamright.score = 0
         self.scoreboard.teamright.snitch_catch = []
+        self.scoreboard.swapped = 0
         self.update_score_ui()
 
     def add_right(self, amount):
@@ -138,6 +141,7 @@ class MainWindow(QDialog):
             self.timekeeper_w.disconnect()
             print("Disconnected Timekeeper")
             self.ui.timekeeperButton.setText("Start Timekeeper")
+            self.scoreboard.swapped = 0
             return
         else:
             self.scoreboard.read_all()
@@ -293,8 +297,12 @@ class MainWindow(QDialog):
         
         while self.result() == 0:
             try:
-                score_left = open("Output/score_left.csv", "r").readlines()[1]
-                score_right = open("Output/score_right.csv", "r").readlines()[1]
+                if(self.swapped == 1 and self.timekeeper_w.timekeeper.connected):
+                    score_left = open("Output/score_right.csv", "r").readlines()[1]
+                    score_right = open("Output/score_left.csv", "r").readlines()[1]
+                else:
+                    score_left = open("Output/score_left.csv", "r").readlines()[1]
+                    score_right = open("Output/score_right.csv", "r").readlines()[1]
                 team_left = open("Output/TeamLeft.csv", "r").readlines()[1]
                 team_right = open("Output/TeamRight.csv", "r").readlines()[1]
                 
@@ -325,8 +333,14 @@ class MainWindow(QDialog):
         self.really_ui.show()
 
     def update_score_ui_tk(self):
-        score_left = open("Output/score_left.csv", "r").readlines()[1]
-        score_right = open("Output/score_right.csv", "r").readlines()[1]
+        if(self.swapped == 0):
+            score_left = open("Output/score_left.csv", "r").readlines()[1]
+            score_right = open("Output/score_right.csv", "r").readlines()[1]
+        else:
+            score_left = open("Output/score_right.csv", "r").readlines()[1]
+            score_right = open("Output/score_left.csv", "r").readlines()[1]
+        self.scoreboard.teamleft.score = score_left
+        self.scoreboard.teamright.score = score_right
         self.ui.score_left.setText(score_left)
         self.ui.score_right.setText(score_right)
 
@@ -383,6 +397,14 @@ class MainWindow(QDialog):
             self.ui.name = QtWidgets.QCheckBox(entry)
             self.ui.name.setObjectName("scrollcontent")
             self.ui.scrolllayout.addWidget(self.ui.name)
+
+    def swap_scores(self):
+        self.swapped = (self.swapped + 1) % 2
+        self.scoreboard.teamleft.score, self.scoreboard.teamright.score = self.scoreboard.teamright.score, self.scoreboard.teamleft.score
+        if(self.timekeeper_w.timekeeper.connected):
+            self.update_score_ui_tk()
+        else:
+            self.update_score_ui()
 
     def delete_oss(self):
         open("Output/overtime_setscore.csv", "w").write("Overtime setscore\n")

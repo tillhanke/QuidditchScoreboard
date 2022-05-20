@@ -73,9 +73,6 @@ class Ui_settings(object):
         self.verticalLayout.addLayout(self.horizontalLayout_7)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.pushButton = QtWidgets.QPushButton(settings)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_5.addWidget(self.pushButton)
         self.closeButton = QtWidgets.QPushButton(settings)
         self.closeButton.setObjectName("closeButton")
         self.horizontalLayout_5.addWidget(self.closeButton)
@@ -88,7 +85,6 @@ class Ui_settings(object):
         self.closeButton.clicked.connect(settings.close)
         self.saveButton.clicked.connect(settings.save)
         self.refreshButton.clicked.connect(settings.refresh)
-        self.pushButton.clicked.connect(settings.swap)
         self.jerseyRightOptions.activated['QString'].connect(settings.highlighted_right)
         self.jerseyLeftOptions.activated['QString'].connect(settings.highlighted_left)
 
@@ -103,6 +99,5 @@ class Ui_settings(object):
         self.saveButton.setText(_translate("settings", "Save"))
         self.teamRight.setText(_translate("settings", "Team Right"))
         self.jerseyRight.setText(_translate("settings", "Jersey Color Right"))
-        self.pushButton.setText(_translate("settings", "Swap Teams"))
         self.closeButton.setText(_translate("settings", "Close"))
 

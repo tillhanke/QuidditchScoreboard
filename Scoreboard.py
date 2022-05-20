@@ -27,8 +27,9 @@ class ScoreBoard:
 
     def read_all(self):
         if os.path.isdir("Output"):
+
             try:
-                with io.open("Output/score_left.csv", "r", encoding="utf-8-sig") as dat:
+                with io.open("Output/score_left"".csv", "r", encoding="utf-8-sig") as dat:
                     line = dat.readlines()[1]
                     score = ""
                     for letter in line:
@@ -43,7 +44,7 @@ class ScoreBoard:
                 None
 
             try:
-                with io.open("Output/score_right.csv", "r", encoding="utf-8-sig") as dat:
+                with io.open("Output/score_right"".csv", "r", encoding="utf-8-sig") as dat:
                     line = dat.readlines()[1]
                     score = ""
                     for letter in line:
@@ -163,9 +164,3 @@ class ScoreBoard:
             shutil.copyfile(self.teamright.rosterpic, "Output/TeamRightRoster.png")
         except FileNotFoundError as e:
             print(e)
-
-    def swap(self):
-        inter = self.teamright
-        self.teamright = self.teamleft
-        self.teamleft = inter
-        self.write_all()
