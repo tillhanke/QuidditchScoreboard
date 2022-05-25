@@ -120,7 +120,7 @@ class ScoreBoard:
                 shutil.copyfile("Input/Cards/" + self.penalty["card"], "Output/card.png")
 
     def write_jersey(self):
-        x, y = 150, 20  # size of output Image
+        x, y = 130, 2  # size of output Image
 
         if self.teamright.color == "" or self.teamleft.color == "":
             print("Please choose colors for the jerseys!")
