@@ -246,7 +246,7 @@ class MainWindow(QDialog):
                         else:
                             player = "{0}".format(number)
                     else:
-                        player = player
+                        player = ""
 
                     self.scoreboard.penalty = {"player": player,
                                             "reason": reason,
