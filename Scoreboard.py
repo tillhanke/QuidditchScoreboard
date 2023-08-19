@@ -112,12 +112,13 @@ class ScoreBoard:
                 dat.write(self.penalty["player"])
             with io.open("Output/PenaltyReason.txt", "w", encoding="utf-8-sig") as dat:
                 dat.write(self.penalty["reason"])
-            '''
+            
             try:
                 shutil.copyfile("Input/Cards/" + self.penalty["card"], "Output/card.png")
             except FileExistsError:
                 os.remove("Output/card.png")
                 shutil.copyfile("Input/Cards/" + self.penalty["card"], "Output/card.png")
+            '''
 
     def write_jersey(self):
         x, y = 130, 2  # size of output Image

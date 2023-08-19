@@ -23,7 +23,7 @@ class Timekeeper:
         self.json_game_data = {}
         self.diff = 0
         self.auth = ""  # authentication
-        self.remote_server = 'quidditch.live'  # 'timekeeper.lucas-scheuvens.de'
+        self.remote_server = 'quadball.live'  # 'timekeeper.lucas-scheuvens.de'
         self.ssl = True  # if self.remote_server == 'timekeeper.lucas-scheuvens.de' else False
         self.port = 443  # if self.remote_server == 'timekeeper.lucas-scheuvens.de' else 8769
         self.team_left = None
