@@ -3,5 +3,9 @@ __pycache__/
 quadballlive_api/node_modules/
 quadballlive_api/*.txt
 Input/TeamLogos/*
+!Input/TeamLogos/.gitkeep
 Input/TeamrosterPNGs/*
+!Input/TeamrosterPNGs/.gitkeep
 Input/Teamrosters/*
+!Input/Teamrosters/.gitkeep
+Input/*.txt
