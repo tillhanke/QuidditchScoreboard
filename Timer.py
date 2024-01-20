@@ -30,8 +30,10 @@ class Timer:
         timer_thread.start()
 
     def write(self):
-        with open(self.path, "w") as dat:
+        with open(self.path+".txt", "w") as dat:
             dat.write(self.time_str)
+        with open(self.path+".csv", "w") as dat:
+            dat.write("Gametime\n"+self.time_str)
 
     def run(self):
         while self.running:

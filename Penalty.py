@@ -1,16 +1,5 @@
-from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
-from PyQt5 import QtGui
-import os
+from PyQt5.QtWidgets import QDialog
 import io
-import shutil
-#import websocket
-import time
-import urllib.request
-import json
-import math
-import threading
-import sys
-import codecs
 from penalty_ui import Ui_Penalty
 
 
@@ -23,7 +12,7 @@ class PenaltyWindow(QDialog):
         self.team = None
         self.team_chosen()
         try:
-            with io.open("Input/penalty_reasons.txt", "r", encoding="utf-8-sig") as dat:
+            with io.open("Input/PenaltyReasons.txt", "r", encoding="utf-8-sig") as dat:
                 self.reasons = dat.read().splitlines()
         except FileNotFoundError:
             self.reasons = []
@@ -33,7 +22,6 @@ class PenaltyWindow(QDialog):
         self.ui.teamLeftButton.setText(self.scoreboard.teamleft.name)
         self.ui.teamRightButton.setText(self.scoreboard.teamright.name)
         self.ui.list_reasons.addItems(self.reasons)
-        open("quidditchlive_api/new_penalty.txt", "w").write("0")
 
     def team_chosen(self):
         players = []
@@ -54,6 +42,8 @@ class PenaltyWindow(QDialog):
         self.ui.list_players.addItems(["{0} - {1}".format(x, y) for x, y in players])
 
     def ok(self):
+        if self.team == None:
+            return
         if self.ui.input_number.text() != "":
             if self.ui.input_number.text() in self.team.roster:
                 player = "{0} - {1}".format(self.ui.input_number.text(), self.team.roster[self.ui.input_number.text()])

@@ -1,18 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
-from PyQt5 import QtGui
-import os
-import io
-from PIL import Image, ImageDraw
-import shutil
-#import websocket
-import time
-import urllib.request
-import json
-import math
-import threading
-import sys
 import codecs
-import textwrap
 
 class Team:
     def __init__(self):

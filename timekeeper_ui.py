@@ -30,18 +30,7 @@ class Ui_Timekeeper(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.label_2 = QtWidgets.QLabel(Timekeeper)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout_2.addWidget(self.label_2)
-        self.auth = QtWidgets.QLineEdit(Timekeeper)
-        self.auth.setObjectName("auth")
-        self.horizontalLayout_2.addWidget(self.auth)
-        auth_tk = open("Input/Auth.txt", "r")
-        self.auth.setText(auth_tk.read())
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
+    
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -64,7 +53,6 @@ class Ui_Timekeeper(object):
         _translate = QtCore.QCoreApplication.translate
         Timekeeper.setWindowTitle(_translate("Timekeeper", "Timekeeper"))
         self.label.setText(_translate("Timekeeper", "Game ID"))
-        self.label_2.setText(_translate("Timekeeper", "Authentifizierung"))
         self.connectButton.setText(_translate("Timekeeper", "Connect"))
         self.closeButton.setText(_translate("Timekeeper", "Close"))
 

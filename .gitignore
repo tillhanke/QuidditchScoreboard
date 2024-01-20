@@ -1,7 +1,7 @@
 __pycache__/
 *.png
-quidditchlive_api/node_modules/
-quidditchlive_api/*.txt
+quadballlive_api/node_modules/
+quadballlive_api/*.txt
 Input/TeamLogos/*
 Input/TeamrosterPNGs/*
 Input/Teamrosters/*

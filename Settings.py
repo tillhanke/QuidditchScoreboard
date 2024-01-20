@@ -1,17 +1,5 @@
-from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
-from PyQt5 import QtGui
+from PyQt5.QtWidgets import QDialog, QColorDialog
 import os
-import io
-from PIL import Image, ImageDraw
-import shutil
-#import websocket
-import time
-import urllib.request
-import json
-import math
-import threading
-import sys
-import codecs
 from setup_ui import Ui_settings
 
 
@@ -49,8 +37,8 @@ class SettingsWindow(QDialog):
             self.scoreboard.teamleft.color = color.name()
 
     def save(self):
-        self.scoreboard.teamleft.set_path(self.ui.teamLeftOptions.currentText(), "Output/left_path.txt")
-        self.scoreboard.teamright.set_path(self.ui.teamRightOptions.currentText(), "Output/right_path.txt")
+        self.scoreboard.teamleft.set_path(self.ui.teamLeftOptions.currentText(), "Output/LeftPath.txt")
+        self.scoreboard.teamright.set_path(self.ui.teamRightOptions.currentText(), "Output/RightPath.txt")
         color_right = self.ui.jerseyRightOptions.currentText()
         color_left = self.ui.jerseyLeftOptions.currentText()
         if not color_left == "Choose Color":
@@ -58,14 +46,6 @@ class SettingsWindow(QDialog):
         if not color_right == "Choose Color":
             self.scoreboard.teamright.color = color_right
         self.scoreboard.write_all()
-        #  palette_left = QtGui.QPalette()
-        # print(1)
-        # print(self.scoreboard.teamleft.color)
-        # print(QtGui.QColor(self.scoreboard.teamleft.color))
-        # color = QtGui.QColor("Red")
-        # print(2)
-        # self.main.ui.farbe.setStyleSheet("QLabel { background-color : %s"%color.name())
-        # self.main.ui.left_color.setPalette(palette_left)
         self.accept()
 
     def refresh(self):
@@ -81,6 +61,9 @@ class SettingsWindow(QDialog):
             self.list_of_teams = []
         self.ui.teamLeftOptions.addItems(self.list_of_teams)
         self.ui.teamRightOptions.addItems(self.list_of_teams)
+        if (len(self.list_of_teams) > 1):
+            self.ui.teamLeftOptions.setCurrentIndex(0)
+            self.ui.teamRightOptions.setCurrentIndex(1)
 
         # refresh Colors (just because)
         colors = self.color_options

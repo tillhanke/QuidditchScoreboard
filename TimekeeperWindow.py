@@ -1,19 +1,6 @@
-from PyQt5.QtWidgets import QDialog, QApplication, QColorDialog
-from PyQt5 import QtGui
-import os
-import io
-from PIL import Image, ImageDraw
-import shutil
-#import websocket
-import time
-import urllib.request
-import json
-import math
-import threading
-import sys
-import codecs
+from PyQt5.QtWidgets import QDialog
 from timekeeper_ui import Ui_Timekeeper
-from timekeeper import Timekeeper
+from Timekeeper import Timekeeper
 
 
 class TimekeeperWindow(QDialog):
@@ -27,12 +14,10 @@ class TimekeeperWindow(QDialog):
 
     def connect(self):
         self.scoreboard.time.stop()
-        self.timekeeper.auth, self.timekeeper.gameid = self.ui.auth.displayText(), self.ui.gameID.displayText(),
-        #self.timekeeper.gameid, self.timekeeper.auth = "A-403-559-343", "83d4b05926f1b081e2f6da408bf5b1e5"  # for debugging insert info
-        #self.timekeeper.connect()
+        self.timekeeper.gameid = self.ui.gameID.displayText()
         if (self.timekeeper.gameid == ""):
             return
-        self.timekeeper.connect_js(self.timekeeper.auth, self.timekeeper.gameid)
+        self.timekeeper.connect_js(self.timekeeper.gameid)
         self.scoreboard.timekeeper = self.timekeeper
         if self.timekeeper.connected:
             self.main.ui.timekeeperButton.setText("Stop Timekeeper")
